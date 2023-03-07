@@ -1,51 +1,57 @@
-// // ignore_for_file: unused_import
-//
-// import 'dart:convert';
-//
-// import 'package:http/http.dart' as http;
-// import 'package:meta/meta.dart';
-//
-// import '../../../../core/error/exception.dart';
-// import '../models/number_trivia_model.dart';
-//
-// abstract class CatalogRemoteDataSource {
-//   /// Calls the http://numbersapi.com/{number} endpoint.
-//   ///
-//   /// Throws a [ServerException] for all error codes.
-//   Future<NumberTriviaModel> getConcreteNumberTrivia(int number);
-//
-//   /// Calls the http://numbersapi.com/random endpoint.
-//   ///
-//   /// Throws a [ServerException] for all error codes.
-//   Future<NumberTriviaModel> getRandomNumberTrivia();
-// }
-//
-// class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
-//   final http.Client client;
-//
-//   CatalogRemoteDataSourceImpl({required this.client});
-//
-//   @override
-//   Future<NumberTriviaModel> getConcreteNumberTrivia(int number) =>
-//       _getTriviaFromUrl('http://numbersapi.com/$number');
-//
-//   @override
-//   Future<NumberTriviaModel> getRandomNumberTrivia() =>
-//       _getTriviaFromUrl('http://numbersapi.com/random');
-//
-//   Future<NumberTriviaModel> _getTriviaFromUrl(String url) async {
-//     var uri = Uri.parse(url);
-//     final response = await client.get(
-//       uri,
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     );
-//
-//     if (response.statusCode == 200) {
-//       return NumberTriviaModel.fromJson(json.decode(response.body));
-//     } else {
-//       throw ServerException();
-//     }
-//   }
-// }
+// ignore_for_file: unused_import
+
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
+
+import '../../../../core/error/exception.dart';
+import '../models/number_trivia_model.dart';
+
+abstract class CatalogRemoteDataSource {
+  /// Calls the http://numbersapi.com/{number} endpoint.
+  ///
+  /// Throws a [ServerException] for all error codes.
+  Future<Iterable<Category>> getCategories();
+
+  /// Calls the http://numbersapi.com/random endpoint.
+  ///
+  /// Throws a [ServerException] for all error codes.
+  Future<Iterable<Maker>> getMakers();
+}
+
+class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
+  final http.Client client;
+
+  static const String baseUrl =
+      "https://motorcycle-specs-database.p.rapidapi.com";
+  static const String rapidAPIKey =
+      '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
+  static const String rapidAPIHost = 'motorcycle-specs-database.p.rapidapi.com';
+
+  CatalogRemoteDataSourceImpl({required this.client});
+
+  Future<Iterable<Map<String, dynamic>>> _getResponseFromUrl(String url) async {
+    var uri = Uri.parse('$baseUrl/$url');
+    final response = await client.get(uri, headers: {
+      'X-RapidAPI-Key': rapidAPIKey,
+      'X-RapidAPI-Host': rapidAPIHost,
+    });
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<Iterable> getCategories() {
+    _getResponseFromUrl('category');
+  }
+
+  @override
+  Future<Iterable> getMakers() {
+    _getResponseFromUrl('make');
+  }
+}
