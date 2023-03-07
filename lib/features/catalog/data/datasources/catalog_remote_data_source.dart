@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 import '../../../../core/error/exception.dart';
+import '../../domain/entities/category.dart';
+import '../../domain/entities/maker.dart';
 import '../models/number_trivia_model.dart';
 
 abstract class CatalogRemoteDataSource {
@@ -46,12 +48,14 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   }
 
   @override
-  Future<Iterable> getCategories() {
+  Future<Iterable<Category>> getCategories() {
     _getResponseFromUrl('category');
+    return Future.value([]);
   }
 
   @override
-  Future<Iterable> getMakers() {
+  Future<Iterable<Maker>> getMakers() {
     _getResponseFromUrl('make');
+    return Future.value([]);
   }
 }
