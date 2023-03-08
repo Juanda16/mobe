@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'maker.freezed.dart';
+part 'maker.g.dart';
 
 @freezed
 class Maker with _$Maker {
@@ -9,4 +10,6 @@ class Maker with _$Maker {
     required String id,
     required String name,
   }) = _Maker;
+
+  factory Maker.fromJson(Map<String, dynamic> json) => _$MakerFromJson(json);
 }

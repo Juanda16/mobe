@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'maker.dart';
+part of 'category.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,27 +14,33 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return _Category.fromJson(json);
+}
+
 /// @nodoc
-mixin _$Maker {
-  String get id => throw _privateConstructorUsedError;
+mixin _$Category {
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MakerCopyWith<Maker> get copyWith => throw _privateConstructorUsedError;
+  $CategoryCopyWith<Category> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MakerCopyWith<$Res> {
-  factory $MakerCopyWith(Maker value, $Res Function(Maker) then) =
-      _$MakerCopyWithImpl<$Res, Maker>;
+abstract class $CategoryCopyWith<$Res> {
+  factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
+      _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
-class _$MakerCopyWithImpl<$Res, $Val extends Maker>
-    implements $MakerCopyWith<$Res> {
-  _$MakerCopyWithImpl(this._value, this._then);
+class _$CategoryCopyWithImpl<$Res, $Val extends Category>
+    implements $CategoryCopyWith<$Res> {
+  _$CategoryCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -51,7 +57,7 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -61,18 +67,21 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
 }
 
 /// @nodoc
-abstract class _$$_MakerCopyWith<$Res> implements $MakerCopyWith<$Res> {
-  factory _$$_MakerCopyWith(_$_Maker value, $Res Function(_$_Maker) then) =
-      __$$_MakerCopyWithImpl<$Res>;
+abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
+  factory _$$_CategoryCopyWith(
+          _$_Category value, $Res Function(_$_Category) then) =
+      __$$_CategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({int id, String name});
 }
 
 /// @nodoc
-class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
-    implements _$$_MakerCopyWith<$Res> {
-  __$$_MakerCopyWithImpl(_$_Maker _value, $Res Function(_$_Maker) _then)
+class __$$_CategoryCopyWithImpl<$Res>
+    extends _$CategoryCopyWithImpl<$Res, _$_Category>
+    implements _$$_CategoryCopyWith<$Res> {
+  __$$_CategoryCopyWithImpl(
+      _$_Category _value, $Res Function(_$_Category) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -81,11 +90,11 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
     Object? id = null,
     Object? name = null,
   }) {
-    return _then(_$_Maker(
+    return _then(_$_Category(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -95,49 +104,62 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
 }
 
 /// @nodoc
+@JsonSerializable()
+class _$_Category implements _Category {
+  const _$_Category({required this.id, required this.name});
 
-class _$_Maker implements _Maker {
-  const _$_Maker({required this.id, required this.name});
+  factory _$_Category.fromJson(Map<String, dynamic> json) =>
+      _$$_CategoryFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
 
   @override
   String toString() {
-    return 'Maker(id: $id, name: $name)';
+    return 'Category(id: $id, name: $name)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Maker &&
+            other is _$_Category &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MakerCopyWith<_$_Maker> get copyWith =>
-      __$$_MakerCopyWithImpl<_$_Maker>(this, _$identity);
-}
-
-abstract class _Maker implements Maker {
-  const factory _Maker({required final String id, required final String name}) =
-      _$_Maker;
+  _$$_CategoryCopyWith<_$_Category> get copyWith =>
+      __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
 
   @override
-  String get id;
+  Map<String, dynamic> toJson() {
+    return _$$_CategoryToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Category implements Category {
+  const factory _Category({required final int id, required final String name}) =
+      _$_Category;
+
+  factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
+
+  @override
+  int get id;
   @override
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_MakerCopyWith<_$_Maker> get copyWith =>
+  _$$_CategoryCopyWith<_$_Category> get copyWith =>
       throw _privateConstructorUsedError;
 }

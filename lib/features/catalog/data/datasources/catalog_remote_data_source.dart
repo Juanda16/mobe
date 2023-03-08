@@ -3,11 +3,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 import '../../../../core/error/exception.dart';
-import '../../domain/entities/category.dart';
-import '../../domain/entities/maker.dart';
+import '../../domain/entities/category/category.dart';
+import '../../domain/entities/maker/maker.dart';
 import '../models/number_trivia_model.dart';
 
 abstract class CatalogRemoteDataSource {
@@ -33,7 +32,7 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   CatalogRemoteDataSourceImpl({required this.client});
 
-  Future<Iterable<Map<String, dynamic>>> _getResponseFromUrl(String url) async {
+  Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
     final response = await client.get(uri, headers: {
       'X-RapidAPI-Key': rapidAPIKey,
@@ -48,14 +47,18 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   }
 
   @override
-  Future<Iterable<Category>> getCategories() {
-    _getResponseFromUrl('category');
-    return Future.value([]);
+  Future<Iterable<Category>> getCategories() async {
+    final Map<String, dynamic> response = await _getResponseFromUrl('category');
+    Iterable<Category> categories =
+        (response as List).map((category) => Category.fromJson(category));
+    return categories;
   }
 
   @override
-  Future<Iterable<Maker>> getMakers() {
-    _getResponseFromUrl('make');
-    return Future.value([]);
+  Future<Iterable<Maker>> getMakers() async {
+    final Map<String, dynamic> response = await _getResponseFromUrl('make');
+    Iterable<Maker> makers =
+        (response as List).map((maker) => Maker.fromJson(maker));
+    return makers;
   }
 }
