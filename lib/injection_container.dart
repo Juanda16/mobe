@@ -2,9 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mobe/features/catalog/domain/usecases/get_categories.dart';
+
 import 'core/network/network_info.dart';
 import 'core/util/input_converter.dart';
-import 'features/catalog/domain/usecases/get_motorcycle_by_id.dart';
 
 final sl = GetIt.instance;
 
@@ -20,7 +20,7 @@ Future<void> init() async {
   // );
 
   // Use cases
-  sl.registerLazySingleton(() => GetMotorcycleById(sl()));
+  // sl.registerLazySingleton(() => GetMotorcycleById(sl()));
   sl.registerLazySingleton(() => GetCategories(sl()));
 
   // Repository

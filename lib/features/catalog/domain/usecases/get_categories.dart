@@ -2,16 +2,16 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entities/motorcyvle.dart';
+import '../entities/category/category.dart';
 import '../repositories/catalog_repository.dart';
 
-class GetCategories implements UseCase<Motorcycle, NoParam> {
+class GetCategories implements UseCase<Iterable<Category>, NoParam> {
   late final CatalogRepository repository;
 
   GetCategories(this.repository);
 
   @override
-  Future<Either<Failure, Motorcycle>> call(NoParam _) async {
-    return await repository.getRandomNumberTrivia();
+  Future<Either<Failure, Iterable<Category>>> call(NoParam _) async {
+    return await repository.getCategories();
   }
 }
