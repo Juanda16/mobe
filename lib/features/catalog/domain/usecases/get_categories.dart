@@ -6,12 +6,13 @@ import '../entities/category/category.dart';
 import '../repositories/catalog_repository.dart';
 
 class GetCategories implements UseCase<Iterable<Category>, NoParam> {
-  late final CatalogRepository repository;
+  final CatalogRepository repository;
 
   GetCategories(this.repository);
 
   @override
   Future<Either<Failure, Iterable<Category>>> call(NoParam _) async {
+    print('calling use case ');
     return await repository.getCategories();
   }
 }

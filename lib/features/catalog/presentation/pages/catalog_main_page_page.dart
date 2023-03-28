@@ -1,6 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:mobe/core/usecases/usecase.dart';
+import 'package:mobe/features/catalog/domain/usecases/get_categories.dart';
 
+import '../../../../core/error/failures.dart';
 import '../../../../core/util/images.dart';
+import '../../../../injection_container.dart';
+import '../../domain/entities/category/category.dart';
 import '../widgets/loading_widget.dart';
 
 class CatalogMainPage extends StatelessWidget {
@@ -13,6 +19,7 @@ class CatalogMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GetCategories _getCategories = getIt.get<GetCategories>();
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -45,7 +52,7 @@ class CatalogMainPage extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(4),
-          child: buildBody(context),
+          child: buildBody(context, _getCategories),
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
@@ -60,21 +67,25 @@ class CatalogMainPage extends StatelessWidget {
     );
   }
 
-  Widget buildBody(BuildContext context) {
+  Widget buildBody(BuildContext context, GetCategories getCategories) {
     return RefreshIndicator(
       onRefresh: () {
         return Future.delayed(const Duration(seconds: 3));
       },
       child: FutureBuilder(
-        future: Future.any(
-            [_calculation, Future.delayed(const Duration(seconds: 3))]),
+        future: Future.any([
+          getCategories.call(NoParam.i),
+          Future.delayed(const Duration(seconds: 5))
+        ]),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
+            final Either<Failure, Iterable<Category>> categoriesEither =
+                snapshot.data;
+            Iterable<Category> categories =
+                categoriesEither.fold((l) => [], (r) => r);
             return GridView.builder(
-              // Create a grid with 2 columns. If you change the scrollDirection to
-              // horizontal, this produces 2 rows.
-              // crossAxisCount: 2,
-              // Generate 100 widgets that display their index in the List.
+              // Create a grid with 2 columns
+
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 // childAspectRatio: 3 / 2,
@@ -112,9 +123,10 @@ class CatalogMainPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Item $index',
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
+                                    '${categories.elementAt(index).name}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
                                   ),
                                   Text(
                                     'Item $index',

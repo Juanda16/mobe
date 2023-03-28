@@ -34,13 +34,22 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
+    print('uri>>> $uri');
     final response = await client.get(uri, headers: {
       'X-RapidAPI-Key': rapidAPIKey,
       'X-RapidAPI-Host': rapidAPIHost,
     });
+    final String preProcessResponse = '{"categories":${response.body}}';
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      try {
+        return json.decode(
+          preProcessResponse,
+        ) as Map<String, dynamic>;
+      } catch (e) {
+        print(e);
+        return {};
+      }
     } else {
       throw ServerException();
     }
@@ -49,8 +58,11 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   @override
   Future<Iterable<Category>> getCategories() async {
     final Map<String, dynamic> response = await _getResponseFromUrl('category');
-    Iterable<Category> categories =
-        (response as List).map((category) => Category.fromJson(category));
+
+    Iterable<Category> categories = (response['categories'] as List)
+        .map((category) => Category.fromJson(category));
+
+    print('categories>>> ${categories}');
     return categories;
   }
 

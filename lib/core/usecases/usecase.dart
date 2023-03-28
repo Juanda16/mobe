@@ -7,7 +7,10 @@ abstract class UseCase<Type, Params> {
 }
 
 class NoParam {
-  // Differing from the original implementation, since we can expect a null value,
-  // the Object becomes Object?
+  static const NoParam _instance = NoParam._();
 
+  /// Returns the only [NoParam] instance that can be created.
+  static NoParam get i => _instance;
+
+  const NoParam._();
 }
