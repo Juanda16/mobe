@@ -9,6 +9,9 @@ import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
 import '../models/number_trivia_model.dart';
 
+const String responseString =
+    '[{"id":2,"name":"Prototype-concept model"},{"id":3,"name":"Sport"},{"id":4,"name":"ATV"},{"id":5,"name":"Allround"},{"id":6,"name":"Scooter"},{"id":7,"name":"Naked bike"},{"id":8,"name":"Custom-cruiser"},{"id":9,"name":"Cross-motocross"},{"id":10,"name":"Super motard"},{"id":11,"name":"Minibike-sport"},{"id":12,"name":"Minibike-cross"},{"id":13,"name":"Classic"},{"id":14,"name":"Touring"},{"id":15,"name":"Enduro-offroad"},{"id":16,"name":"Trial"},{"id":18,"name":"Sport touring"},{"id":19,"name":"Speedway"}]';
+
 abstract class CatalogRemoteDataSource {
   /// Calls the http://numbersapi.com/{number} endpoint.
   ///
@@ -35,10 +38,13 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
     print('uri>>> $uri');
-    final response = await client.get(uri, headers: {
-      'X-RapidAPI-Key': rapidAPIKey,
-      'X-RapidAPI-Host': rapidAPIHost,
-    });
+    // final http.Response response = await client.get(uri, headers: {
+    //   'X-RapidAPI-Key': rapidAPIKey,
+    //   'X-RapidAPI-Host': rapidAPIHost,
+    // });
+
+    final http.Response response = http.Response(responseString, 200);
+
     final String preProcessResponse = '{"categories":${response.body}}';
 
     if (response.statusCode == 200) {
