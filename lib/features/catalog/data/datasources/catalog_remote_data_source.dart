@@ -8,7 +8,9 @@ import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
 import '../models/number_trivia_model.dart';
+import 'fake_makers_response.dart';
 
+const String logosUrl = "https://logo.clearbit.com/";
 const String responseString =
     '[{"id":2,"name":"Prototype-concept model"},{"id":3,"name":"Sport"},{"id":4,"name":"ATV"},{"id":5,"name":"Allround"},{"id":6,"name":"Scooter"},{"id":7,"name":"Naked bike"},{"id":8,"name":"Custom-cruiser"},{"id":9,"name":"Cross-motocross"},{"id":10,"name":"Super motard"},{"id":11,"name":"Minibike-sport"},{"id":12,"name":"Minibike-cross"},{"id":13,"name":"Classic"},{"id":14,"name":"Touring"},{"id":15,"name":"Enduro-offroad"},{"id":16,"name":"Trial"},{"id":18,"name":"Sport touring"},{"id":19,"name":"Speedway"}]';
 
@@ -37,25 +39,27 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
-    print('uri>>> $uri');
     // final http.Response response = await client.get(uri, headers: {
     //   'X-RapidAPI-Key': rapidAPIKey,
     //   'X-RapidAPI-Host': rapidAPIHost,
     // });
 
-    final http.Response response = http.Response(responseString, 200);
+    // final http.Response response = http.Response(responseString, 200);
+    // final String preProcessResponse = '{"categories":${response.body}}';
 
-    final String preProcessResponse = '{"categories":${response.body}}';
+    final http.Response response = http.Response(makersFakeResponseString, 200);
+    // final String preProcessResponse = '{"makers":${response.body}}';
 
     if (response.statusCode == 200) {
-      try {
-        return json.decode(
-          preProcessResponse,
-        ) as Map<String, dynamic>;
-      } catch (e) {
-        print(e);
-        return {};
-      }
+      return makersFakeResponse;
+      // try {
+      //   return json.decode(
+      //     preProcessResponse,
+      //   ) as Map<String, dynamic>;
+      // } catch (e) {
+      //   print(e);
+      //   return {};
+      // }
     } else {
       throw ServerException();
     }
@@ -74,9 +78,18 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Maker>> getMakers() async {
-    final Map<String, dynamic> response = await _getResponseFromUrl('make');
-    Iterable<Maker> makers =
-        (response as List).map((maker) => Maker.fromJson(maker));
+    Map<String, dynamic> response = await _getResponseFromUrl('make');
+
+    Iterable<Maker> makers = (response['makers'] as List<Map<String, String>>)
+        .map((Map<String, String> maker) {
+      final makerName =
+          (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
+      final makerUrl = "$logosUrl$makerName.com";
+      final modifiedMaker = {...maker, "logoUrl": makerUrl};
+
+      return Maker.fromJson(modifiedMaker);
+    });
+
     return makers;
   }
 }

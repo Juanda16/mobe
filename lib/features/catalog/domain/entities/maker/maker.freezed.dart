@@ -22,6 +22,7 @@ Maker _$MakerFromJson(Map<String, dynamic> json) {
 mixin _$Maker {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get logoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $MakerCopyWith<$Res> {
   factory $MakerCopyWith(Maker value, $Res Function(Maker) then) =
       _$MakerCopyWithImpl<$Res, Maker>;
   @useResult
-  $Res call({String id, String name});
+  $Res call({String id, String name, String? logoUrl});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? logoUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -61,6 +63,10 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      logoUrl: freezed == logoUrl
+          ? _value.logoUrl
+          : logoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$_MakerCopyWith<$Res> implements $MakerCopyWith<$Res> {
       __$$_MakerCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name});
+  $Res call({String id, String name, String? logoUrl});
 }
 
 /// @nodoc
@@ -85,6 +91,7 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? logoUrl = freezed,
   }) {
     return _then(_$_Maker(
       id: null == id
@@ -95,6 +102,10 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      logoUrl: freezed == logoUrl
+          ? _value.logoUrl
+          : logoUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -102,7 +113,7 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
 /// @nodoc
 @JsonSerializable()
 class _$_Maker implements _Maker {
-  const _$_Maker({required this.id, required this.name});
+  const _$_Maker({required this.id, required this.name, this.logoUrl});
 
   factory _$_Maker.fromJson(Map<String, dynamic> json) =>
       _$$_MakerFromJson(json);
@@ -111,10 +122,12 @@ class _$_Maker implements _Maker {
   final String id;
   @override
   final String name;
+  @override
+  final String? logoUrl;
 
   @override
   String toString() {
-    return 'Maker(id: $id, name: $name)';
+    return 'Maker(id: $id, name: $name, logoUrl: $logoUrl)';
   }
 
   @override
@@ -123,12 +136,13 @@ class _$_Maker implements _Maker {
         (other.runtimeType == runtimeType &&
             other is _$_Maker &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.logoUrl, logoUrl) || other.logoUrl == logoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, logoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -145,8 +159,10 @@ class _$_Maker implements _Maker {
 }
 
 abstract class _Maker implements Maker {
-  const factory _Maker({required final String id, required final String name}) =
-      _$_Maker;
+  const factory _Maker(
+      {required final String id,
+      required final String name,
+      final String? logoUrl}) = _$_Maker;
 
   factory _Maker.fromJson(Map<String, dynamic> json) = _$_Maker.fromJson;
 
@@ -154,6 +170,8 @@ abstract class _Maker implements Maker {
   String get id;
   @override
   String get name;
+  @override
+  String? get logoUrl;
   @override
   @JsonKey(ignore: true)
   _$$_MakerCopyWith<_$_Maker> get copyWith =>

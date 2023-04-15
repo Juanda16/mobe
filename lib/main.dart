@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'features/catalog/presentation/pages/catalog_main_page_page.dart';
+import 'features/catalog/presentation/pages/makers_main_page_page.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           secondary: Colors.blueAccent,
         ),
       ),
-      home: CatalogMainPage(),
+      home: MakersMainPage(),
     );
   }
 }

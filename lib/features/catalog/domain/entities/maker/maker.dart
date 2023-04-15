@@ -9,6 +9,7 @@ class Maker with _$Maker {
   const factory Maker({
     required String id,
     required String name,
+    String? logoUrl,
   }) = _Maker;
 
   factory Maker.fromJson(Map<String, dynamic> json) => _$MakerFromJson(json);
