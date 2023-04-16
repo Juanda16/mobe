@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 //
-// import '../../domain/entities/motorcyvle.dart';
+// import '../../domain/entities/motorcycle.dart';
 //
 // class TriviaDisplay extends StatelessWidget {
 //   final Motorcycle numberTrivia;

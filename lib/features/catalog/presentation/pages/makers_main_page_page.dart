@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
 import 'package:mobe/core/usecases/usecase.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
+import 'package:mobe/features/catalog/presentation/pages/motorcycles_by_maker_page.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/util/images.dart';
@@ -161,7 +162,12 @@ class _MakersMainPageState extends State<MakersMainPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SettingsPage()),
+                            builder: (context) => MotorcyclesByMakerPage(
+                            maker: {
+                              "id": _searchList.elementAt(index).id,
+                              "name": _searchList.elementAt(index).name,
+                            }
+                            )),
                       );
                     },
                     child: Column(

@@ -26,6 +26,8 @@ Future<void> init() async {
   // getIt.registerLazySingleton(() => GetMotorcycleById(getIt()));
   getIt.registerLazySingleton(() => GetCategories(getIt()));
   getIt.registerLazySingleton(() => GetMakers(getIt()));
+  getIt.registerLazySingleton<GetMotorcycleByMaker>(
+      () => GetMotorcycleByMaker(getIt()));
 
   // Repository
   getIt.registerLazySingleton<CatalogRepository>(

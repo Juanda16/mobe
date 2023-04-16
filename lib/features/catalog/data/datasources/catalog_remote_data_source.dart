@@ -2,13 +2,17 @@
 
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobe/core/error/failures.dart';
+import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
 import '../models/number_trivia_model.dart';
 import 'fake_makers_response.dart';
+import 'fake_motorcycles_name_response.dart';
 
 const String logosUrl = "https://logo.clearbit.com/";
 const String responseString =
@@ -24,6 +28,8 @@ abstract class CatalogRemoteDataSource {
   ///
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Maker>> getMakers();
+
+  Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id);
 }
 
 class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
@@ -63,6 +69,7 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
     } else {
       throw ServerException();
     }
+
   }
 
   @override
@@ -91,5 +98,20 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
     });
 
     return makers;
+  }
+
+  @override
+  Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id) async {
+
+    final http.Response response2 = http.Response(motorcycleNameFakeResponseString, 200);
+    final Map<String, dynamic> response =
+    //     await _getResponseFromUrl('model/make-id/$id');
+    motorcycleNameFakeResponse;
+
+    Iterable<MotorcycleName> motorcycleName =
+        (response['motorcycles_names'] as List)
+            .map((motorcycle) => MotorcycleName.fromJson(motorcycle));
+
+    return motorcycleName;
   }
 }

@@ -2,7 +2,7 @@
 //
 // import '../../../../core/error/failures.dart';
 // import '../../../../core/usecases/usecase.dart';
-// import '../entities/motorcyvle.dart';
+// import '../entities/motorcycle.dart';
 // import '../repositories/catalog_repository.dart';
 //
 // class GetMotorcycleById implements UseCase<Motorcycle, Params> {
