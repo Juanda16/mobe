@@ -36,7 +36,6 @@ Widget buildBody(
         if (snapshot.hasData) {
           final Either<Failure, Iterable<MotorcycleName>> motorcyclesEither =
               snapshot.data;
-
           motorcyclesNames = motorcyclesEither.fold(
               (l) => throw Exception('Error getting motorcycles'),
               (r) => r.toList());
@@ -47,7 +46,7 @@ Widget buildBody(
               final motorcycle = motorcyclesNames[index];
               return ListTile(
                 title: Text(motorcycle.name),
-                subtitle: Text(motorcycle.id),
+                subtitle: Text(motorcycle.id.toString()),
                 onTap: () {
                   Navigator.push(
                     context,

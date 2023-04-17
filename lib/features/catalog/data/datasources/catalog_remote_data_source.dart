@@ -38,57 +38,46 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   static const String baseUrl =
       "https://motorcycle-specs-database.p.rapidapi.com";
   static const String rapidAPIKey =
-      '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
+      // '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
+      '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
+
   static const String rapidAPIHost = 'motorcycle-specs-database.p.rapidapi.com';
 
   CatalogRemoteDataSourceImpl({required this.client});
 
-  Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
+  Future<List<dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
-    // final http.Response response = await client.get(uri, headers: {
-    //   'X-RapidAPI-Key': rapidAPIKey,
-    //   'X-RapidAPI-Host': rapidAPIHost,
-    // });
+    final http.Response response = await client.get(uri, headers: {
+      'X-RapidAPI-Key': rapidAPIKey,
+      'X-RapidAPI-Host': rapidAPIHost,
+    });
 
-    // final http.Response response = http.Response(responseString, 200);
-    // final String preProcessResponse = '{"categories":${response.body}}';
-
-    final http.Response response = http.Response(makersFakeResponseString, 200);
-    // final String preProcessResponse = '{"makers":${response.body}}';
-
+    print(response.body);
     if (response.statusCode == 200) {
-      return makersFakeResponse;
-      // try {
-      //   return json.decode(
-      //     preProcessResponse,
-      //   ) as Map<String, dynamic>;
-      // } catch (e) {
-      //   print(e);
-      //   return {};
-      // }
+      return json.decode(response.body);
     } else {
       throw ServerException();
     }
-
   }
 
   @override
   Future<Iterable<Category>> getCategories() async {
-    final Map<String, dynamic> response = await _getResponseFromUrl('category');
+    final Map<String, dynamic> response =
+        (await _getResponseFromUrl('category')) as Map<String, dynamic>;
+    // makersFakeResponse;
+    Iterable<Category> categories =
+        (response as List).map((category) => Category.fromJson(category));
 
-    Iterable<Category> categories = (response['categories'] as List)
-        .map((category) => Category.fromJson(category));
-
-    print('categories>>> ${categories}');
     return categories;
   }
 
   @override
   Future<Iterable<Maker>> getMakers() async {
-    Map<String, dynamic> response = await _getResponseFromUrl('make');
+    final response =
+        // await _getResponseFromUrl('make');
+        makersFakeResponse;
 
-    Iterable<Maker> makers = (response['makers'] as List<Map<String, String>>)
-        .map((Map<String, String> maker) {
+    Iterable<Maker> makers = (response).map((Map<String, String> maker) {
       final makerName =
           (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
       final makerUrl = "$logosUrl$makerName.com";
@@ -102,16 +91,13 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id) async {
+    final response =
+        // await _getResponseFromUrl('model/make-id/$id');
+         motorcycleNameFakeResponse;
 
-    final http.Response response2 = http.Response(motorcycleNameFakeResponseString, 200);
-    final Map<String, dynamic> response =
-    //     await _getResponseFromUrl('model/make-id/$id');
-    motorcycleNameFakeResponse;
-
+    //change repsonse id to type int
     Iterable<MotorcycleName> motorcycleName =
-        (response['motorcycles_names'] as List)
-            .map((motorcycle) => MotorcycleName.fromJson(motorcycle));
-
+        (response).map((motorcycle) => MotorcycleName.fromJson(motorcycle));
     return motorcycleName;
   }
 }
