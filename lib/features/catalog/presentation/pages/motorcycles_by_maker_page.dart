@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobe/core/error/failures.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
-import '../../../../core/usecases/usecase.dart';
 import '../../../../injection_container.dart';
-import '../../domain/entities/motorcycle_name/motorcycle_name.dart';
 import '../../domain/usecases/get_motorcycles_by_maker.dart';
 import '../widgets/loading_widget.dart';
 
@@ -39,7 +35,6 @@ Widget buildBody(
         if (snapshot.hasData) {
           final Either<Failure, Iterable<MotorcycleName>> motorcyclesEither =
               snapshot.data;
-
           motorcyclesNames = motorcyclesEither.fold(
               (l) => throw Exception('Error getting motorcycles'),
               (r) => r.toList());
@@ -50,7 +45,7 @@ Widget buildBody(
               final motorcycle = motorcyclesNames[index];
               return ListTile(
                 title: Text(motorcycle.name),
-                subtitle: Text(motorcycle.id),
+                subtitle: Text(motorcycle.id.toString()),
                 onTap: () {
                   Navigator.push(
                     context,
