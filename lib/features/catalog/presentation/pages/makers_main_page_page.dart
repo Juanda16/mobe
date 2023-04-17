@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
 import 'package:mobe/core/usecases/usecase.dart';
-import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
-import 'package:mobe/features/catalog/presentation/pages/motorcycles_by_maker_page.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/util/images.dart';
@@ -10,10 +8,11 @@ import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/maker/maker.dart';
 import '../../domain/usecases/get_makers.dart';
+import '../widgets/grid_builder_widget.dart';
 import '../widgets/loading_widget.dart';
 
 class MakersMainPage extends StatefulWidget {
-  MakersMainPage({Key? key}) : super(key: key);
+  const MakersMainPage({Key? key}) : super(key: key);
 
   @override
   State<MakersMainPage> createState() => _MakersMainPageState();
@@ -30,11 +29,6 @@ class _MakersMainPageState extends State<MakersMainPage> {
     Icons.search,
     color: Colors.lightBlue,
   );
-
-  // Widget appBarWidget = const Text(
-  //   "Search Demo",
-  //   style: TextStyle(color: Colors.white),
-  // );
 
   Widget appBarWidget = Image.asset(
     Images.mobeLogoPath,
@@ -76,8 +70,6 @@ class _MakersMainPageState extends State<MakersMainPage> {
           .where((maker) =>
               maker.name.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
-      print('${_searchList.length}');
-      print('${_searchList}');
 
       return _searchList;
     }
@@ -143,119 +135,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
 
             makers = makersEither.fold((l) => [], (r) => r.toList());
 
-            return GridView.builder(
-              // Create a grid with 2 columns
-              itemCount: _searchList.length,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                // childAspectRatio: 3 / 2,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              itemBuilder: ((BuildContext ctx, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)),
-                  elevation: 5,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MotorcyclesByMakerPage(
-                            maker: {
-                              "id": _searchList.elementAt(index).id,
-                              "name": _searchList.elementAt(index).name,
-                            }
-                            )),
-                      );
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Images.getUrlLogo(
-                                logoUrl: _searchList.elementAt(index).logoUrl),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _searchList.elementAt(index).name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        '  ${_searchList.elementAt(index).id}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 50,
-                                  height: 30,
-                                  color: Colors.blue,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.white,
-                                          size: 16,
-                                        ),
-                                        Text(
-                                          '3,9',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-                // return Center(
-                //   child: Text(
-                //     'Item $index',
-                //     style: Theme.of(context).textTheme.headlineSmall,
-                //   ),
-                // );
-              }),
-            );
+            return GridBuilderWidget(searchList: _searchList);
           } else {
             return const Center(child: LoadingWidget());
           }

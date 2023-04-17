@@ -1,19 +1,16 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobe/core/error/failures.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
-import '../../../../core/usecases/usecase.dart';
 import '../../../../injection_container.dart';
-import '../../domain/entities/motorcycle_name/motorcycle_name.dart';
+import '../../domain/entities/maker/maker.dart';
 import '../../domain/usecases/get_motorcycles_by_maker.dart';
 import '../widgets/loading_widget.dart';
 
 class MotorcyclesByMakerPage extends StatelessWidget {
-  final Map<String, String> maker;
+  final Maker maker;
 
   const MotorcyclesByMakerPage({Key? key, required this.maker})
       : super(key: key);
@@ -23,9 +20,9 @@ class MotorcyclesByMakerPage extends StatelessWidget {
     GetMotorcycleByMaker _getMotorcycles = getIt.get<GetMotorcycleByMaker>();
     return Scaffold(
         appBar: AppBar(
-          title: Text(maker['name']!),
+          title: Text(maker.name),
         ),
-        body: buildBody(context, _getMotorcycles, int.parse(maker['id']!)));
+        body: buildBody(context, _getMotorcycles, int.parse(maker.id)));
   }
 }
 

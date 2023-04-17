@@ -9,7 +9,7 @@ class GetMotorcycleByMaker
     implements UseCase<Iterable<MotorcycleName>, Params> {
   // Since we're gonna initialize the variable later,
   // the null safety requires a late.
-  late final CatalogRepository repository;
+  final CatalogRepository repository;
 
   GetMotorcycleByMaker(this.repository);
 
