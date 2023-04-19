@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobe/features/catalog/domain/entities/maker/maker.dart';
+import 'package:mobe/features/catalog/domain/entities/motorcycle/motorcycle.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
@@ -57,9 +58,23 @@ class CatalogRepositoryImpl implements CatalogRepository {
   }
 
   @override
-  Future<Either<Failure, Iterable<MotorcycleName>>> getMotorcyclesByMaker(int id) {
+  Future<Either<Failure, Iterable<MotorcycleName>>> getMotorcyclesByMaker(
+      int id) {
     return _getRequest<Iterable<MotorcycleName>>(() {
       return remoteDataSource.getMotorcyclesByMaker(id);
     });
+  }
+
+  @override
+  Future<Either<Failure, Motorcycle>> getMotorcycleById(int id) {
+    return _getRequest<Motorcycle>(() {
+      return remoteDataSource.getMotorcycleById(id);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Iterable<Motorcycle>>> getMotorcyclesById(int id) {
+    // TODO: implement getMotorcyclesById
+    throw UnimplementedError();
   }
 }

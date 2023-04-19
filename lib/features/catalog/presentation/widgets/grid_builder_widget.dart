@@ -30,11 +30,14 @@ class GridBuilderWidget extends StatelessWidget {
           elevation: 5,
           child: InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MotorcyclesByMakerPage(
-                        maker: _searchList.elementAt(index))),
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => MotorcyclesByMakerPage(
+              //           maker: _searchList.elementAt(index))),
+              // );
+              Navigator.of(context).push(
+                buildPageRouteBuilder(index),
               );
             },
             child: Column(
@@ -116,5 +119,27 @@ class GridBuilderWidget extends StatelessWidget {
         // );
       }),
     );
+  }
+
+  PageRouteBuilder<dynamic> buildPageRouteBuilder(int index) {
+    return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MotorcyclesByMakerPage(maker: _searchList.elementAt(index)),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.linear;
+
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        });
   }
 }

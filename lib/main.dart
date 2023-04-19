@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           secondary: Colors.blueAccent,
         ),
       ),
-      home: MakersMainPage(),
+      home: const MakersMainPage(),
     );
   }
 }

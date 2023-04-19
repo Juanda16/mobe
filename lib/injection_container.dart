@@ -7,6 +7,7 @@ import 'core/util/input_converter.dart';
 import 'features/catalog/data/datasources/catalog_remote_data_source.dart';
 import 'features/catalog/data/repositories/catalog_repository_impl.dart';
 import 'features/catalog/domain/domain.dart';
+import 'features/catalog/domain/usecases/get_motorcycle_by_id.dart';
 
 final getIt = GetIt.instance;
 
@@ -26,6 +27,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => GetCategories(getIt()));
   getIt.registerLazySingleton(() => GetMakers(getIt()));
   getIt.registerLazySingleton(() => GetMotorcycleByMaker(getIt()));
+  getIt.registerLazySingleton(() => GetMotorcycleById(getIt()));
 
   // Repository
   getIt.registerLazySingleton<CatalogRepository>(

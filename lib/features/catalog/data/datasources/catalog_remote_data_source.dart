@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobe/core/error/failures.dart';
+import 'package:mobe/features/catalog/domain/entities/motorcycle/motorcycle.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
-import '../models/number_trivia_model.dart';
 import 'fake_makers_response.dart';
+import 'fake_motorcycle_response.dart';
 import 'fake_motorcycles_name_response.dart';
 
 const String logosUrl = "https://logo.clearbit.com/";
@@ -19,17 +20,21 @@ const String responseString =
     '[{"id":2,"name":"Prototype-concept model"},{"id":3,"name":"Sport"},{"id":4,"name":"ATV"},{"id":5,"name":"Allround"},{"id":6,"name":"Scooter"},{"id":7,"name":"Naked bike"},{"id":8,"name":"Custom-cruiser"},{"id":9,"name":"Cross-motocross"},{"id":10,"name":"Super motard"},{"id":11,"name":"Minibike-sport"},{"id":12,"name":"Minibike-cross"},{"id":13,"name":"Classic"},{"id":14,"name":"Touring"},{"id":15,"name":"Enduro-offroad"},{"id":16,"name":"Trial"},{"id":18,"name":"Sport touring"},{"id":19,"name":"Speedway"}]';
 
 abstract class CatalogRemoteDataSource {
-  /// Calls the http://numbersapi.com/{number} endpoint.
+  /// Calls them endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Category>> getCategories();
 
-  /// Calls the http://numbersapi.com/random endpoint.
+  /// Calls the endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Maker>> getMakers();
 
   Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id);
+
+  Future<Iterable<MotorcycleName>> getMotorcyclesById(int id);
+
+  Future<Motorcycle> getMotorcycleById(int id);
 }
 
 class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
@@ -93,11 +98,28 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id) async {
     final response =
         // await _getResponseFromUrl('model/make-id/$id');
-         motorcycleNameFakeResponse;
+        motorcycleNameFakeResponse;
 
     //change repsonse id to type int
     Iterable<MotorcycleName> motorcycleName =
         (response).map((motorcycle) => MotorcycleName.fromJson(motorcycle));
     return motorcycleName;
+  }
+
+  @override
+  Future<Iterable<MotorcycleName>> getMotorcyclesById(int id) {
+    // TODO: implement getMotorcyclesById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Motorcycle> getMotorcycleById(int id) async {
+    final response =
+        // await _getResponseFromUrl('model/make-id/$id');
+        motorcycleFakeResponse;
+
+    Motorcycle motorcycle = Motorcycle.fromJson(response);
+
+    return motorcycle;
   }
 }

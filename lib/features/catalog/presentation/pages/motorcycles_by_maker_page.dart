@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobe/core/error/failures.dart';
-import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
-import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
 import '../../../../injection_container.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/motorcycle_name/motorcycle_name.dart';
 import '../../domain/usecases/get_motorcycles_by_maker.dart';
 import '../widgets/loading_widget.dart';
+import 'motorcycle_detail_page.dart';
 
 class MotorcyclesByMakerPage extends StatelessWidget {
   final Maker maker;
@@ -18,6 +18,7 @@ class MotorcyclesByMakerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetMotorcycleByMaker _getMotorcycles = getIt.get<GetMotorcycleByMaker>();
+
     return Scaffold(
         appBar: AppBar(
           title: Text(maker.name),
@@ -48,9 +49,13 @@ Widget buildBody(
                 title: Text(motorcycle.name),
                 subtitle: Text(motorcycle.id.toString()),
                 onTap: () {
+                  print(' tap>>> ${motorcycle.id}');
+
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage()
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MotorcycleDetailPage(motorcycleId: index)
                         //     MotorcycleDetailPage(
                         //   motorcycle: motorcycle,
                         // ),
