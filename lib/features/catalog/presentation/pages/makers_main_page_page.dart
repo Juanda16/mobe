@@ -19,6 +19,7 @@ class MakersMainPage extends StatefulWidget {
 }
 
 class _MakersMainPageState extends State<MakersMainPage> {
+  GetMakers _getMakers = getIt.get<GetMakers>();
   final TextEditingController _searchQuery = TextEditingController();
   List<Maker> makers = [];
   late List<Maker> _searchList;
@@ -42,7 +43,11 @@ class _MakersMainPageState extends State<MakersMainPage> {
     init();
   }
 
-  void init() {
+  Future<void> init() async {
+    final Either<Failure, Iterable<Maker>> makersEither =
+        await _getMakers.call(NoParam.i);
+
+    makers = makersEither.fold((l) => [], (r) => r.toList());
     _searchList = makers;
 
     _searchQuery.addListener(() {
@@ -77,8 +82,6 @@ class _MakersMainPageState extends State<MakersMainPage> {
 
   @override
   Widget build(BuildContext context) {
-    GetMakers _getMakers = getIt.get<GetMakers>();
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildBar(context),
@@ -120,15 +123,14 @@ class _MakersMainPageState extends State<MakersMainPage> {
       semanticsValue: "456",
       onRefresh: () {
         loaderOn(context);
+        getMakers
+            .call(NoParam.i)
+            .then((value) => _searchQuery.notifyListeners());
         return Future.delayed(const Duration(seconds: 3))
             .then((value) => Navigator.pop(context));
       },
       child: FutureBuilder(
-        future: Future.any([
-          getMakers.call(NoParam.i),
-          Future.delayed(const Duration(seconds: 3))
-              .then((value) => _searchQuery.notifyListeners())
-        ]),
+        future: getMakers.call(NoParam.i),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             final Either<Failure, Iterable<Maker>> makersEither = snapshot.data;
