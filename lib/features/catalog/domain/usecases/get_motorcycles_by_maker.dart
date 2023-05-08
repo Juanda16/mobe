@@ -1,12 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../entities/motorcycle/motorcycle.dart';
 import '../repositories/catalog_repository.dart';
 
-class GetMotorcycleByMaker
-    implements UseCase<Iterable<MotorcycleName>, Params> {
+class GetMotorcycleByMaker implements UseCase<Iterable<Motorcycle>, Params> {
   // Since we're gonna initialize the variable later,
   // the null safety requires a late.
   final CatalogRepository repository;
@@ -14,7 +13,7 @@ class GetMotorcycleByMaker
   GetMotorcycleByMaker(this.repository);
 
   @override
-  Future<Either<Failure, Iterable<MotorcycleName>>> call(Params params) async {
+  Future<Either<Failure, Iterable<Motorcycle>>> call(Params params) async {
     return await repository.getMotorcyclesByMaker(params.id);
   }
 }

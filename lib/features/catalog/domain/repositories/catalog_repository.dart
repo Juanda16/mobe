@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/category/category.dart';
@@ -11,8 +10,7 @@ abstract class CatalogRepository {
 
   Future<Either<Failure, Iterable<Maker>>> getMakers();
 
-  Future<Either<Failure, Iterable<MotorcycleName>>> getMotorcyclesByMaker(
-      int id);
+  Future<Either<Failure, Iterable<Motorcycle>>> getMotorcyclesByMaker(int id);
 
   Future<Either<Failure, Iterable<Motorcycle>>> getMotorcyclesById(int id);
 

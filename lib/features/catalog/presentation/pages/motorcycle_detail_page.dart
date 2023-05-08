@@ -1,64 +1,70 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../injection_container.dart';
+import '../../../../core/util/images.dart';
 import '../../domain/entities/motorcycle/motorcycle.dart';
-import '../../domain/usecases/get_motorcycle_by_id.dart';
-import '../widgets/loading_widget.dart';
 
 class MotorcycleDetailPage extends StatelessWidget {
-  final int motorcycleId;
+  final Motorcycle motorcycle;
 
-  GetMotorcycleById _getMotorcycle = getIt.get<GetMotorcycleById>();
-
-  MotorcycleDetailPage({required this.motorcycleId});
+  const MotorcycleDetailPage({
+    super.key,
+    required this.motorcycle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('maker.name'),
+        title: Text(motorcycle.name),
       ),
-      body: FutureBuilder(
-        future: Future.any(
-            [_getMotorcycle.call(GetMotorcycleByIdParam(id: motorcycleId))]),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            final Either<Failure, Motorcycle> motorcycleEither = snapshot.data;
-            final Motorcycle motorcycle = motorcycleEither.fold(
-                (l) => throw Exception('Error getting motorcycles'), (r) => r);
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '${motorcycle.articleCompleteInfo.makeName} ${motorcycle.articleCompleteInfo.modelName} ${motorcycle.articleCompleteInfo.yearName}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text('Type: ${motorcycle.articleCompleteInfo.categoryName}'),
-                  Text('Maker: ${motorcycle.articleCompleteInfo.makeName}'),
-                  Text('Model: ${motorcycle.articleCompleteInfo.modelName}'),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('Close'),
-                  ),
-                ],
+      body: Stack(children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            image: DecorationImage(
+              alignment: Alignment.bottomCenter,
+              image: AssetImage(Images.backgroundImage),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${motorcycle.name} ${motorcycle.year}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            );
-          } else {
-            return const Center(child: LoadingWidget());
-          }
-        },
-      ),
+              const SizedBox(height: 16),
+              Center(
+                child: FadeInImage.assetNetwork(
+                  placeholder: Images.loaderIcon,
+
+                  placeholderScale: 0.1,
+                  // placeholder: Images.defaultIcon,
+                  image: motorcycle.image ?? Images.defaultUrlMotorcycleIcon,
+                ),
+              ),
+              // Images.getUrlLogo(logoUrl: motorcycle.image),
+              Text('Type: ${motorcycle.name}'),
+              Text('Maker: ${motorcycle.brandId}'),
+              Text('Model: ${motorcycle.year}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

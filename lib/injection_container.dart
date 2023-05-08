@@ -5,6 +5,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'core/network/network_info.dart';
 import 'core/util/input_converter.dart';
 import 'features/catalog/data/datasources/catalog_remote_data_source.dart';
+import 'features/catalog/data/datasources/catalog_remote_data_source2.dart';
 import 'features/catalog/data/repositories/catalog_repository_impl.dart';
 import 'features/catalog/domain/domain.dart';
 import 'features/catalog/domain/usecases/get_motorcycle_by_id.dart';
@@ -40,7 +41,7 @@ Future<void> init() async {
 
   // Data sources
   getIt.registerLazySingleton<CatalogRemoteDataSource>(
-    () => CatalogRemoteDataSourceImpl(client: getIt()),
+    () => CatalogRemoteDataSourceImpl2(client: getIt()),
   );
 
   // getIt.registerLazySingleton<CatalogLocalDataSource>(

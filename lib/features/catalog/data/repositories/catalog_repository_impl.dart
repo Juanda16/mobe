@@ -6,7 +6,6 @@ import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/category/category.dart';
-import '../../domain/entities/motorcycle_name/motorcycle_name.dart';
 import '../../domain/repositories/catalog_repository.dart';
 import '../datasources/catalog_remote_data_source.dart';
 
@@ -58,9 +57,8 @@ class CatalogRepositoryImpl implements CatalogRepository {
   }
 
   @override
-  Future<Either<Failure, Iterable<MotorcycleName>>> getMotorcyclesByMaker(
-      int id) {
-    return _getRequest<Iterable<MotorcycleName>>(() {
+  Future<Either<Failure, Iterable<Motorcycle>>> getMotorcyclesByMaker(int id) {
+    return _getRequest<Iterable<Motorcycle>>(() {
       return remoteDataSource.getMotorcyclesByMaker(id);
     });
   }
