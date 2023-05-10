@@ -92,7 +92,10 @@ class GridBuilderWidget extends StatelessWidget {
                                     size: 16,
                                   ),
                                   Text(
-                                    '3,9',
+                                    _searchList
+                                        .elementAt(index)
+                                        .qualification
+                                        .toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!
