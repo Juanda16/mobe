@@ -40,6 +40,7 @@ Widget buildBody(
           image: DecorationImage(
             alignment: Alignment.bottomCenter,
             image: AssetImage(Images.backgroundImage),
+
             fit: BoxFit.cover,
           ),
         ),
