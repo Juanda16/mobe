@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mobe/core/usecases/usecase.dart';
 
 import '../../../../core/error/failures.dart';
@@ -22,7 +23,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
   GetMakers _getMakers = getIt.get<GetMakers>();
   final TextEditingController _searchQuery = TextEditingController();
   List<Maker> makers = [];
-  late List<Maker> _searchList;
+  List<Maker> _searchList = [];
   late bool _IsSearching;
   String _searchText = "";
 
@@ -36,9 +37,9 @@ class _MakersMainPageState extends State<MakersMainPage> {
   );
 
   @override
-  @override
   void initState() {
     super.initState();
+    Geolocator.requestPermission();
     _IsSearching = false;
     init();
   }

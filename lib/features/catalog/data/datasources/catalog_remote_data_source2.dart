@@ -44,7 +44,7 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
       'Authorization': authToken,
     });
 
-    log('response>>>: ${response.body}');
+    // log('response>>>: ${response.body}');
     final String preProcessResponse = '{"$url":${response.body}}';
     // final http.Response response = http.Response(makersFakeResponseString, 200);
 
@@ -57,8 +57,6 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
         print(e);
         return {};
       }
-
-      return json.decode(response.body);
     } else {
       throw ServerException();
     }
