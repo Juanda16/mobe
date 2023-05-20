@@ -55,7 +55,8 @@ Widget buildBody(
                   (l) => throw Exception('Error getting motorcycles'),
                   (r) => r.toList());
 
-              return ListView.builder(
+
+              /*             return ListView.builder(
                 itemCount: motorcyclesNames.length,
                 itemBuilder: (BuildContext context, int index) {
                   final motorcycle = motorcyclesNames[index];
@@ -79,7 +80,41 @@ Widget buildBody(
                     },
                   );
                 },
+              );*/
+
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemCount: motorcyclesNames.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final motorcycle = motorcyclesNames[index];
+                  return Card(
+                    child: Column(
+                      children: [
+                        Expanded(
+
+                          child:  Image.asset(
+                          Images.mobeLogoPath,
+                          fit: BoxFit.cover,
+                          ),
+                          ),
+
+                        const SizedBox(height: 8),
+                        Text(motorcycle.name,
+
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  );
+                },
               );
+
             } else {
               return const Center(child: LoadingWidget());
             }
