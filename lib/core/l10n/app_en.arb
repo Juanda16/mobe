@@ -1,0 +1,45 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "darkMode": "Dark Mode",
+    "@darkMode": {
+        "description": "A setting that allows the user to switch to a dark color scheme"
+    },
+    "lightMode": "Light Mode",
+    "@lightMode": {
+        "description": "A setting that allows the user to switch to a light color scheme"
+    },
+
+    "settings": "Settings",
+    "@settings": {
+        "description": "A button that allows the user to change the settings of the app"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "A setting that allows the user to change the language of the app"
+    },
+    "name": "Name",
+    "catalog":"Catalog",
+    "contact":"Contact",
+    "searchHere":"Search Here",
+    "type":"Type",
+    "engine":"Engine",
+    "price":"Price",
+    "manufacturer":"Manufacturer",
+    "maker":"Maker",
+    "model":"Model",
+    "year":"Year",
+    "color":"Color",
+    "fuel":"Fuel",
+    "close":"Close",
+    "stores":"Stores",
+    "go":"Go",
+    "interested":"I'm interested",
+    "email":"Email",
+    "phoneNumber":"Phone Number",
+    "message":"Message",
+    "send":"Send"
+
+}

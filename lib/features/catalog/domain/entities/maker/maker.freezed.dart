@@ -20,9 +20,11 @@ Maker _$MakerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Maker {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get logoUrl => throw _privateConstructorUsedError;
+  num? get qualification => throw _privateConstructorUsedError;
+  int? get vendor_id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +36,12 @@ abstract class $MakerCopyWith<$Res> {
   factory $MakerCopyWith(Maker value, $Res Function(Maker) then) =
       _$MakerCopyWithImpl<$Res, Maker>;
   @useResult
-  $Res call({String id, String name, String? logoUrl});
+  $Res call(
+      {int id,
+      String name,
+      String? logoUrl,
+      num? qualification,
+      int? vendor_id});
 }
 
 /// @nodoc
@@ -53,12 +60,14 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
     Object? id = null,
     Object? name = null,
     Object? logoUrl = freezed,
+    Object? qualification = freezed,
+    Object? vendor_id = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -67,6 +76,14 @@ class _$MakerCopyWithImpl<$Res, $Val extends Maker>
           ? _value.logoUrl
           : logoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      qualification: freezed == qualification
+          ? _value.qualification
+          : qualification // ignore: cast_nullable_to_non_nullable
+              as num?,
+      vendor_id: freezed == vendor_id
+          ? _value.vendor_id
+          : vendor_id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -77,7 +94,12 @@ abstract class _$$_MakerCopyWith<$Res> implements $MakerCopyWith<$Res> {
       __$$_MakerCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String? logoUrl});
+  $Res call(
+      {int id,
+      String name,
+      String? logoUrl,
+      num? qualification,
+      int? vendor_id});
 }
 
 /// @nodoc
@@ -92,12 +114,14 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
     Object? id = null,
     Object? name = null,
     Object? logoUrl = freezed,
+    Object? qualification = freezed,
+    Object? vendor_id = freezed,
   }) {
     return _then(_$_Maker(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -106,6 +130,14 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
           ? _value.logoUrl
           : logoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      qualification: freezed == qualification
+          ? _value.qualification
+          : qualification // ignore: cast_nullable_to_non_nullable
+              as num?,
+      vendor_id: freezed == vendor_id
+          ? _value.vendor_id
+          : vendor_id // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -113,21 +145,30 @@ class __$$_MakerCopyWithImpl<$Res> extends _$MakerCopyWithImpl<$Res, _$_Maker>
 /// @nodoc
 @JsonSerializable()
 class _$_Maker implements _Maker {
-  const _$_Maker({required this.id, required this.name, this.logoUrl});
+  const _$_Maker(
+      {required this.id,
+      required this.name,
+      this.logoUrl,
+      this.qualification,
+      this.vendor_id});
 
   factory _$_Maker.fromJson(Map<String, dynamic> json) =>
       _$$_MakerFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
   @override
   final String? logoUrl;
+  @override
+  final num? qualification;
+  @override
+  final int? vendor_id;
 
   @override
   String toString() {
-    return 'Maker(id: $id, name: $name, logoUrl: $logoUrl)';
+    return 'Maker(id: $id, name: $name, logoUrl: $logoUrl, qualification: $qualification, vendor_id: $vendor_id)';
   }
 
   @override
@@ -137,12 +178,17 @@ class _$_Maker implements _Maker {
             other is _$_Maker &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.logoUrl, logoUrl) || other.logoUrl == logoUrl));
+            (identical(other.logoUrl, logoUrl) || other.logoUrl == logoUrl) &&
+            (identical(other.qualification, qualification) ||
+                other.qualification == qualification) &&
+            (identical(other.vendor_id, vendor_id) ||
+                other.vendor_id == vendor_id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, logoUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, logoUrl, qualification, vendor_id);
 
   @JsonKey(ignore: true)
   @override
@@ -160,18 +206,24 @@ class _$_Maker implements _Maker {
 
 abstract class _Maker implements Maker {
   const factory _Maker(
-      {required final String id,
+      {required final int id,
       required final String name,
-      final String? logoUrl}) = _$_Maker;
+      final String? logoUrl,
+      final num? qualification,
+      final int? vendor_id}) = _$_Maker;
 
   factory _Maker.fromJson(Map<String, dynamic> json) = _$_Maker.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
   String? get logoUrl;
+  @override
+  num? get qualification;
+  @override
+  int? get vendor_id;
   @override
   @JsonKey(ignore: true)
   _$$_MakerCopyWith<_$_Maker> get copyWith =>

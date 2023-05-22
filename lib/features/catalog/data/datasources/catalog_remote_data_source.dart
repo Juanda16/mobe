@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +31,7 @@ abstract class CatalogRemoteDataSource {
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Maker>> getMakers();
 
-  Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id);
+  Future<Iterable<Motorcycle>> getMotorcyclesByMaker(int id);
 
   Future<Iterable<MotorcycleName>> getMotorcyclesById(int id);
 
@@ -43,22 +44,34 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   static const String baseUrl =
       "https://motorcycle-specs-database.p.rapidapi.com";
   static const String rapidAPIKey =
-      // '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
-      '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
+      '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
+
+  // '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
 
   static const String rapidAPIHost = 'motorcycle-specs-database.p.rapidapi.com';
 
   CatalogRemoteDataSourceImpl({required this.client});
 
-  Future<List<dynamic>> _getResponseFromUrl(String url) async {
+  Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
     var uri = Uri.parse('$baseUrl/$url');
     final http.Response response = await client.get(uri, headers: {
       'X-RapidAPI-Key': rapidAPIKey,
       'X-RapidAPI-Host': rapidAPIHost,
     });
 
-    print(response.body);
+    final String preProcessResponse = '{"$url":${response.body}}';
+    // final http.Response response = http.Response(makersFakeResponseString, 200);
+
     if (response.statusCode == 200) {
+      try {
+        return json.decode(
+          preProcessResponse,
+        ) as Map<String, dynamic>;
+      } catch (e) {
+        print(e);
+        return {};
+      }
+
       return json.decode(response.body);
     } else {
       throw ServerException();
@@ -68,8 +81,8 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   @override
   Future<Iterable<Category>> getCategories() async {
     final Map<String, dynamic> response =
-        (await _getResponseFromUrl('category')) as Map<String, dynamic>;
-    // makersFakeResponse;
+        // (await _getResponseFromUrl('category')) as Map<String, dynamic>;
+        makersFakeResponse;
     Iterable<Category> categories =
         (response as List).map((category) => Category.fromJson(category));
 
@@ -78,15 +91,18 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Maker>> getMakers() async {
-    final response =
+    final Map<String, dynamic> response =
         // await _getResponseFromUrl('make');
         makersFakeResponse;
 
-    Iterable<Maker> makers = (response).map((Map<String, String> maker) {
-      final makerName =
+    Iterable<Maker> makers = (response['make'] as List).map((maker) {
+      final String makerName =
           (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
-      final makerUrl = "$logosUrl$makerName.com";
-      final modifiedMaker = {...maker, "logoUrl": makerUrl};
+      final String makerUrl = "$logosUrl$makerName.com";
+      final Map<String, dynamic> modifiedMaker = {
+        ...maker,
+        "logoUrl": makerUrl
+      };
 
       return Maker.fromJson(modifiedMaker);
     });
@@ -95,15 +111,15 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   }
 
   @override
-  Future<Iterable<MotorcycleName>> getMotorcyclesByMaker(int id) async {
-    final response =
+  Future<Iterable<Motorcycle>> getMotorcyclesByMaker(int id) async {
+    final Map<String, dynamic> response =
         // await _getResponseFromUrl('model/make-id/$id');
-        motorcycleNameFakeResponse;
+        motorcycleNameFakeResponse2;
 
-    //change repsonse id to type int
-    Iterable<MotorcycleName> motorcycleName =
-        (response).map((motorcycle) => MotorcycleName.fromJson(motorcycle));
-    return motorcycleName;
+    //change response id to type int
+    Iterable<Motorcycle> motorcycle = (response['model/make-id/$id'] as List)
+        .map((motorcycle) => Motorcycle.fromJson(motorcycle));
+    return motorcycle;
   }
 
   @override
@@ -114,12 +130,11 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   @override
   Future<Motorcycle> getMotorcycleById(int id) async {
-    final response =
-        // await _getResponseFromUrl('model/make-id/$id');
+    final Map<String, dynamic>
+        response = //await _getResponseFromUrl('article/$id');
         motorcycleFakeResponse;
 
-    Motorcycle motorcycle = Motorcycle.fromJson(response);
-
+    Motorcycle motorcycle = Motorcycle.fromJson(response['article/$id']);
     return motorcycle;
   }
 }
