@@ -8,14 +8,17 @@ class GridBuilderWidget extends StatelessWidget {
   const GridBuilderWidget({
     Key? key,
     required List<Maker> searchList,
+    this.homeController,
   })  : _searchList = searchList,
         super(key: key);
 
   final List<Maker> _searchList;
+  final ScrollController? homeController;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      controller: homeController,
       // Create a grid with 2 columns
       itemCount: _searchList.length,
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

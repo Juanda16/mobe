@@ -1,6 +1,4 @@
-import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+rt 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'core/network/network_info.dart';
 import 'core/util/input_converter.dart';

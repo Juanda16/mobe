@@ -29,7 +29,7 @@ class CatalogMainPage extends StatelessWidget {
         title: Column(
           children: [
             Image.asset(
-              Images.mobeLogoPath,
+              Images.mobeLogoPathNoBG,
             ),
             const SizedBox(
               height: 10,
@@ -107,8 +107,7 @@ class CatalogMainPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const SettingsPage()),
+                        MaterialPageRoute(builder: (context) => SettingsPage()),
                       );
                     },
                     child: Column(

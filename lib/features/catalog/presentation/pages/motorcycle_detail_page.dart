@@ -1,15 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/util/images.dart';
 import '../../domain/entities/motorcycle/motorcycle.dart';
+import '../widgets/contact_form.dart';
 
 class MotorcycleDetailPage extends StatelessWidget {
   final Motorcycle motorcycle;
+  final _formKey = GlobalKey<FormState>();
 
   MotorcycleDetailPage({
     super.key,
@@ -76,7 +79,7 @@ class MotorcycleDetailPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  '${motorcycle.name} ${motorcycle.year}',
+                  '${motorcycle.name} ',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -98,9 +101,16 @@ class MotorcycleDetailPage extends StatelessWidget {
                   ),
                 ),
                 // Images.getUrlLogo(logoUrl: motorcycle.image),
-                Text('Type: ${motorcycle.name}'),
-                Text('Maker: ${motorcycle.brandId}'),
-                Text('Model: ${motorcycle.year}'),
+                Text(
+                    '${AppLocalizations.of(context)!.name}: ${motorcycle.name}'),
+                Text(
+                    '${AppLocalizations.of(context)!.engine}: ${motorcycle.engineType}'),
+                Text(
+                    '${AppLocalizations.of(context)!.maker}: ${motorcycle.brandId}'),
+                Text(
+                    '${AppLocalizations.of(context)!.year}: ${motorcycle.year}'),
+                Text(
+                    '${AppLocalizations.of(context)!.price}: ${motorcycle.price}'),
                 const SizedBox(height: 16),
                 Text('Donde comprar'),
                 const SizedBox(height: 4),
@@ -145,6 +155,14 @@ class MotorcycleDetailPage extends StatelessWidget {
                       _controller.complete(controller);
                     },
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ContactForm(formKey: _formKey);
+                      }),
+                  child: Text(AppLocalizations.of(context)!.interested),
                 ),
               ],
             ),

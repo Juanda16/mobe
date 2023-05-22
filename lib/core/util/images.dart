@@ -8,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Images {
   static String get mobeLogoPath => 'assets/images/logo_mobe_lq.jpg';
 
+  static String get mobeLogoPathNoBG => 'assets/images/logo_mobe_nobg.png';
+
   static String get mobeLogoIsotypePath => 'assets/images/welcome1.png';
 
   static String get backgroundImage => 'assets/images/background_mobe.png';

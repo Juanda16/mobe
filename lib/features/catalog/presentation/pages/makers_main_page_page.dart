@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobe/core/usecases/usecase.dart';
+import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/util/images.dart';
@@ -9,6 +11,7 @@ import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/maker/maker.dart';
 import '../../domain/usecases/get_makers.dart';
+import '../widgets/contact_form.dart';
 import '../widgets/grid_builder_widget.dart';
 import '../widgets/loading_widget.dart';
 
@@ -20,12 +23,18 @@ class MakersMainPage extends StatefulWidget {
 }
 
 class _MakersMainPageState extends State<MakersMainPage> {
-  GetMakers _getMakers = getIt.get<GetMakers>();
+  int _selectedIndex = 0;
+  final ScrollController _homeController = ScrollController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  final GetMakers _getMakers = getIt.get<GetMakers>();
   final TextEditingController _searchQuery = TextEditingController();
   List<Maker> makers = [];
   List<Maker> _searchList = [];
   late bool _IsSearching;
   String _searchText = "";
+  String _appBarText = "";
 
   Icon actionIcon = const Icon(
     Icons.search,
@@ -83,12 +92,22 @@ class _MakersMainPageState extends State<MakersMainPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgetOptions = <Widget>[
+      buildBody(context, _getMakers),
+      const SettingsPage()
+    ];
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildBar(context),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         elevation: 30,
-        onPressed: () {},
+        onPressed: () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ContactForm(formKey: _formKey);
+            }),
+        label: Text(AppLocalizations.of(context)!.contact),
+        icon: const Icon(Icons.call),
       ),
       body: Stack(children: [
         Container(
@@ -103,25 +122,38 @@ class _MakersMainPageState extends State<MakersMainPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(4),
-          child: buildBody(context, _getMakers),
+          // child: buildBody(context, _getMakers),
+          child: widgetOptions.elementAt(_selectedIndex),
         ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.motorcycle), label: "Catalog"),
-          BottomNavigationBarItem(icon: Icon(Icons.hardware), label: "Tools"),
+              icon: const Icon(Icons.motorcycle),
+              label: AppLocalizations.of(context)!.contact),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
+              icon: const Icon(Icons.settings),
+              label: AppLocalizations.of(context)!.settings),
         ],
+        onTap: (int index) {
+          if (_selectedIndex == index) {
+            _homeController.animateTo(
+              0.0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOut,
+            );
+          }
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        currentIndex: _selectedIndex,
       ),
     );
   }
 
   Widget buildBody(BuildContext context, GetMakers getMakers) {
     return RefreshIndicator(
-      semanticsLabel: "123",
-      semanticsValue: "456",
       onRefresh: () {
         loaderOn(context);
         getMakers
@@ -138,7 +170,8 @@ class _MakersMainPageState extends State<MakersMainPage> {
 
             makers = makersEither.fold((l) => [], (r) => r.toList());
 
-            return GridBuilderWidget(searchList: _searchList);
+            return GridBuilderWidget(
+                searchList: _searchList, homeController: _homeController);
           } else {
             return const Center(child: LoadingWidget());
           }
@@ -148,18 +181,6 @@ class _MakersMainPageState extends State<MakersMainPage> {
   }
 
   AppBar buildBar(BuildContext context) {
-    // appBar: AppBar(
-    //
-    //   title: Column(
-    //     children: [
-
-    //       const SizedBox(
-    //         height: 10,
-    //       )
-    //     ],
-    //   ),
-    // ),
-
     return AppBar(
         centerTitle: true,
         title: appBarWidget,
@@ -180,13 +201,13 @@ class _MakersMainPageState extends State<MakersMainPage> {
                     style: const TextStyle(
                       color: Colors.lightBlue,
                     ),
-                    decoration: const InputDecoration(
-                        hintText: "Search here..",
-                        hintStyle: TextStyle(color: Colors.lightBlue)),
+                    decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.searchHere,
+                        hintStyle: const TextStyle(color: Colors.lightBlue)),
                   );
                   _handleSearchStart();
                 } else {
-                  _handleSearchEnd();
+                  _handleSearchEnd(context);
                 }
               });
             },
@@ -200,7 +221,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
     });
   }
 
-  void _handleSearchEnd() {
+  void _handleSearchEnd(BuildContext context) {
     setState(() {
       actionIcon = const Icon(
         Icons.search,
@@ -209,7 +230,6 @@ class _MakersMainPageState extends State<MakersMainPage> {
       appBarWidget = Image.asset(
         Images.mobeLogoPath,
       );
-
       _IsSearching = false;
       _searchQuery.clear();
     });
