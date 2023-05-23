@@ -40,6 +40,7 @@ Widget buildBody(
           image: DecorationImage(
             alignment: Alignment.bottomCenter,
             image: AssetImage(Images.backgroundImage),
+
             fit: BoxFit.cover,
           ),
         ),
@@ -54,31 +55,61 @@ Widget buildBody(
                   (l) => throw Exception('Error getting motorcycles'),
                   (r) => r.toList());
 
-              return ListView.builder(
+
+
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
                 itemCount: motorcyclesNames.length,
                 itemBuilder: (BuildContext context, int index) {
                   final motorcycle = motorcyclesNames[index];
-                  return ListTile(
-                    title: Text(motorcycle.name),
-                    subtitle: Text(motorcycle.id.toString()),
-                    onTap: () {
-                      print(' tap>>> ${motorcycle.id}');
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4)),
+                    elevation: 5,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => MotorcycleDetailPage(
-                                  motorcycle: motorcycle,
-                                )
-                            //     MotorcycleDetailPage(
-                            //   motorcycle: motorcycle,
-                            // ),
+                              motorcycle: motorcycle,
+                            )
+                          ),
+                        );
+                      },
+
+                      child: Column(
+                        children: [
+                          Expanded(
+
+                            child:  FadeInImage.assetNetwork(
+                              placeholder: Images.loaderIcon,
+
+                              placeholderScale: 0.1,
+                              // placeholder: Images.defaultIcon,
+                              image: motorcycle.image ?? Images.defaultUrlMotorcycleIcon,
                             ),
-                      );
-                    },
+                            ),
+
+                        const SizedBox(height: 8),
+                        Text(motorcycle.name,
+
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+
+                      ],
+                    ),
+                    ),
                   );
-                },
+                }
               );
+
             } else {
               return const Center(child: LoadingWidget());
             }
