@@ -82,7 +82,11 @@ class GridBuilderWidget extends StatelessWidget {
                           Container(
                             width: 50,
                             height: 30,
-                            color: Colors.blue,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
+                              color: Colors.lightBlueAccent.shade400,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(4),
                               child: Row(

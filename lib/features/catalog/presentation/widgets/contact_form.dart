@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ContactForm extends StatelessWidget {
+import '../../domain/services/email_service.dart';
+
+class ContactForm extends StatefulWidget {
   const ContactForm({
     Key? key,
     required GlobalKey<FormState> formKey,
@@ -11,63 +13,110 @@ class ContactForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey;
 
   @override
+  _ContactFormState createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(AppLocalizations.of(context)!.contact),
       content: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.name,
-                ),
+        key: widget._formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.formMessage,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.name,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.email,
-                ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _phoneNumberController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.phoneNumber,
               ),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.phoneNumber,
-                ),
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.email,
               ),
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Model',
-              //   ),
-              // ),
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Color',
-              //   ),
-              // ),
-              // TextFormField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Year',
-              //   ),
-              // ),
-              TextButton(
-                child: Text(AppLocalizations.of(context)!.send),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Send the form data to your server.
-                  }
-                },
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       actions: [
-        TextButton(
+        OutlinedButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(AppLocalizations.of(context)!.close),
         ),
+        ElevatedButton(
+          child: Text(AppLocalizations.of(context)!.send),
+          onPressed: () {
+            if (widget._formKey.currentState!.validate()) {
+              sendEmail();
+            }
+          },
+        ),
       ],
     );
+  }
+
+  void sendEmail() async {
+    try {
+      await EmailService.sendEmail(
+        name: _nameController.text,
+        phoneNumber: _phoneNumberController.text,
+        email: _emailController.text,
+      );
+
+      // Close all dialogs
+      Navigator.of(context).popUntil((route) => route.isFirst);
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.success),
+            content: Text(AppLocalizations.of(context)!.successMessage),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(AppLocalizations.of(context)!.ok),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.error),
+            content: Text(AppLocalizations.of(context)!.errorMessage),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(AppLocalizations.of(context)!.ok),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

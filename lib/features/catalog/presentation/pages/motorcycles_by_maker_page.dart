@@ -19,7 +19,6 @@ class MotorcyclesByMakerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GetMotorcycleByMaker _getMotorcycles = getIt.get<GetMotorcycleByMaker>();
-
     return Scaffold(
         appBar: AppBar(
           title: Text(maker.name),
@@ -32,6 +31,7 @@ class MotorcyclesByMakerPage extends StatelessWidget {
 Widget buildBody(
     BuildContext context, GetMotorcycleByMaker getMotorcycles, int makerId) {
   List<Motorcycle> motorcyclesNames = [];
+
   return Stack(
     children: [
       Container(
@@ -40,7 +40,6 @@ Widget buildBody(
           image: DecorationImage(
             alignment: Alignment.bottomCenter,
             image: AssetImage(Images.backgroundImage),
-
             fit: BoxFit.cover,
           ),
         ),
@@ -55,61 +54,53 @@ Widget buildBody(
                   (l) => throw Exception('Error getting motorcycles'),
                   (r) => r.toList());
 
-
-
               return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemCount: motorcyclesNames.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final motorcycle = motorcyclesNames[index];
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4)),
-                    elevation: 5,
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MotorcycleDetailPage(
-                              motorcycle: motorcycle,
-                            )
-                          ),
-                        );
-                      },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemCount: motorcyclesNames.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final motorcycle = motorcyclesNames[index];
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4)),
+                      elevation: 5,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MotorcycleDetailPage(
+                                      motorcycle: motorcycle,
+                                    )),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: FadeInImage.assetNetwork(
+                                placeholder: Images.loaderIcon,
 
-                      child: Column(
-                        children: [
-                          Expanded(
-
-                            child:  FadeInImage.assetNetwork(
-                              placeholder: Images.loaderIcon,
-
-                              placeholderScale: 0.1,
-                              // placeholder: Images.defaultIcon,
-                              image: motorcycle.image ?? Images.defaultUrlMotorcycleIcon,
+                                placeholderScale: 0.1,
+                                // placeholder: Images.defaultIcon,
+                                image: motorcycle.image ??
+                                    Images.defaultUrlMotorcycleIcon,
+                              ),
                             ),
+                            const SizedBox(height: 8),
+                            Text(
+                              motorcycle.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-
-                        const SizedBox(height: 8),
-                        Text(motorcycle.name,
-
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
+                            const SizedBox(height: 8),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-
-                      ],
-                    ),
-                    ),
-                  );
-                }
-              );
-
+                      ),
+                    );
+                  });
             } else {
               return const Center(child: LoadingWidget());
             }

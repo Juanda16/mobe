@@ -50,6 +50,7 @@ dependencies:
   geolocator: ^9.0.2
   url_launcher: ^6.1.11
   google_maps_flutter: ^2.2.6
+  mailer: ^5.0.1
 
 
 

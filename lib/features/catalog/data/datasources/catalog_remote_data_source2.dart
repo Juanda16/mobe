@@ -25,7 +25,7 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   final http.Client client;
 
   static const String baseUrl =
-      "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1";
+      "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1/";
   static const String apiKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2ODk4NzQsImV4cCI6MTk5NzI2NTg3NH0.8kLIMV-TD0AYbq0tuwpXIIykj7FA6TRLoFP-DHLloLs';
   static const String authToken =
@@ -96,13 +96,14 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   @override
   Future<Iterable<Motorcycle>> getMotorcyclesByMaker(int id) async {
     final Map<String, dynamic> response =
-        await _getResponseFromUrl('motorcycles?brand_id=eq.$id');
+        //await _getResponseFromUrl('motorcycles?brand_id=eq.$id');
+        await _getResponseFromUrl(
+            'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id');
     // motorcycleNameFakeResponse2;
-
-    //change response id to type int
-    Iterable<Motorcycle> motorcycleName =
-        (response['motorcycles?brand_id=eq.$id'] as List)
-            .map((motorcycle) => Motorcycle.fromJson(motorcycle));
+    Iterable<Motorcycle> motorcycleName = (response[
+                'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id']
+            as List)
+        .map((motorcycle) => Motorcycle.fromJson(motorcycle));
     return motorcycleName;
   }
 
@@ -114,10 +115,9 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
 
   @override
   Future<Motorcycle> getMotorcycleById(int id) async {
-    final Map<String, dynamic>
-        response = //await _getResponseFromUrl('article/$id');
-        motorcycleFakeResponse;
-
+    final Map<String, dynamic> response = await _getResponseFromUrl(
+        'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&id=eq.$id');
+    //motorcycleFakeResponse;
     Motorcycle motorcycle = Motorcycle.fromJson(response['article/$id']);
     return motorcycle;
   }

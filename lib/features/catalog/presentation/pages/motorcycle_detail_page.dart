@@ -23,7 +23,7 @@ class MotorcycleDetailPage extends StatelessWidget {
       Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(37.43296265331129, -122.08832357078792),
     zoom: 14.4746,
   );
 
@@ -35,6 +35,24 @@ class MotorcycleDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final specs = {
+      "engine_displacement": AppLocalizations.of(context)!.engineDisplacement,
+      "engine_type": AppLocalizations.of(context)!.engineType,
+      "power": AppLocalizations.of(context)!.power,
+      "torque": AppLocalizations.of(context)!.torque,
+      "transmission_type": AppLocalizations.of(context)!.transmissionType,
+      "front_wheel": AppLocalizations.of(context)!.frontWheel,
+      "rear_wheel": AppLocalizations.of(context)!.rearWheel,
+      "overall_dimensions": AppLocalizations.of(context)!.overallDimensions,
+      "wheelbase": AppLocalizations.of(context)!.wheelbase,
+      "weight": AppLocalizations.of(context)!.weight,
+      "front_brake": AppLocalizations.of(context)!.frontBrake,
+      "rear_brake": AppLocalizations.of(context)!.rearBrake,
+      "front_suspension": AppLocalizations.of(context)!.frontSuspension,
+      "rear_suspension": AppLocalizations.of(context)!.rearSuspension,
+      "starting_type": AppLocalizations.of(context)!.startingType
+    };
+
     Position position = const Position(
         longitude: 0,
         latitude: 0,
@@ -72,7 +90,7 @@ class MotorcycleDetailPage extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,27 +119,124 @@ class MotorcycleDetailPage extends StatelessWidget {
                   ),
                 ),
                 // Images.getUrlLogo(logoUrl: motorcycle.image),
+
+                Card(
+                  color: Colors.blue[50],
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 0.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${motorcycle.price}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          '${motorcycle.year}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+                Card(
+                  color: Colors.blue[50],
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 0.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 12.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(AppLocalizations.of(context)!.specifications,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              )),
+                          const SizedBox(height: 10),
+                          ListView.builder(
+                            itemCount: specs.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final name = specs.keys.elementAt(index);
+                              return motorcycle.toJson()[name] != null
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          name != specs.keys.first
+                                              ? const Divider()
+                                              : const SizedBox(height: 0),
+                                          Text(
+                                            '${specs[name]}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${motorcycle.toJson()[name]}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ])
+                                  : const SizedBox(height: 0);
+                            },
+                          ),
+                        ]),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Text(
-                    '${AppLocalizations.of(context)!.name}: ${motorcycle.name}'),
-                Text(
-                    '${AppLocalizations.of(context)!.engine}: ${motorcycle.engineType}'),
-                Text(
-                    '${AppLocalizations.of(context)!.maker}: ${motorcycle.brandId}'),
-                Text(
-                    '${AppLocalizations.of(context)!.year}: ${motorcycle.year}'),
-                Text(
-                    '${AppLocalizations.of(context)!.price}: ${motorcycle.price}'),
-                const SizedBox(height: 16),
-                Text('Donde comprar'),
-                const SizedBox(height: 4),
+                  AppLocalizations.of(context)!.whereToFindUs,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('tienda 1'),
-                    Text(
-                        '${Geolocator.distanceBetween(position.latitude, position.longitude, 52.3546274, 4.8285838).toInt()} m'),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${motorcycle.brand?.vendor?.name}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                          Text(
+                              '${Geolocator.distanceBetween(position.latitude, position.longitude, motorcycle.brand?.vendor?.latitude ?? 6.0, motorcycle.brand?.vendor?.longitude ?? -75.0).toInt() / 1000} Km'),
+                        ]),
                     TextButton(
-                      child: Text('Go'),
+                      child: Text(AppLocalizations.of(context)!.go),
                       onPressed: () {
                         MapUtils.openMap(position.latitude, position.longitude);
                       },
@@ -129,26 +244,24 @@ class MotorcycleDetailPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
+                  //rounded corners
                   height: 300,
+
                   child: GoogleMap(
                     markers: {
                       Marker(
-                        markerId: MarkerId("pos1"),
-                        position: LatLng(6.2677532, -75.5714165),
-                      ),
-                      Marker(
-                        markerId: MarkerId("pos2"),
-                        position: LatLng(6.2677532, -75.5714130),
-                      ),
-                      Marker(
-                        markerId: MarkerId("pos3"),
-                        position: LatLng(6.2677510, -75.5714110),
+                        markerId: const MarkerId("marker_1"),
+                        position: LatLng(
+                            motorcycle.brand?.vendor?.latitude ?? 6.2677510,
+                            motorcycle.brand?.vendor?.longitude ?? -75.5714165),
                       ),
                     },
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                      // target: LatLng(position.latitude, position.longitude),
-                      target: LatLng(6.2677510, -75.5714165),
+                      //target: LatLng(position.latitude, position.longitude),
+                      target: LatLng(
+                          motorcycle.brand?.vendor?.latitude ?? 6.2677510,
+                          motorcycle.brand?.vendor?.longitude ?? -75.5714165),
                       zoom: 14,
                     ),
                     onMapCreated: (GoogleMapController controller) {
@@ -156,7 +269,11 @@ class MotorcycleDetailPage extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(height: 16),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                  ),
                   onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -164,6 +281,7 @@ class MotorcycleDetailPage extends StatelessWidget {
                       }),
                   child: Text(AppLocalizations.of(context)!.interested),
                 ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

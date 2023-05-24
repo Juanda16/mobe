@@ -30,6 +30,9 @@ _$_Motorcycle _$$_MotorcycleFromJson(Map<String, dynamic> json) =>
       frontSuspension: json['front_suspension'] as String?,
       rearSuspension: json['rear_suspension'] as String?,
       startingType: json['starting_type'] as String?,
+      brand: json['brand'] == null
+          ? null
+          : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_MotorcycleToJson(_$_Motorcycle instance) =>
@@ -56,4 +59,5 @@ Map<String, dynamic> _$$_MotorcycleToJson(_$_Motorcycle instance) =>
       'front_suspension': instance.frontSuspension,
       'rear_suspension': instance.rearSuspension,
       'starting_type': instance.startingType,
+      'brand': instance.brand,
     };

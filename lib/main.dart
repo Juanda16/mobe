@@ -35,6 +35,8 @@ class _MyAppState extends State<MyApp> {
           primary: Colors.blue[900],
           secondary: Colors.blueAccent,
         ),
+        inputDecorationTheme:
+        const InputDecorationTheme(border: OutlineInputBorder()),
       ),
       darkTheme: ThemeData.dark(),
       themeMode: _themeMode,

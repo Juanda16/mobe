@@ -54,6 +54,7 @@ mixin _$Motorcycle {
   String? get rearSuspension => throw _privateConstructorUsedError;
   @JsonKey(name: 'starting_type')
   String? get startingType => throw _privateConstructorUsedError;
+  Brand? get brand => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -89,7 +90,10 @@ abstract class $MotorcycleCopyWith<$Res> {
       @JsonKey(name: 'rear_brake') String? rearBrake,
       @JsonKey(name: 'front_suspension') String? frontSuspension,
       @JsonKey(name: 'rear_suspension') String? rearSuspension,
-      @JsonKey(name: 'starting_type') String? startingType});
+      @JsonKey(name: 'starting_type') String? startingType,
+      Brand? brand});
+
+  $BrandCopyWith<$Res>? get brand;
 }
 
 /// @nodoc
@@ -127,6 +131,7 @@ class _$MotorcycleCopyWithImpl<$Res, $Val extends Motorcycle>
     Object? frontSuspension = freezed,
     Object? rearSuspension = freezed,
     Object? startingType = freezed,
+    Object? brand = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -217,7 +222,23 @@ class _$MotorcycleCopyWithImpl<$Res, $Val extends Motorcycle>
           ? _value.startingType
           : startingType // ignore: cast_nullable_to_non_nullable
               as String?,
+      brand: freezed == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as Brand?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $BrandCopyWith<$Res>? get brand {
+    if (_value.brand == null) {
+      return null;
+    }
+
+    return $BrandCopyWith<$Res>(_value.brand!, (value) {
+      return _then(_value.copyWith(brand: value) as $Val);
+    });
   }
 }
 
@@ -251,7 +272,11 @@ abstract class _$$_MotorcycleCopyWith<$Res>
       @JsonKey(name: 'rear_brake') String? rearBrake,
       @JsonKey(name: 'front_suspension') String? frontSuspension,
       @JsonKey(name: 'rear_suspension') String? rearSuspension,
-      @JsonKey(name: 'starting_type') String? startingType});
+      @JsonKey(name: 'starting_type') String? startingType,
+      Brand? brand});
+
+  @override
+  $BrandCopyWith<$Res>? get brand;
 }
 
 /// @nodoc
@@ -287,6 +312,7 @@ class __$$_MotorcycleCopyWithImpl<$Res>
     Object? frontSuspension = freezed,
     Object? rearSuspension = freezed,
     Object? startingType = freezed,
+    Object? brand = freezed,
   }) {
     return _then(_$_Motorcycle(
       id: null == id
@@ -377,6 +403,10 @@ class __$$_MotorcycleCopyWithImpl<$Res>
           ? _value.startingType
           : startingType // ignore: cast_nullable_to_non_nullable
               as String?,
+      brand: freezed == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as Brand?,
     ));
   }
 }
@@ -406,7 +436,8 @@ class _$_Motorcycle extends _Motorcycle {
       @JsonKey(name: 'rear_brake') this.rearBrake,
       @JsonKey(name: 'front_suspension') this.frontSuspension,
       @JsonKey(name: 'rear_suspension') this.rearSuspension,
-      @JsonKey(name: 'starting_type') this.startingType})
+      @JsonKey(name: 'starting_type') this.startingType,
+      this.brand})
       : super._();
 
   factory _$_Motorcycle.fromJson(Map<String, dynamic> json) =>
@@ -468,10 +499,12 @@ class _$_Motorcycle extends _Motorcycle {
   @override
   @JsonKey(name: 'starting_type')
   final String? startingType;
+  @override
+  final Brand? brand;
 
   @override
   String toString() {
-    return 'Motorcycle(id: $id, brandId: $brandId, url: $url, name: $name, image: $image, year: $year, price: $price, engineDisplacement: $engineDisplacement, engineType: $engineType, power: $power, torque: $torque, transmissionType: $transmissionType, frontWheel: $frontWheel, rearWheel: $rearWheel, overallDimensions: $overallDimensions, wheelbase: $wheelbase, weight: $weight, frontBrake: $frontBrake, rearBrake: $rearBrake, frontSuspension: $frontSuspension, rearSuspension: $rearSuspension, startingType: $startingType)';
+    return 'Motorcycle(id: $id, brandId: $brandId, url: $url, name: $name, image: $image, year: $year, price: $price, engineDisplacement: $engineDisplacement, engineType: $engineType, power: $power, torque: $torque, transmissionType: $transmissionType, frontWheel: $frontWheel, rearWheel: $rearWheel, overallDimensions: $overallDimensions, wheelbase: $wheelbase, weight: $weight, frontBrake: $frontBrake, rearBrake: $rearBrake, frontSuspension: $frontSuspension, rearSuspension: $rearSuspension, startingType: $startingType, brand: $brand)';
   }
 
   @override
@@ -512,7 +545,8 @@ class _$_Motorcycle extends _Motorcycle {
             (identical(other.rearSuspension, rearSuspension) ||
                 other.rearSuspension == rearSuspension) &&
             (identical(other.startingType, startingType) ||
-                other.startingType == startingType));
+                other.startingType == startingType) &&
+            (identical(other.brand, brand) || other.brand == brand));
   }
 
   @JsonKey(ignore: true)
@@ -540,7 +574,8 @@ class _$_Motorcycle extends _Motorcycle {
         rearBrake,
         frontSuspension,
         rearSuspension,
-        startingType
+        startingType,
+        brand
       ]);
 
   @JsonKey(ignore: true)
@@ -560,39 +595,28 @@ class _$_Motorcycle extends _Motorcycle {
 abstract class _Motorcycle extends Motorcycle {
   const factory _Motorcycle(
       {required final int id,
-      @JsonKey(name: 'brand_id')
-          required final int brandId,
+      @JsonKey(name: 'brand_id') required final int brandId,
       required final String url,
       required final String name,
       final String? image,
       final int? year,
       final String? price,
-      @JsonKey(name: 'engine_displacement')
-          final String? engineDisplacement,
-      @JsonKey(name: 'engine_type')
-          final String? engineType,
+      @JsonKey(name: 'engine_displacement') final String? engineDisplacement,
+      @JsonKey(name: 'engine_type') final String? engineType,
       final String? power,
       final String? torque,
-      @JsonKey(name: 'transmission_type')
-          final String? transmissionType,
-      @JsonKey(name: 'front_wheel')
-          final String? frontWheel,
-      @JsonKey(name: 'rear_wheel')
-          final String? rearWheel,
-      @JsonKey(name: 'overall_dimensions')
-          final String? overallDimensions,
+      @JsonKey(name: 'transmission_type') final String? transmissionType,
+      @JsonKey(name: 'front_wheel') final String? frontWheel,
+      @JsonKey(name: 'rear_wheel') final String? rearWheel,
+      @JsonKey(name: 'overall_dimensions') final String? overallDimensions,
       final String? wheelbase,
       final String? weight,
-      @JsonKey(name: 'front_brake')
-          final String? frontBrake,
-      @JsonKey(name: 'rear_brake')
-          final String? rearBrake,
-      @JsonKey(name: 'front_suspension')
-          final String? frontSuspension,
-      @JsonKey(name: 'rear_suspension')
-          final String? rearSuspension,
-      @JsonKey(name: 'starting_type')
-          final String? startingType}) = _$_Motorcycle;
+      @JsonKey(name: 'front_brake') final String? frontBrake,
+      @JsonKey(name: 'rear_brake') final String? rearBrake,
+      @JsonKey(name: 'front_suspension') final String? frontSuspension,
+      @JsonKey(name: 'rear_suspension') final String? rearSuspension,
+      @JsonKey(name: 'starting_type') final String? startingType,
+      final Brand? brand}) = _$_Motorcycle;
   const _Motorcycle._() : super._();
 
   factory _Motorcycle.fromJson(Map<String, dynamic> json) =
@@ -654,6 +678,8 @@ abstract class _Motorcycle extends Motorcycle {
   @override
   @JsonKey(name: 'starting_type')
   String? get startingType;
+  @override
+  Brand? get brand;
   @override
   @JsonKey(ignore: true)
   _$$_MotorcycleCopyWith<_$_Motorcycle> get copyWith =>

@@ -1,6 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../brand/brand.dart';
+
 part 'motorcycle.freezed.dart';
+
 part 'motorcycle.g.dart';
 
 @freezed
@@ -28,12 +31,15 @@ class Motorcycle with _$Motorcycle {
     @JsonKey(name: 'front_suspension') String? frontSuspension,
     @JsonKey(name: 'rear_suspension') String? rearSuspension,
     @JsonKey(name: 'starting_type') String? startingType,
+    Brand? brand,
   }) = _Motorcycle;
 
   factory Motorcycle.fromJson(Map<String, dynamic> json) =>
       _$MotorcycleFromJson(json);
 
   const Motorcycle._();
+
+
 }
 
 // @freezed

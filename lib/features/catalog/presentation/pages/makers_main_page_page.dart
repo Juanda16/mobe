@@ -36,9 +36,9 @@ class _MakersMainPageState extends State<MakersMainPage> {
   String _searchText = "";
   String _appBarText = "";
 
-  Icon actionIcon = const Icon(
+  Icon actionIcon = Icon(
     Icons.search,
-    color: Colors.lightBlue,
+    color: Colors.blue.shade900,
   );
 
   Widget appBarWidget = Image.asset(
@@ -100,6 +100,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
       backgroundColor: Colors.transparent,
       appBar: buildBar(context),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.blue.shade900,
         elevation: 30,
         onPressed: () => showDialog(
             context: context,
@@ -130,7 +131,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
         items: [
           BottomNavigationBarItem(
               icon: const Icon(Icons.motorcycle),
-              label: AppLocalizations.of(context)!.contact),
+              label: AppLocalizations.of(context)!.catalog),
           BottomNavigationBarItem(
               icon: const Icon(Icons.settings),
               label: AppLocalizations.of(context)!.settings),
@@ -184,7 +185,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
     return AppBar(
         centerTitle: true,
         title: appBarWidget,
-        iconTheme: const IconThemeData(color: Colors.lightBlue),
+        iconTheme: IconThemeData(color: Colors.lightBlue.shade900),
         backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(
@@ -192,18 +193,18 @@ class _MakersMainPageState extends State<MakersMainPage> {
             onPressed: () {
               setState(() {
                 if (actionIcon.icon == Icons.search) {
-                  actionIcon = const Icon(
+                  actionIcon =  Icon(
                     Icons.close,
-                    color: Colors.lightBlue,
+                    color: Colors.lightBlue.shade900,
                   );
                   appBarWidget = TextField(
                     controller: _searchQuery,
-                    style: const TextStyle(
-                      color: Colors.lightBlue,
+                    style:  TextStyle(
+                      color: Colors.lightBlue.shade900,
                     ),
                     decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.searchHere,
-                        hintStyle: const TextStyle(color: Colors.lightBlue)),
+                        hintStyle:  TextStyle(color: Colors.lightBlue.shade900)),
                   );
                   _handleSearchStart();
                 } else {
@@ -223,9 +224,9 @@ class _MakersMainPageState extends State<MakersMainPage> {
 
   void _handleSearchEnd(BuildContext context) {
     setState(() {
-      actionIcon = const Icon(
+      actionIcon = Icon(
         Icons.search,
-        color: Colors.lightBlue,
+        color: Colors.lightBlue.shade900,
       );
       appBarWidget = Image.asset(
         Images.mobeLogoPath,

@@ -157,7 +157,7 @@ class CatalogMainPage extends StatelessWidget {
                                 Container(
                                   width: 50,
                                   height: 30,
-                                  color: Colors.blue,
+                                  color: Colors.blue.shade900,
                                   child: Padding(
                                     padding: const EdgeInsets.all(4),
                                     child: Row(
