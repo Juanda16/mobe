@@ -8,16 +8,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Images {
   static String get mobeLogoPath => 'assets/images/logo_mobe_lq.jpg';
 
+  static String get mobeLogoPathNoBG => 'assets/images/logo_mobe_nobg.png';
+
   static String get mobeLogoIsotypePath => 'assets/images/welcome1.png';
 
   static String get backgroundImage => 'assets/images/background_mobe.png';
 
-  static String get defaultIcon => 'assets/images/default_token.png';
+  static String get defaultIcon => 'assets/images/logo_mobe_lq.jpg';
 
-  static String get platform => 'assets/icons/platform.png';
+  static String get defaultUrlIcon => '';
+
+  static String get defaultUrlMotorcycleIcon =>
+      'https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/defaultbike.jpg&w=350&h=251&q=75&c=1';
+
+  static String get loaderIcon => 'assets/loader/mobe2.gif';
+
+  // static String get platform => 'assets/icons/platform.png';
 
   static Widget _defaultLogoImage(double size) => Image(
-        image: AssetImage(defaultIcon),
+        image: AssetImage(mobeLogoPath),
         width: size,
         height: size,
       );
@@ -77,7 +86,7 @@ class Images {
   }
 
   /// Draw token logo from url if not null and is not empty or default token logo if it is.
-  static Widget getTokenLogo(
+  static Widget getUrlLogo(
           {required String? logoUrl,
           double size = 32,
           BorderRadius? borderRadius}) =>
