@@ -4,7 +4,10 @@ import 'package:mobe/core/util/images.dart';
 
 /// [SignUpPage] is a page where the user can sign up to the app.
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  SignUpPage({super.key});
+
+  static const double formIconSize = 28;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +41,64 @@ class SignUpPage extends StatelessWidget {
                         width: 150,
                         height: 150,
                       ),
-                      const Positioned(
+                      Positioned(
                         bottom: 0,
                         right: 0,
-                        child: Icon(
-                          Icons.add_a_photo,
-                          size: 40,
-                          color: Colors.red,
+                        child: Images.buildSvgPngImage(
+                          Images.plusButton,
+                          width: 40,
+                          height: 40,
                         ),
                       )
                     ]),
-                    spaceV24,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.person,
-                          size: 28,
-                          color: secondaryColor,
+                    spaceV8,
+                    Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: padding24,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                icon: Images.buildSvgPngImage(Images.userIcon,
+                                    width: formIconSize, height: formIconSize),
+                                labelText: 'Nombre completo',
+                                hintText: 'Nombre',
+                              ),
+                              validator: textFormFieldValidator,
+                            ),
+                            spaceV12,
+                            TextFormField(
+                              decoration: InputDecoration(
+                                icon: Images.buildSvgPngImage(Images.emailIcon,
+                                    width: formIconSize, height: formIconSize),
+                                labelText: 'Correo Electrónico',
+                                hintText: 'Correo',
+                              ),
+                            ),
+                            spaceV12,
+                            TextFormField(
+                              decoration: InputDecoration(
+                                icon: Images.buildSvgPngImage(Images.lock,
+                                    width: formIconSize, height: formIconSize),
+                                labelText: 'Contraseña',
+                                hintText: 'Contraseña',
+                              ),
+                            ),
+                            spaceV12,
+                            TextFormField(
+                              decoration: InputDecoration(
+                                icon: Images.buildSvgPngImage(
+                                    Images.checkedLock,
+                                    width: formIconSize,
+                                    height: formIconSize),
+                                labelText: 'Confirmar contraseña',
+                                hintText: 'Confirmar contraseña',
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -85,25 +126,44 @@ class SignUpPage extends StatelessWidget {
           ),
         ]),
       ),
-      bottomNavigationBar: Container(
-        color: primaryColor,
-        height: 100,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              spaceV24,
-              Text(
-                'Regístrate.',
-                style: TextStyle(
-                  color: white,
-                  fontSize: 20,
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          // Validate returns true if the form is valid, or false otherwise.
+          if (_formKey.currentState!.validate()) {
+            // If the form is valid, display a snackbar. In the real world,
+            // you'd often call a server or save the information in a database.
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Processing Data')),
+            );
+          }
+        },
+        child: Container(
+          color: primaryColor,
+          height: 100,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                spaceV24,
+                Text(
+                  'Regístrate.',
+                  style: TextStyle(
+                    color: white,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  String? textFormFieldValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor ingrese su nombre';
+    }
+    return null;
   }
 }

@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         Locale('en'), // English
         Locale('es'), // Spanish
       ],
-      home: const SignUpPage(),
+      home: SignUpPage(),
     );
   }
 

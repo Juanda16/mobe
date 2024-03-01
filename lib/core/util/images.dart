@@ -31,9 +31,11 @@ class Images {
 
   static String get emailIcon => 'assets/icons/cartaCorreo.svg';
 
-  static String get lock => 'assets/images/icons.svg';
+  static String get lock => 'assets/icons/candado.svg';
 
   static String get checkedLock => 'assets/icons/CandadoCheck.svg';
+
+  static String get plusButton => 'assets/icons/boton+.svg';
 
   static Widget _defaultLogoImage(double size) => Image(
         image: AssetImage(mobeLogoPath),
