@@ -13,16 +13,6 @@ import 'features/catalog/domain/usecases/get_motorcycle_by_id.dart';
 final getIt = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Number Trivia
-  // Bloc
-  // getIt.registerFactory(
-  //   () => NumberTriviaBloc(
-  //     concrete: getIt(),
-  //     inputConverter: getIt(),
-  //     random: getIt(),
-  //   ),
-  // );
-
   // Use cases
   // getIt.registerLazySingleton(() => GetMotorcycleById(getIt()));
   getIt.registerLazySingleton(() => GetCategories(getIt()));

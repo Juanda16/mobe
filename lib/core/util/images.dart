@@ -23,7 +23,17 @@ class Images {
 
   static String get loaderIcon => 'assets/loader/mobe2.gif';
 
-  // static String get platform => 'assets/icons/platform.png';
+  static String get emptyState => 'assets/images/empty_state.svg';
+
+  static String get manAvatar => 'assets/images/avatar_man.svg';
+
+  static String get userIcon => 'assets/icons/usuario.svg';
+
+  static String get emailIcon => 'assets/icons/cartaCorreo.svg';
+
+  static String get lock => 'assets/images/icons.svg';
+
+  static String get checkedLock => 'assets/icons/CandadoCheck.svg';
 
   static Widget _defaultLogoImage(double size) => Image(
         image: AssetImage(mobeLogoPath),
@@ -102,12 +112,20 @@ class Images {
               ),
       );
 
-  static Widget build(String url, {double? width, double? height}) =>
+  static Widget buildSvgImage(String url, {double? width, double? height}) =>
       SvgPicture.asset(url, width: width, height: height);
 
+  static Widget buildSvgPngImage(String url, {double? width, double? height}) {
+    final bool isSvgImage = url.contains('.svg');
+
+    return isSvgImage
+        ? SvgPicture.asset(url, width: width, height: height)
+        : Image.asset(url, width: width, height: height);
+  }
+
   static Widget mobeLogo({double? height = 20}) =>
-      build(mobeLogoPath, height: height);
+      buildSvgImage(mobeLogoPath, height: height);
 
   static Widget mobeIsotype({double width = 32}) =>
-      build(mobeLogoIsotypePath, width: width);
+      buildSvgImage(mobeLogoIsotypePath, width: width);
 }
