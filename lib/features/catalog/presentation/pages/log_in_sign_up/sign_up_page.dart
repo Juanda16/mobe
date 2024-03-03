@@ -12,8 +12,11 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 5,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(28),
+        child: AppBar(
+          elevation: 5,
+        ),
       ),
       body: SafeArea(
         bottom: false,
