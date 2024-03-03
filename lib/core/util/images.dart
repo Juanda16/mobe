@@ -10,8 +10,6 @@ class Images {
 
   static String get mobeLogoPathNoBG => 'assets/images/logo_mobe_nobg.png';
 
-  static String get mobeLogoIsotypePath => 'assets/images/welcome1.png';
-
   static String get backgroundImage => 'assets/images/background_mobe.png';
 
   static String get defaultIcon => 'assets/images/logo_mobe_lq.jpg';
@@ -126,8 +124,5 @@ class Images {
   }
 
   static Widget mobeLogo({double? height = 20}) =>
-      buildSvgImage(mobeLogoPath, height: height);
-
-  static Widget mobeIsotype({double width = 32}) =>
-      buildSvgImage(mobeLogoIsotypePath, width: width);
+      buildSvgPngImage(mobeLogoPath, height: height);
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/util/images.dart';
 
-/// [SignUpPage] is a page where the user can sign up to the app.
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+/// [LogIn] is a page where the user can sign up to the app.
+class LogIn extends StatelessWidget {
+  LogIn({super.key});
 
   static const double formIconSize = 28;
   final _formKey = GlobalKey<FormState>();
@@ -37,19 +37,8 @@ class SignUpPage extends StatelessWidget {
               children: [
                 spaceV36,
                 Stack(children: [
-                  Images.buildSvgPngImage(
-                    Images.manAvatar,
-                    width: 150,
+                  Images.mobeLogo(
                     height: 150,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Images.buildSvgPngImage(
-                      Images.plusButton,
-                      width: 40,
-                      height: 40,
-                    ),
                   )
                 ]),
                 Form(
@@ -62,19 +51,10 @@ class SignUpPage extends StatelessWidget {
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.userIcon,
                                 width: formIconSize, height: formIconSize),
-                            labelText: 'Nombre completo',
-                            hintText: 'Nombre',
+                            labelText: 'Correo Electrónico',
+                            hintText: 'Correo Electrónico',
                           ),
                           validator: textFormFieldValidator,
-                        ),
-                        spaceV12,
-                        TextFormField(
-                          decoration: InputDecoration(
-                            icon: Images.buildSvgPngImage(Images.emailIcon,
-                                width: formIconSize, height: formIconSize),
-                            labelText: 'Correo Electrónico',
-                            hintText: 'Correo',
-                          ),
                         ),
                         spaceV12,
                         TextFormField(
@@ -86,12 +66,23 @@ class SignUpPage extends StatelessWidget {
                           ),
                         ),
                         spaceV12,
-                        TextFormField(
-                          decoration: InputDecoration(
-                            icon: Images.buildSvgPngImage(Images.checkedLock,
-                                width: formIconSize, height: formIconSize),
-                            labelText: 'Confirmar contraseña',
-                            hintText: 'Confirmar contraseña',
+                        ElevatedButton(
+                            onPressed:
+                                // Validate returns true if the form is valid, or false otherwise.
+                                () {
+                              if (_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Processing Data')),
+                                );
+                              }
+                            },
+                            child: Text('Iniciar Sesión')),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Olvidé mi contraseña',
+                            style: sim12.copyWith(color: secondaryColor),
                           ),
                         ),
                       ],
