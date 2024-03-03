@@ -23,6 +23,7 @@ class SignUpPage extends StatelessWidget {
               color: white,
               image: DecorationImage(
                 alignment: Alignment.bottomCenter,
+                opacity: 0.6,
                 image: AssetImage(Images.backgroundImage),
                 fit: BoxFit.fitWidth,
               ),
@@ -34,7 +35,7 @@ class SignUpPage extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: [
-                    spaceV48,
+                    spaceV36,
                     Stack(children: [
                       Images.buildSvgPngImage(
                         Images.manAvatar,
@@ -51,7 +52,6 @@ class SignUpPage extends StatelessWidget {
                         ),
                       )
                     ]),
-                    spaceV8,
                     Form(
                       key: _formKey,
                       child: Padding(
@@ -100,6 +100,20 @@ class SignUpPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    spaceV12,
+                    Text(
+                      'Términos y condiciones',
+                      style: hib14.copyWith(color: secondaryColor),
+                    ),
+                    Text(
+                      'Al registrarte, aceptas nuestras reglas y políticas',
+                      style: sim12.copyWith(color: secondaryColor),
+                      maxLines: 2,
+                    ),
+                    Text(
+                      'Aquí no hay letra menuda',
+                      style: sim12.copyWith(color: secondaryColor),
+                    )
                   ],
                 ),
                 // Container(
@@ -139,18 +153,15 @@ class SignUpPage extends StatelessWidget {
         },
         child: Container(
           color: primaryColor,
-          height: 100,
+          height: 90,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                spaceV24,
+              children: [
+                spaceV16,
                 Text(
-                  'Regístrate.',
-                  style: TextStyle(
-                    color: white,
-                    fontSize: 20,
-                  ),
+                  'Regístrate!',
+                  style: hib22.copyWith(color: white),
                 ),
               ],
             ),
