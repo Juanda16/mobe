@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/util/images.dart';
+import 'package:mobe/features/catalog/presentation/pages/catalog_main_page_page.dart';
 
 /// [SignUpPage] is a page where the user can sign up to the app.
 class SignUpPage extends StatelessWidget {
@@ -125,6 +126,10 @@ class SignUpPage extends StatelessWidget {
             // you'd often call a server or save the information in a database.
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Processing Data')),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CatalogMainPage()),
             );
           }
         },

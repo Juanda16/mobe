@@ -35,6 +35,10 @@ class Images {
 
   static String get plusButton => 'assets/icons/boton+.svg';
 
+  static String get facebookIcon => 'assets/icons/facebook_icon.svg';
+
+  static String get googleIcon => 'assets/icons/google_icon.svg';
+
   static Widget _defaultLogoImage(double size) => Image(
         image: AssetImage(mobeLogoPath),
         width: size,
