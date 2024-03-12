@@ -3,8 +3,8 @@ part of core.styles;
 //-------------------- Colors --------------------//
 
 //-----Business App Colors-----//
-const Color primaryColor = Color(0xFF52B4EB);
-const Color secondaryColor = Color(0xFF102E3F);
+const Color primaryColor = Color(0xFF00B8F1);
+const Color secondaryColor = Color(0xFF002F41);
 
 //-----Background/useFull Colors-----//
 const Color white = Colors.white;

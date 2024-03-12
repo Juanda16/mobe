@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/usecases/usecase.dart';
 import 'package:mobe/features/catalog/domain/usecases/get_categories.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
@@ -10,6 +11,17 @@ import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/category/category.dart';
 import '../widgets/loading_widget.dart';
+
+List<String> categories = [
+  'Asistencis',
+  'Talleres',
+  'Repuestos',
+  'Accesorios',
+  'Obligatorios',
+  'Perfil',
+  'Historial',
+  'Cerrar Sesión',
+];
 
 class CatalogMainPage extends StatelessWidget {
   CatalogMainPage({Key? key}) : super(key: key);
@@ -25,7 +37,6 @@ class CatalogMainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Column(
           children: [
             Image.asset(
@@ -35,6 +46,66 @@ class CatalogMainPage extends StatelessWidget {
               height: 10,
             )
           ],
+        ),
+      ),
+      drawer: Drawer(
+        width: 200,
+        child: ListView.separated(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          itemCount: 8,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Column(
+                children: const <Widget>[
+                  SizedBox(
+                    height: 125,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                      ),
+                      child: null,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return Column(
+                children: <Widget>[
+                  // ListTile(
+                  //   minLeadingWidth: 0,
+                  //   leading: Container(
+                  //       padding: const EdgeInsets.all(0),
+                  //       height: 60,
+                  //       width: 70,
+                  //       color: index > 4 ? primaryColor : secondaryColor,
+                  //       child: Icon(Icons.motorcycle)),
+                  //   title: Text(categories[index]),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
+                  MenuListItem(
+                    label: categories[index],
+                    icon: Icons.motorcycle,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    color: index > 4 ? primaryColor : secondaryColor,
+                  ),
+                ],
+              );
+            }
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return spaceV0;
+          },
+          // separatorBuilder: (BuildContext context, int index) {
+          //   return const Divider(
+          //     color: secondaryColor,
+          //     height: 1,
+          //   );
+          // },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -221,4 +292,59 @@ class CatalogMainPage extends StatelessWidget {
 //   throw ('Something went wrong. Please try again.');
 // },
 
+}
+
+class MenuListItem extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final Function onTap;
+  final Color? color;
+
+  const MenuListItem({
+    Key? key,
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    this.color = secondaryColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.all(0),
+      minLeadingWidth: 0,
+      minVerticalPadding: 0,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+            color: secondaryColor.withOpacity(0.5),
+            style: BorderStyle.solid,
+            width: 1),
+        borderRadius: BorderRadius.circular(0),
+      ),
+      title: SizedBox(
+        //height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 60,
+              width: 70,
+              color: color,
+              child: Icon(Icons.motorcycle,
+                  color:
+                      color == secondaryColor ? primaryColor : secondaryColor),
+            ),
+            spaceH12,
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 16,
+                color: secondaryTxt,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

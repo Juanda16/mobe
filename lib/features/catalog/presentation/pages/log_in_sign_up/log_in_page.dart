@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/util/images.dart';
+import 'package:mobe/features/catalog/presentation/pages/catalog_main_page_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/log_in_sign_up/sign_up_page.dart';
 
 /// [LogIn] is a page where the user can sign up to the app.
@@ -76,13 +77,18 @@ class LogIn extends StatelessWidget {
                             onPressed:
                                 // Validate returns true if the form is valid, or false otherwise.
                                 () {
-                              if (_formKey.currentState!.validate()) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      backgroundColor: secondaryColor,
-                                      content: Text('Processing Data...')),
-                                );
-                              }
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CatalogMainPage()),
+                              );
+                              // if (_formKey.currentState!.validate()) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(
+                              //         backgroundColor: secondaryColor,
+                              //         content: Text('Processing Data...')),
+                              //   );
+                              // }
                             },
                             child: Text('Iniciar Sesión',
                                 style: hib16.copyWith(
@@ -138,7 +144,7 @@ class LogIn extends StatelessWidget {
         },
         child: GestureDetector(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => SignUpPage()),
             );
