@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' show Either;
+import 'package:dartz/dartz.dart' show Either, Right;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
@@ -154,20 +154,26 @@ class _MakersMainPageState extends State<MakersMainPage> {
   }
 
   Widget buildBody(BuildContext context, GetMakers getMakers) {
+    List<Maker> makers = [
+      Maker(id: 1, name: 'maker1'),
+    ];
+
     return RefreshIndicator(
       onRefresh: () {
         loaderOn(context);
-        getMakers
-            .call(NoParam.i)
-            .then((value) => _searchQuery.notifyListeners());
+        // getMakers
+        //     .call(NoParam.i)
+        //     .then((value) => _searchQuery.notifyListeners());
         return Future.delayed(const Duration(seconds: 3))
             .then((value) => Navigator.pop(context));
       },
       child: FutureBuilder(
-        future: getMakers.call(NoParam.i),
+        // future: getMakers.call(NoParam.i),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            final Either<Failure, Iterable<Maker>> makersEither = snapshot.data;
+          // if (snapshot.hasData) {
+          if (true) {
+            // final Either<Failure, Iterable<Maker>> makersEither = snapshot.data;
+            final Either<Failure, Iterable<Maker>> makersEither = Right(makers);
 
             makers = makersEither.fold((l) => [], (r) => r.toList());
 
@@ -193,18 +199,18 @@ class _MakersMainPageState extends State<MakersMainPage> {
             onPressed: () {
               setState(() {
                 if (actionIcon.icon == Icons.search) {
-                  actionIcon =  Icon(
+                  actionIcon = Icon(
                     Icons.close,
                     color: Colors.lightBlue.shade900,
                   );
                   appBarWidget = TextField(
                     controller: _searchQuery,
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.lightBlue.shade900,
                     ),
                     decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.searchHere,
-                        hintStyle:  TextStyle(color: Colors.lightBlue.shade900)),
+                        hintStyle: TextStyle(color: Colors.lightBlue.shade900)),
                   );
                   _handleSearchStart();
                 } else {

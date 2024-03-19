@@ -61,7 +61,9 @@ class MotorcycleDetailPage extends StatelessWidget {
         heading: 0,
         speed: 0,
         speedAccuracy: 0,
-        timestamp: null);
+        timestamp: null,
+        altitudeAccuracy: 0,
+        headingAccuracy: 0);
     Geolocator.checkPermission().then((value) {
       return null;
     });

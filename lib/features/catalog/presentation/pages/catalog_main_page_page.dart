@@ -26,6 +26,8 @@ List<String> categories = [
 class CatalogMainPage extends StatelessWidget {
   CatalogMainPage({Key? key}) : super(key: key);
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   final Future<String> _calculation = Future<String>.delayed(
     const Duration(seconds: 2),
     () => 'Data Loaded',
@@ -35,12 +37,16 @@ class CatalogMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     GetCategories _getCategories = getIt.get<GetCategories>();
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.transparent,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: secondaryColor),
+        backgroundColor: white,
         title: Column(
           children: [
             Image.asset(
               Images.mobeLogoPathNoBG,
+              height: 50,
             ),
             const SizedBox(
               height: 10,
@@ -109,9 +115,8 @@ class CatalogMainPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        elevation: 30,
-        onPressed: () {},
-      ),
+          elevation: 30,
+          onPressed: () => _scaffoldKey.currentState?.openDrawer()),
       body: Stack(children: [
         Container(
           decoration: BoxDecoration(
@@ -128,22 +133,20 @@ class CatalogMainPage extends StatelessWidget {
           child: buildBody(context, _getCategories),
         ),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.motorcycle), label: "Catalog"),
-          BottomNavigationBarItem(icon: Icon(Icons.hardware), label: "Tools"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.motorcycle), label: "Catalog"),
+      //     BottomNavigationBarItem(icon: Icon(Icons.hardware), label: "Tools"),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.settings), label: "Settings"),
+      //   ],
+      // ),
     );
   }
 
   Widget buildBody(BuildContext context, GetCategories getCategories) {
     return RefreshIndicator(
-      semanticsLabel: "123",
-      semanticsValue: "456",
       onRefresh: () {
         loaderOn(context);
         return Future.delayed(const Duration(seconds: 3))

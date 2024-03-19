@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
-import 'package:mobe/core/util/images.dart';
-import 'package:mobe/features/catalog/presentation/pages/catalog_main_page_page.dart';
+
+import '../../../../../core/util/images.dart';
+import '../../../../../injection_container.dart';
+import '../../../domain/entities/user/user.dart';
+import '../../../domain/usecases/create_user.dart';
+import 'log_in_page.dart';
 
 /// [SignUpPage] is a page where the user can sign up to the app.
 class SignUpPage extends StatelessWidget {
@@ -9,6 +13,14 @@ class SignUpPage extends StatelessWidget {
 
   static const double formIconSize = 28;
   final _formKey = GlobalKey<FormState>();
+  final CreateUser createUser = getIt.get<CreateUser>();
+
+  User userToCreate = const User(
+    userName: '',
+    email: '',
+    password: '',
+    roles: ['admin'],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +72,24 @@ class SignUpPage extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          onSaved: (value) {
+                            userToCreate =
+                                userToCreate.copyWith(userName: value ?? '');
+                          },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.userIcon,
                                 width: formIconSize, height: formIconSize),
-                            labelText: 'Nombre completo',
-                            hintText: 'Nombre',
+                            labelText: 'Nombre usuario',
+                            hintText: 'Nombre de usuario',
                           ),
                           validator: textFormFieldValidator,
                         ),
                         spaceV12,
                         TextFormField(
+                          onSaved: (value) {
+                            userToCreate =
+                                userToCreate.copyWith(email: value ?? '');
+                          },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.emailIcon,
                                 width: formIconSize, height: formIconSize),
@@ -79,6 +99,10 @@ class SignUpPage extends StatelessWidget {
                         ),
                         spaceV12,
                         TextFormField(
+                          onSaved: (value) {
+                            userToCreate =
+                                userToCreate.copyWith(password: value ?? '');
+                          },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.lock,
                                 width: formIconSize, height: formIconSize),
@@ -119,7 +143,7 @@ class SignUpPage extends StatelessWidget {
         ]),
       ),
       bottomNavigationBar: GestureDetector(
-        onTap: () {
+        onTap: () async {
           // Validate returns true if the form is valid, or false otherwise.
           if (_formKey.currentState!.validate()) {
             // If the form is valid, display a snackbar. In the real world,
@@ -127,10 +151,24 @@ class SignUpPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Processing Data')),
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CatalogMainPage()),
-            );
+            _formKey.currentState?.save();
+
+            // createUser.createUser();
+            final response = await createUser(CreateUserParams(userToCreate));
+
+            if (response.isRight()) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Usuario creado')),
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogIn()),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Error al crear usuario')),
+              );
+            }
           }
         },
         child: Container(

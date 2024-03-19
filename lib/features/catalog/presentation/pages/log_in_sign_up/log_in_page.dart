@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/util/images.dart';
-import 'package:mobe/features/catalog/presentation/pages/catalog_main_page_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/log_in_sign_up/sign_up_page.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../../injection_container.dart';
+import '../../../domain/entities/user/user.dart';
+import '../../../domain/usecases/log_in_user.dart';
+import '../makers_main_page_page.dart';
 
 /// [LogIn] is a page where the user can sign up to the app.
 class LogIn extends StatelessWidget {
@@ -10,10 +15,15 @@ class LogIn extends StatelessWidget {
 
   static const double formIconSize = 28;
   final _formKey = GlobalKey<FormState>();
+  final LogInUser logInUser = getIt.get<LogInUser>();
+
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(28),
         child: AppBar(
@@ -49,17 +59,28 @@ class LogIn extends StatelessWidget {
                     child: Column(
                       children: [
                         TextFormField(
+                          onSaved: (value) {
+                            email = value ?? '';
+                          },
+                          textCapitalization: TextCapitalization.none,
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.userIcon,
                                 width: formIconSize, height: formIconSize),
-                            labelText: 'Correo Electrónico',
-                            hintText: 'Correo Electrónico',
+                            labelText: 'Nombre de Usuario',
+                            hintText: 'nombre de usuario',
                           ),
                           validator: (value) => textFormFieldValidator(
-                              value, 'correo electrónico'),
+                              value, 'nombre de usuario'),
                         ),
                         spaceV12,
                         TextFormField(
+                          onSaved: (value) {
+                            password = value ?? '';
+                          },
+                          textCapitalization: TextCapitalization.none,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.lock,
                                 width: formIconSize, height: formIconSize),
@@ -76,19 +97,36 @@ class LogIn extends StatelessWidget {
                             ),
                             onPressed:
                                 // Validate returns true if the form is valid, or false otherwise.
-                                () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CatalogMainPage()),
-                              );
-                              // if (_formKey.currentState!.validate()) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(
-                              //         backgroundColor: secondaryColor,
-                              //         content: Text('Processing Data...')),
-                              //   );
-                              // }
+                                () async {
+                              if (_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: secondaryColor,
+                                      content: Text('Processing Data...')),
+                                );
+
+                                _formKey.currentState!.save();
+
+                                final response = await logInUser(
+                                    LogInUserParams(
+                                        email: email, password: password));
+
+                                response.fold((Failure error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        backgroundColor: secondaryColor,
+                                        content:
+                                            Text('Error al iniciar sesión')),
+                                  );
+                                }, (User user) {
+                                  print('Current User ${user}');
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MakersMainPage()),
+                                  );
+                                });
+                              }
                             },
                             child: Text('Iniciar Sesión',
                                 style: hib16.copyWith(

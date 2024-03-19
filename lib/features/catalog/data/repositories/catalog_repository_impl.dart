@@ -42,10 +42,14 @@ class CatalogRepositoryImpl implements CatalogRepository {
         // localDataSource.cacheNumberTrivia(remoteTrivia);
         return Right(remoteResponse);
       } on ServerException {
-        return Left(ServerFailure());
+        return Left(ServerFailure(
+          message: 'Server error',
+        ));
       }
     }
-    return Left(ServerFailure());
+    return Left(ServerFailure(
+      message: 'No internet connection',
+    ));
     // else {
     //   try {
     //     final localTrivia = await localDataSource.getLastNumberTrivia();
