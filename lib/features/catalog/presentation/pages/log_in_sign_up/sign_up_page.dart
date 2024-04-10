@@ -96,6 +96,7 @@ class SignUpPage extends StatelessWidget {
                             labelText: 'Correo Electrónico',
                             hintText: 'Correo',
                           ),
+                          validator: emailValidator,
                         ),
                         spaceV12,
                         TextFormField(
@@ -194,6 +195,13 @@ class SignUpPage extends StatelessWidget {
   String? textFormFieldValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor ingrese su nombre';
+    }
+    return null;
+  }
+
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty || !value.contains('@')) {
+      return 'Por favor ingrese su correo';
     }
     return null;
   }

@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart' show Either, Right;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:mobe/core/usecases/usecase.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../core/styles/styles.dart';
 import '../../../../core/util/images.dart';
 import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
@@ -15,18 +15,30 @@ import '../widgets/contact_form.dart';
 import '../widgets/grid_builder_widget.dart';
 import '../widgets/loading_widget.dart';
 
-class MakersMainPage extends StatefulWidget {
-  const MakersMainPage({Key? key}) : super(key: key);
+List<String> categories = [
+  'Asistencis',
+  'Talleres',
+  'Repuestos',
+  'Accesorios',
+  'Obligatorios',
+  'Perfil',
+  'Historial',
+  'Cerrar Sesión',
+];
+
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<MakersMainPage> createState() => _MakersMainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MakersMainPageState extends State<MakersMainPage> {
+class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final ScrollController _homeController = ScrollController();
 
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final GetMakers _getMakers = getIt.get<GetMakers>();
   final TextEditingController _searchQuery = TextEditingController();
@@ -54,10 +66,21 @@ class _MakersMainPageState extends State<MakersMainPage> {
   }
 
   Future<void> init() async {
-    final Either<Failure, Iterable<Maker>> makersEither =
-        await _getMakers.call(NoParam.i);
+    // final Either<Failure, Iterable<Maker>> makersEither =
+    //     await _getMakers.call(NoParam.i);
 
-    makers = makersEither.fold((l) => [], (r) => r.toList());
+    // makers = makersEither.fold((l) => [], (r) => r.toList());
+    List<Maker> makers = [
+      Maker(id: 1, name: 'maker1'),
+      Maker(id: 2, name: 'maker2'),
+      Maker(id: 3, name: 'maker3'),
+      Maker(id: 4, name: 'maker4'),
+      Maker(id: 5, name: 'maker5'),
+      Maker(id: 6, name: 'maker6'),
+      Maker(id: 7, name: 'maker7'),
+      Maker(id: 8, name: 'maker8'),
+      Maker(id: 9, name: 'maker9'),
+    ];
     _searchList = makers;
 
     _searchQuery.addListener(() {
@@ -99,6 +122,49 @@ class _MakersMainPageState extends State<MakersMainPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildBar(context),
+      drawer: Drawer(
+        width: 200,
+        child: ListView.separated(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          itemCount: 8,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 0) {
+              return Column(
+                children: const <Widget>[
+                  SizedBox(
+                    height: 125,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                      ),
+                      child: null,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return MenuListItem(
+                label: categories[index],
+                icon: Icons.motorcycle,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                color: index > 4 ? primaryColor : secondaryColor,
+              );
+            }
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return spaceV0;
+          },
+          // separatorBuilder: (BuildContext context, int index) {
+          //   return const Divider(
+          //     color: secondaryColor,
+          //     height: 1,
+          //   );
+          // },
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blue.shade900,
         elevation: 30,
@@ -156,6 +222,7 @@ class _MakersMainPageState extends State<MakersMainPage> {
   Widget buildBody(BuildContext context, GetMakers getMakers) {
     List<Maker> makers = [
       Maker(id: 1, name: 'maker1'),
+      Maker(id: 2, name: 'maker2'),
     ];
 
     return RefreshIndicator(
@@ -169,9 +236,12 @@ class _MakersMainPageState extends State<MakersMainPage> {
       },
       child: FutureBuilder(
         // future: getMakers.call(NoParam.i),
+        future:
+            Future.delayed(Duration(seconds: 3)).then((value) => Right(makers)),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           // if (snapshot.hasData) {
           if (true) {
+            print('snapshot.data: ${snapshot.data}');
             // final Either<Failure, Iterable<Maker>> makersEither = snapshot.data;
             final Either<Failure, Iterable<Maker>> makersEither = Right(makers);
 
@@ -240,5 +310,61 @@ class _MakersMainPageState extends State<MakersMainPage> {
       _IsSearching = false;
       _searchQuery.clear();
     });
+  }
+}
+
+class MenuListItem extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final Function onTap;
+  final Color? color;
+
+  const MenuListItem({
+    Key? key,
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    this.color = secondaryColor,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.all(0),
+      minLeadingWidth: 0,
+      minVerticalPadding: 0,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          color: secondaryColor,
+          style: BorderStyle.solid,
+          width: 0.1,
+        ),
+        borderRadius: BorderRadius.circular(0),
+      ),
+      title: SizedBox(
+        //height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 60,
+              width: 70,
+              color: color,
+              child: Icon(Icons.motorcycle,
+                  color:
+                      color == secondaryColor ? primaryColor : secondaryColor),
+            ),
+            spaceH12,
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 16,
+                color: secondaryTxt,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

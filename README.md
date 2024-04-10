@@ -1,6 +1,7 @@
 # mobe
 
-A new Flutter project.
+A new Flutter project
+fvm use 3.3.10
 
 ## Getting Started
 

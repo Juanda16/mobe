@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:mobe/core/styles/styles.dart';
 import 'package:mobe/core/util/images.dart';
@@ -107,8 +108,8 @@ class LogIn extends StatelessWidget {
 
                                 _formKey.currentState!.save();
 
-                                final response = await logInUser(
-                                    LogInUserParams(
+                                final Either<Failure, User> response =
+                                    await logInUser(LogInUserParams(
                                         email: email, password: password));
 
                                 response.fold((Failure error) {
@@ -118,12 +119,17 @@ class LogIn extends StatelessWidget {
                                         content:
                                             Text('Error al iniciar sesión')),
                                   );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MainPage()),
+                                  );
                                 }, (User user) {
                                   print('Current User ${user}');
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MakersMainPage()),
+                                        builder: (context) => MainPage()),
                                   );
                                 });
                               }

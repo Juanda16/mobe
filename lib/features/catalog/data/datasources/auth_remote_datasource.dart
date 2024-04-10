@@ -30,7 +30,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   static const String baseUrl =
       "https://mobeappbe.azurewebsites.net/api_v1/auth";
 
-  final String currentBaseUrl = localUrl;
+  final String currentBaseUrl = baseUrl;
 
   @override
   Future<Either<Failure, User>> logInWithEmailAndPassword(

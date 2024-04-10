@@ -26,7 +26,7 @@ List<String> categories = [
 class CatalogMainPage extends StatelessWidget {
   CatalogMainPage({Key? key}) : super(key: key);
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final Future<String> _calculation = Future<String>.delayed(
     const Duration(seconds: 2),

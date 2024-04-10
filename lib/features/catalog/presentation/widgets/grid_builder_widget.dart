@@ -17,6 +17,7 @@ class GridBuilderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('lenght ${_searchList.length}');
     return GridView.builder(
       controller: homeController,
       // Create a grid with 2 columns
