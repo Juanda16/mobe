@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart' show Either, Right;
+import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,23 +6,33 @@ import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/styles/styles.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/images.dart';
 import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
+import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/usecases/get_categories.dart';
 import '../../domain/usecases/get_makers.dart';
 import '../widgets/contact_form.dart';
 import '../widgets/grid_builder_widget.dart';
 import '../widgets/loading_widget.dart';
 
-List<String> categories = [
-  'Asistencis',
-  'Talleres',
-  'Repuestos',
-  'Accesorios',
-  'Obligatorios',
+// List<String> categories = [
+//   'Asistencia',
+//   'Talleres',
+//   'Repuestos',
+//   'Accesorios',
+//   'Obligatorios',
+//   'Perfil',
+//   'Historial',
+//   'Cerrar Sesión',
+// ];
+
+List<String> drawerFix = [
   'Perfil',
-  'Historial',
+  'Configuración',
+  'Home',
   'Cerrar Sesión',
 ];
 
@@ -38,11 +48,12 @@ class _MainPageState extends State<MainPage> {
   final ScrollController _homeController = ScrollController();
 
   final _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final GetMakers _getMakers = getIt.get<GetMakers>();
+  final GetCategories _getCategories = getIt.get<GetCategories>();
   final TextEditingController _searchQuery = TextEditingController();
   List<Maker> makers = [];
+  List<Category> categories = [];
   List<Maker> _searchList = [];
   late bool _IsSearching;
   String _searchText = "";
@@ -66,13 +77,25 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> init() async {
-    // final Either<Failure, Iterable<Maker>> makersEither =
-    //     await _getMakers.call(NoParam.i);
+    final Either<Failure, Iterable<Category>> categoriesEither =
+        await _getCategories.call(NoParam.i);
+    categories = categoriesEither.fold((l) {
+      print('Error: ${l}');
+      return [];
+    }, (r) => r.toList());
 
-    // makers = makersEither.fold((l) => [], (r) => r.toList());
+    categories.forEach((element) {
+      print('category on init: ${element.name}');
+    });
+    setState(() {});
+
     List<Maker> makers = [
-      Maker(id: 1, name: 'maker1'),
-      Maker(id: 2, name: 'maker2'),
+      Maker(id: 1, name: 'maker1', logoUrl: 'https://via.placeholder.com/150'),
+      Maker(
+          id: 2,
+          name: 'maker2',
+          logoUrl:
+              'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA'),
       Maker(id: 3, name: 'maker3'),
       Maker(id: 4, name: 'maker4'),
       Maker(id: 5, name: 'maker5'),
@@ -115,8 +138,17 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Category> drawerList = [
+      ...categories,
+      ...drawerFix.map((name) => Category(id: 0, name: name))
+    ];
+
+    drawerList.forEach((element) {
+      print('element: ${element.name}');
+    });
+
     List<Widget> widgetOptions = <Widget>[
-      buildBody(context, _getMakers),
+      buildBody(context, _getMakers, _getCategories),
       const SettingsPage()
     ];
     return Scaffold(
@@ -127,7 +159,8 @@ class _MainPageState extends State<MainPage> {
         child: ListView.separated(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
-          itemCount: 8,
+          itemCount: drawerList.length,
+          // Add 1 for the header
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return Column(
@@ -145,10 +178,28 @@ class _MainPageState extends State<MainPage> {
               );
             } else {
               return MenuListItem(
-                label: categories[index],
+                label: drawerList[index].name,
                 icon: Icons.motorcycle,
                 onTap: () {
-                  Navigator.pop(context);
+                  print('drawerList[index].name : ${drawerList[index].name}');
+                  // Navigator.of(context).pop();
+
+                  if (drawerList[index].name == 'Configuración') {
+                    widgetOptions.elementAt(1);
+                    setState(() {
+                      _selectedIndex = 1;
+                    });
+                  }
+                  if (drawerList[index].name == 'Cerrar Sesión') {}
+
+                  if (drawerList[index].name == 'Home') {
+                    widgetOptions.elementAt(0);
+                    setState(() {
+                      _selectedIndex = 0;
+                    });
+                  }
+
+                  Navigator.of(context).pop();
                 },
                 color: index > 4 ? primaryColor : secondaryColor,
               );
@@ -193,33 +244,34 @@ class _MainPageState extends State<MainPage> {
           child: widgetOptions.elementAt(_selectedIndex),
         ),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.motorcycle),
-              label: AppLocalizations.of(context)!.catalog),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.settings),
-              label: AppLocalizations.of(context)!.settings),
-        ],
-        onTap: (int index) {
-          if (_selectedIndex == index) {
-            _homeController.animateTo(
-              0.0,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut,
-            );
-          }
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        currentIndex: _selectedIndex,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(
+      //         icon: const Icon(Icons.motorcycle),
+      //         label: AppLocalizations.of(context)!.catalog),
+      //     BottomNavigationBarItem(
+      //         icon: const Icon(Icons.settings),
+      //         label: AppLocalizations.of(context)!.settings),
+      //   ],
+      //   onTap: (int index) {
+      //     if (_selectedIndex == index) {
+      //       _homeController.animateTo(
+      //         0.0,
+      //         duration: const Duration(milliseconds: 500),
+      //         curve: Curves.easeOut,
+      //       );
+      //     }
+      //     setState(() {
+      //       _selectedIndex = index;
+      //     });
+      //   },
+      //   currentIndex: _selectedIndex,
+      // ),
     );
   }
 
-  Widget buildBody(BuildContext context, GetMakers getMakers) {
+  Widget buildBody(
+      BuildContext context, GetMakers getMakers, GetCategories getCategories) {
     List<Maker> makers = [
       Maker(id: 1, name: 'maker1'),
       Maker(id: 2, name: 'maker2'),
@@ -228,6 +280,9 @@ class _MainPageState extends State<MainPage> {
     return RefreshIndicator(
       onRefresh: () {
         loaderOn(context);
+        getCategories
+            .call(NoParam.i)
+            .then((value) => _searchQuery.notifyListeners());
         // getMakers
         //     .call(NoParam.i)
         //     .then((value) => _searchQuery.notifyListeners());
@@ -235,20 +290,61 @@ class _MainPageState extends State<MainPage> {
             .then((value) => Navigator.pop(context));
       },
       child: FutureBuilder(
-        // future: getMakers.call(NoParam.i),
-        future:
-            Future.delayed(Duration(seconds: 3)).then((value) => Right(makers)),
+        future: getCategories.call(NoParam.i),
+        // future:
+        //     Future.delayed(Duration(seconds: 3)).then((value) => Right(makers)),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          // if (snapshot.hasData) {
-          if (true) {
-            print('snapshot.data: ${snapshot.data}');
-            // final Either<Failure, Iterable<Maker>> makersEither = snapshot.data;
-            final Either<Failure, Iterable<Maker>> makersEither = Right(makers);
+          if (snapshot.hasData) {
+            final Either<Failure, Iterable<Category>> categoriesEither =
+                snapshot.data;
+            categories = categoriesEither.fold((l) {
+              print('Error: ${l}');
+              return [];
+            }, (r) => r.toList());
 
-            makers = makersEither.fold((l) => [], (r) => r.toList());
-
-            return GridBuilderWidget(
-                searchList: _searchList, homeController: _homeController);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Recomendados',
+                      style: hpm16.copyWith(color: secondaryColor),
+                      textAlign: TextAlign.start),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: SizedBox(
+                                width: 160,
+                                child: Text(categories[index].name)),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text('Mejor Puntuados',
+                      style: hpm16.copyWith(color: secondaryColor),
+                      textAlign: TextAlign.start),
+                  Expanded(
+                    child: SizedBox(
+                      child: GridBuilderWidget(
+                          searchList: _searchList,
+                          homeController: _homeController),
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else {
             return const Center(child: LoadingWidget());
           }
@@ -316,7 +412,7 @@ class _MainPageState extends State<MainPage> {
 class MenuListItem extends StatelessWidget {
   final String label;
   final IconData icon;
-  final Function onTap;
+  final VoidCallback onTap;
   final Color? color;
 
   const MenuListItem({
@@ -330,6 +426,7 @@ class MenuListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       contentPadding: const EdgeInsets.all(0),
       minLeadingWidth: 0,
       minVerticalPadding: 0,

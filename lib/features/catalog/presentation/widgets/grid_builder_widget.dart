@@ -48,11 +48,9 @@ class GridBuilderWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Images.getUrlLogo(
-                          logoUrl: _searchList.elementAt(index).logoUrl),
-                    ),
+                    child: Images.getUrlLogo(
+                        logoUrl: _searchList.elementAt(index).logoUrl,
+                        size: 50),
                   ),
                   Expanded(
                     flex: 1,

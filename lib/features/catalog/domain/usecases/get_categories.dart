@@ -12,6 +12,7 @@ class GetCategories implements UseCase<Iterable<Category>, NoParam> {
 
   @override
   Future<Either<Failure, Iterable<Category>>> call(NoParam _) async {
+    print('GetCategories UC call>>>');
     return await repository.getCategories();
   }
 }

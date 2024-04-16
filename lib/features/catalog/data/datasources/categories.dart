@@ -24,32 +24,27 @@ const String responseString =
 class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   final http.Client client;
 
-  // static const String baseUrl =
-  //     "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1/";
-  // static const String apiKey =
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2ODk4NzQsImV4cCI6MTk5NzI2NTg3NH0.8kLIMV-TD0AYbq0tuwpXIIykj7FA6TRLoFP-DHLloLs';
-  // static const String authToken =
-  //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4MTY4OTg3NCwiZXhwIjoxOTk3MjY1ODc0fQ.09n3aZNWC-qKzkUqf6EQJwuXGuNd54K7WHlkYH4Ru3k';
-  //
-  // // '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
-  //
-  // static const String rapidAPIHost = 'motorcycle-specs-database.p.rapidapi.com';
+  static const String baseUrl =
+      "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1/";
+  static const String apiKey =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2ODk4NzQsImV4cCI6MTk5NzI2NTg3NH0.8kLIMV-TD0AYbq0tuwpXIIykj7FA6TRLoFP-DHLloLs';
+  static const String authToken =
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4MTY4OTg3NCwiZXhwIjoxOTk3MjY1ODc0fQ.09n3aZNWC-qKzkUqf6EQJwuXGuNd54K7WHlkYH4Ru3k';
 
-  static const String localUrl = "http://localhost:8080/api_v1";
+  // '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
 
-  static const String baseUrl = "https://mobeappbe.azurewebsites.net/api_v1";
-
-  final String currentBaseUrl = baseUrl;
+  static const String rapidAPIHost = 'motorcycle-specs-database.p.rapidapi.com';
 
   CatalogRemoteDataSourceImpl2({required this.client});
 
   Future<Map<String, dynamic>> _getResponseFromUrl(String url) async {
-    var uri = Uri.parse('$currentBaseUrl/$url');
+    var uri = Uri.parse('$baseUrl/$url');
     final http.Response response = await client.get(uri, headers: {
-      'Content-Type': 'application/json',
+      'apikey': apiKey,
+      'Authorization': authToken,
     });
 
-    print('response>>>: ${response.body}');
+    // log('response>>>: ${response.body}');
     final String preProcessResponse = '{"$url":${response.body}}';
     // final http.Response response = http.Response(makersFakeResponseString, 200);
 
@@ -70,22 +65,12 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   @override
   Future<Iterable<Category>> getCategories() async {
     final Map<String, dynamic> response =
-        (await _getResponseFromUrl('categories/all')) as Map<String, dynamic>;
-    // makersFakeResponse;
+        // (await _getResponseFromUrl('category')) as Map<String, dynamic>;
+        makersFakeResponse;
+    Iterable<Category> categories =
+        (response as List).map((category) => Category.fromJson(category));
 
-    try {
-      final List<dynamic> responseList =
-          response['categories/all'] as List<dynamic>;
-
-      Iterable<Category> categories = responseList.map((category) {
-        return Category.fromJson(category);
-      });
-
-      return categories;
-    } catch (e) {
-      print(e);
-      return [];
-    }
+    return categories;
   }
 
   @override
