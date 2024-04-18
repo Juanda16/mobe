@@ -25,6 +25,7 @@ mixin _$User {
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   List<String>? get roles => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'accessToken')
   String? get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'tokenType')
@@ -45,6 +46,7 @@ abstract class $UserCopyWith<$Res> {
       String? email,
       String? password,
       List<String>? roles,
+      String? imageUrl,
       @JsonKey(name: 'accessToken') String? accessToken,
       @JsonKey(name: 'tokenType') String? tokenType});
 }
@@ -66,6 +68,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = freezed,
     Object? password = freezed,
     Object? roles = freezed,
+    Object? imageUrl = freezed,
     Object? accessToken = freezed,
     Object? tokenType = freezed,
   }) {
@@ -86,6 +89,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -109,6 +116,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? email,
       String? password,
       List<String>? roles,
+      String? imageUrl,
       @JsonKey(name: 'accessToken') String? accessToken,
       @JsonKey(name: 'tokenType') String? tokenType});
 }
@@ -126,6 +134,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? email = freezed,
     Object? password = freezed,
     Object? roles = freezed,
+    Object? imageUrl = freezed,
     Object? accessToken = freezed,
     Object? tokenType = freezed,
   }) {
@@ -146,6 +155,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
           ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -166,6 +179,7 @@ class _$_User implements _User {
       this.email,
       this.password,
       final List<String>? roles,
+      this.imageUrl,
       @JsonKey(name: 'accessToken') this.accessToken,
       @JsonKey(name: 'tokenType') this.tokenType})
       : _roles = roles;
@@ -190,6 +204,8 @@ class _$_User implements _User {
   }
 
   @override
+  final String? imageUrl;
+  @override
   @JsonKey(name: 'accessToken')
   final String? accessToken;
   @override
@@ -198,7 +214,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(userName: $userName, email: $email, password: $password, roles: $roles, accessToken: $accessToken, tokenType: $tokenType)';
+    return 'User(userName: $userName, email: $email, password: $password, roles: $roles, imageUrl: $imageUrl, accessToken: $accessToken, tokenType: $tokenType)';
   }
 
   @override
@@ -212,6 +228,8 @@ class _$_User implements _User {
             (identical(other.password, password) ||
                 other.password == password) &&
             const DeepCollectionEquality().equals(other._roles, _roles) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.tokenType, tokenType) ||
@@ -220,8 +238,15 @@ class _$_User implements _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userName, email, password,
-      const DeepCollectionEquality().hash(_roles), accessToken, tokenType);
+  int get hashCode => Object.hash(
+      runtimeType,
+      userName,
+      email,
+      password,
+      const DeepCollectionEquality().hash(_roles),
+      imageUrl,
+      accessToken,
+      tokenType);
 
   @JsonKey(ignore: true)
   @override
@@ -243,6 +268,7 @@ abstract class _User implements User {
       final String? email,
       final String? password,
       final List<String>? roles,
+      final String? imageUrl,
       @JsonKey(name: 'accessToken') final String? accessToken,
       @JsonKey(name: 'tokenType') final String? tokenType}) = _$_User;
 
@@ -257,6 +283,8 @@ abstract class _User implements User {
   String? get password;
   @override
   List<String>? get roles;
+  @override
+  String? get imageUrl;
   @override
   @JsonKey(name: 'accessToken')
   String? get accessToken;

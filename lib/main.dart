@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:mobe/features/catalog/presentation/pages/makers_main_page_page.dart';
 
 import 'core/styles/styles.dart';
+import 'features/catalog/presentation/pages/log_in_sign_up/log_in_page.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
@@ -39,8 +39,8 @@ class _MyAppState extends State<MyApp> {
         Locale('en'), // English
         Locale('es'), // Spanish
       ],
-      home: MainPage(),
-      // home: LogIn(),
+      // home: MainPage(),
+      home: LogIn(),
     );
   }
 

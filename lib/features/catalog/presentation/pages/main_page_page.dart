@@ -1,7 +1,10 @@
-import 'package:dartz/dartz.dart' show Either;
+import 'dart:developer';
+
+import 'package:dartz/dartz.dart' show Either, Left, Right;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mobe/features/catalog/presentation/pages/profile/edit_profile_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 
 import '../../../../core/error/failures.dart';
@@ -12,22 +15,21 @@ import '../../../../core/util/loader.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/user/user.dart';
 import '../../domain/usecases/get_categories.dart';
 import '../../domain/usecases/get_makers.dart';
 import '../widgets/contact_form.dart';
 import '../widgets/grid_builder_widget.dart';
 import '../widgets/loading_widget.dart';
+//
 
-// List<String> categories = [
-//   'Asistencia',
-//   'Talleres',
-//   'Repuestos',
-//   'Accesorios',
-//   'Obligatorios',
-//   'Perfil',
-//   'Historial',
-//   'Cerrar Sesión',
-// ];
+List<String> defaultCategories = [
+  'Asistencia',
+  'Talleres',
+  'Repuestos',
+  'Accesorios',
+  'Obligatorios',
+];
 
 List<String> drawerFix = [
   'Perfil',
@@ -37,7 +39,9 @@ List<String> drawerFix = [
 ];
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key, required this.currentUser}) : super(key: key);
+
+  final User currentUser;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -52,7 +56,7 @@ class _MainPageState extends State<MainPage> {
   final GetMakers _getMakers = getIt.get<GetMakers>();
   final GetCategories _getCategories = getIt.get<GetCategories>();
   final TextEditingController _searchQuery = TextEditingController();
-  List<Maker> makers = [];
+  List<Maker> tiendas = [];
   List<Category> categories = [];
   List<Maker> _searchList = [];
   late bool _IsSearching;
@@ -78,33 +82,41 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> init() async {
     final Either<Failure, Iterable<Category>> categoriesEither =
-        await _getCategories.call(NoParam.i);
+        await Future.any([
+      _getCategories.call(NoParam.i),
+      Future.delayed(const Duration(seconds: 5))
+          .then((value) => Left(ServerFailure(message: 'Timeout')))
+    ]);
+
     categories = categoriesEither.fold((l) {
-      print('Error: ${l}');
-      return [];
+      log('Error getting categories: $l');
+      return defaultCategories
+          .map((defaultCategory) => Category(id: 0, name: defaultCategory))
+          .toList();
     }, (r) => r.toList());
 
-    categories.forEach((element) {
-      print('category on init: ${element.name}');
-    });
     setState(() {});
 
-    List<Maker> makers = [
-      Maker(id: 1, name: 'maker1', logoUrl: 'https://via.placeholder.com/150'),
-      Maker(
-          id: 2,
-          name: 'maker2',
+    List<Maker> tiendas = [
+      const Maker(
+          id: 1,
+          name: 'tienda1',
           logoUrl:
               'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA'),
-      Maker(id: 3, name: 'maker3'),
-      Maker(id: 4, name: 'maker4'),
-      Maker(id: 5, name: 'maker5'),
-      Maker(id: 6, name: 'maker6'),
-      Maker(id: 7, name: 'maker7'),
-      Maker(id: 8, name: 'maker8'),
-      Maker(id: 9, name: 'maker9'),
+      const Maker(
+          id: 2,
+          name: 'tienda2',
+          logoUrl:
+              'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA'),
+      const Maker(id: 3, name: 'tienda3'),
+      const Maker(id: 4, name: 'tienda4'),
+      const Maker(id: 5, name: 'tienda5'),
+      const Maker(id: 6, name: 'tienda6'),
+      const Maker(id: 7, name: 'tienda7'),
+      const Maker(id: 8, name: 'tienda8'),
+      const Maker(id: 9, name: 'tienda9'),
     ];
-    _searchList = makers;
+    _searchList = tiendas;
 
     _searchQuery.addListener(() {
       if (_searchQuery.text.isEmpty) {
@@ -125,11 +137,11 @@ class _MainPageState extends State<MainPage> {
 
   List<Maker> _buildSearchList() {
     if (_searchText.isEmpty) {
-      return _searchList = makers;
+      return _searchList = tiendas;
     } else {
-      _searchList = makers
-          .where((maker) =>
-              maker.name.toLowerCase().contains(_searchText.toLowerCase()))
+      _searchList = tiendas
+          .where((tienda) =>
+              tienda.name.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
 
       return _searchList;
@@ -143,14 +155,12 @@ class _MainPageState extends State<MainPage> {
       ...drawerFix.map((name) => Category(id: 0, name: name))
     ];
 
-    drawerList.forEach((element) {
-      print('element: ${element.name}');
-    });
-
     List<Widget> widgetOptions = <Widget>[
       buildBody(context, _getMakers, _getCategories),
-      const SettingsPage()
+      EditProfilePage(currentUser: widget.currentUser),
+      const SettingsPage(),
     ];
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: buildBar(context),
@@ -159,7 +169,7 @@ class _MainPageState extends State<MainPage> {
         child: ListView.separated(
           shrinkWrap: true,
           padding: EdgeInsets.zero,
-          itemCount: drawerList.length,
+          itemCount: drawerList.length + 1,
           // Add 1 for the header
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
@@ -178,30 +188,39 @@ class _MainPageState extends State<MainPage> {
               );
             } else {
               return MenuListItem(
-                label: drawerList[index].name,
+                label: drawerList[index - 1].name,
                 icon: Icons.motorcycle,
                 onTap: () {
-                  print('drawerList[index].name : ${drawerList[index].name}');
                   // Navigator.of(context).pop();
 
-                  if (drawerList[index].name == 'Configuración') {
-                    widgetOptions.elementAt(1);
-                    setState(() {
-                      _selectedIndex = 1;
-                    });
-                  }
-                  if (drawerList[index].name == 'Cerrar Sesión') {}
-
-                  if (drawerList[index].name == 'Home') {
+                  if (drawerList[index - 1].name == 'Home') {
                     widgetOptions.elementAt(0);
                     setState(() {
                       _selectedIndex = 0;
                     });
                   }
 
+                  if (drawerList[index - 1].name == 'Perfil') {
+                    widgetOptions.elementAt(1);
+                    setState(() {
+                      _selectedIndex = 1;
+                    });
+                  }
+
+                  if (drawerList[index - 1].name == 'Configuración') {
+                    widgetOptions.elementAt(2);
+                    setState(() {
+                      _selectedIndex = 2;
+                    });
+                  }
+                  if (drawerList[index - 1].name == 'Cerrar Sesión') {
+                    Navigator.pop(context);
+                  }
+
                   Navigator.of(context).pop();
                 },
-                color: index > 4 ? primaryColor : secondaryColor,
+                color:
+                    index > categories.length ? primaryColor : secondaryColor,
               );
             }
           },
@@ -272,9 +291,9 @@ class _MainPageState extends State<MainPage> {
 
   Widget buildBody(
       BuildContext context, GetMakers getMakers, GetCategories getCategories) {
-    List<Maker> makers = [
-      Maker(id: 1, name: 'maker1'),
-      Maker(id: 2, name: 'maker2'),
+    List<Maker> tiendas = [
+      Maker(id: 1, name: 'tienda1'),
+      Maker(id: 2, name: 'tienda2'),
     ];
 
     return RefreshIndicator(
@@ -292,7 +311,7 @@ class _MainPageState extends State<MainPage> {
       child: FutureBuilder(
         future: getCategories.call(NoParam.i),
         // future:
-        //     Future.delayed(Duration(seconds: 3)).then((value) => Right(makers)),
+        //     Future.delayed(Duration(seconds: 3)).then((value) => Right(tiendas)),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             final Either<Failure, Iterable<Category>> categoriesEither =

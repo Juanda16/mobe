@@ -50,7 +50,8 @@ class GridBuilderWidget extends StatelessWidget {
                     flex: 2,
                     child: Images.getUrlLogo(
                         logoUrl: _searchList.elementAt(index).logoUrl,
-                        size: 50),
+                        size: 150,
+                        borderRadius: BorderRadius.circular(0)),
                   ),
                   Expanded(
                     flex: 1,

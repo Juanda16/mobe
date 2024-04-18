@@ -12,6 +12,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       password: json['password'] as String?,
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      imageUrl: json['imageUrl'] as String?,
       accessToken: json['accessToken'] as String?,
       tokenType: json['tokenType'] as String?,
     );
@@ -21,6 +22,7 @@ Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
       'roles': instance.roles,
+      'imageUrl': instance.imageUrl,
       'accessToken': instance.accessToken,
       'tokenType': instance.tokenType,
     };

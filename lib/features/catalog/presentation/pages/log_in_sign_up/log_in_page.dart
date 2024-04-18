@@ -8,7 +8,7 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../injection_container.dart';
 import '../../../domain/entities/user/user.dart';
 import '../../../domain/usecases/log_in_user.dart';
-import '../makers_main_page_page.dart';
+import '../main_page_page.dart';
 
 /// [LogIn] is a page where the user can sign up to the app.
 class LogIn extends StatelessWidget {
@@ -119,17 +119,23 @@ class LogIn extends StatelessWidget {
                                         content:
                                             Text('Error al iniciar sesión')),
                                   );
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MainPage()),
+                                        builder: (context) => MainPage(
+                                                currentUser: User(
+                                              userName: 'User',
+                                              email: email,
+                                              password: password,
+                                            ))),
                                   );
                                 }, (User user) {
                                   print('Current User ${user}');
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MainPage()),
+                                        builder: (context) =>
+                                            MainPage(currentUser: user)),
                                   );
                                 });
                               }

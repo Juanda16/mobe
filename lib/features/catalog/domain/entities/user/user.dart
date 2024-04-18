@@ -11,6 +11,7 @@ class User with _$User {
       String? email,
       String? password,
       List<String>? roles,
+      String? imageUrl,
       @JsonKey(name: 'accessToken') String? accessToken,
       @JsonKey(name: 'tokenType') String? tokenType}) = _User;
 
