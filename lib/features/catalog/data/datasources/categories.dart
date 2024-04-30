@@ -12,6 +12,7 @@ import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/vendor/store.dart';
 import 'catalog_remote_data_source.dart';
 import 'fake_makers_response.dart';
 import 'fake_motorcycle_response.dart';
@@ -120,5 +121,11 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
     //motorcycleFakeResponse;
     Motorcycle motorcycle = Motorcycle.fromJson(response['article/$id']);
     return motorcycle;
+  }
+
+  @override
+  Future<Iterable<Store>> getStores() {
+    // TODO: implement getStores
+    throw UnimplementedError();
   }
 }

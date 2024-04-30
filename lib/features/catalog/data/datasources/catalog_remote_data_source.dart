@@ -12,6 +12,7 @@ import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/vendor/store.dart';
 import 'fake_makers_response.dart';
 import 'fake_motorcycle_response.dart';
 import 'fake_motorcycles_name_response.dart';
@@ -25,6 +26,8 @@ abstract class CatalogRemoteDataSource {
   ///
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Category>> getCategories();
+
+  Future<Iterable<Store>> getStores();
 
   /// Calls the endpoint.
   ///
@@ -136,5 +139,11 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
     Motorcycle motorcycle = Motorcycle.fromJson(response['article/$id']);
     return motorcycle;
+  }
+
+  @override
+  Future<Iterable<Store>> getStores() {
+    // TODO: implement getStores
+    throw UnimplementedError();
   }
 }

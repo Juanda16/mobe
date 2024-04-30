@@ -6,6 +6,7 @@ import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../domain/entities/category/category.dart';
+import '../../domain/entities/vendor/store.dart';
 import '../../domain/repositories/catalog_repository.dart';
 import '../datasources/catalog_remote_data_source.dart';
 
@@ -23,6 +24,13 @@ class CatalogRepositoryImpl implements CatalogRepository {
   Future<Either<Failure, Iterable<Category>>> getCategories() async {
     return await _getRequest<Iterable<Category>>(() {
       return remoteDataSource.getCategories();
+    });
+  }
+
+  @override
+  Future<Either<Failure, Iterable<Store>>> getStores() async {
+    return await _getRequest<Iterable<Store>>(() {
+      return remoteDataSource.getStores();
     });
   }
 

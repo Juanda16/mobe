@@ -12,6 +12,7 @@ import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/vendor/store.dart';
 import 'catalog_remote_data_source.dart';
 import 'fake_makers_response.dart';
 import 'fake_motorcycle_response.dart';
@@ -82,6 +83,26 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
       });
 
       return categories;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<Iterable<Store>> getStores() async {
+    final Map<String, dynamic> response =
+        (await _getResponseFromUrl('stores/all')) as Map<String, dynamic>;
+
+    try {
+      final List<dynamic> responseList =
+          response['stores/all'] as List<dynamic>;
+
+      Iterable<Store> stores = responseList.map((category) {
+        return Store.fromJson(category);
+      });
+
+      return stores;
     } catch (e) {
       print(e);
       return [];

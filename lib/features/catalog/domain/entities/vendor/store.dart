@@ -1,12 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'vendor.freezed.dart';
-
-part 'vendor.g.dart';
+part 'store.freezed.dart';
+part 'store.g.dart';
 
 @freezed
-class Vendor with _$Vendor {
-  const factory Vendor(
+class Store with _$Store {
+  const factory Store(
       {required int id,
       required String name,
       String? phone,
@@ -15,7 +14,7 @@ class Vendor with _$Vendor {
       String? city,
       String? country,
       @Default(0.0) double latitude,
-      @Default(0.0) double longitude}) = _Vendor;
+      @Default(0.0) double longitude}) = _Store;
 
-  factory Vendor.fromJson(Map<String, dynamic> json) => _$VendorFromJson(json);
+  factory Store.fromJson(Map<String, dynamic> json) => _$StoreFromJson(json);
 }

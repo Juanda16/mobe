@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'vendor.dart';
+part of 'store.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Vendor _$$_VendorFromJson(Map<String, dynamic> json) => _$_Vendor(
+_$_Store _$$_StoreFromJson(Map<String, dynamic> json) => _$_Store(
       id: json['id'] as int,
       name: json['name'] as String,
       phone: json['phone'] as String?,
@@ -18,7 +18,7 @@ _$_Vendor _$$_VendorFromJson(Map<String, dynamic> json) => _$_Vendor(
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
     );
 
-Map<String, dynamic> _$$_VendorToJson(_$_Vendor instance) => <String, dynamic>{
+Map<String, dynamic> _$$_StoreToJson(_$_Store instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,

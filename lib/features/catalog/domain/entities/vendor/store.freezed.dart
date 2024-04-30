@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'vendor.dart';
+part of 'store.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Vendor _$VendorFromJson(Map<String, dynamic> json) {
-  return _Vendor.fromJson(json);
+Store _$StoreFromJson(Map<String, dynamic> json) {
+  return _Store.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Vendor {
+mixin _$Store {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -32,13 +32,13 @@ mixin _$Vendor {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $VendorCopyWith<Vendor> get copyWith => throw _privateConstructorUsedError;
+  $StoreCopyWith<Store> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $VendorCopyWith<$Res> {
-  factory $VendorCopyWith(Vendor value, $Res Function(Vendor) then) =
-      _$VendorCopyWithImpl<$Res, Vendor>;
+abstract class $StoreCopyWith<$Res> {
+  factory $StoreCopyWith(Store value, $Res Function(Store) then) =
+      _$StoreCopyWithImpl<$Res, Store>;
   @useResult
   $Res call(
       {int id,
@@ -53,9 +53,9 @@ abstract class $VendorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VendorCopyWithImpl<$Res, $Val extends Vendor>
-    implements $VendorCopyWith<$Res> {
-  _$VendorCopyWithImpl(this._value, this._then);
+class _$StoreCopyWithImpl<$Res, $Val extends Store>
+    implements $StoreCopyWith<$Res> {
+  _$StoreCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -117,9 +117,9 @@ class _$VendorCopyWithImpl<$Res, $Val extends Vendor>
 }
 
 /// @nodoc
-abstract class _$$_VendorCopyWith<$Res> implements $VendorCopyWith<$Res> {
-  factory _$$_VendorCopyWith(_$_Vendor value, $Res Function(_$_Vendor) then) =
-      __$$_VendorCopyWithImpl<$Res>;
+abstract class _$$_StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
+  factory _$$_StoreCopyWith(_$_Store value, $Res Function(_$_Store) then) =
+      __$$_StoreCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -135,10 +135,9 @@ abstract class _$$_VendorCopyWith<$Res> implements $VendorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VendorCopyWithImpl<$Res>
-    extends _$VendorCopyWithImpl<$Res, _$_Vendor>
-    implements _$$_VendorCopyWith<$Res> {
-  __$$_VendorCopyWithImpl(_$_Vendor _value, $Res Function(_$_Vendor) _then)
+class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
+    implements _$$_StoreCopyWith<$Res> {
+  __$$_StoreCopyWithImpl(_$_Store _value, $Res Function(_$_Store) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -154,7 +153,7 @@ class __$$_VendorCopyWithImpl<$Res>
     Object? latitude = null,
     Object? longitude = null,
   }) {
-    return _then(_$_Vendor(
+    return _then(_$_Store(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -197,8 +196,8 @@ class __$$_VendorCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Vendor implements _Vendor {
-  const _$_Vendor(
+class _$_Store implements _Store {
+  const _$_Store(
       {required this.id,
       required this.name,
       this.phone,
@@ -209,8 +208,8 @@ class _$_Vendor implements _Vendor {
       this.latitude = 0.0,
       this.longitude = 0.0});
 
-  factory _$_Vendor.fromJson(Map<String, dynamic> json) =>
-      _$$_VendorFromJson(json);
+  factory _$_Store.fromJson(Map<String, dynamic> json) =>
+      _$$_StoreFromJson(json);
 
   @override
   final int id;
@@ -235,14 +234,14 @@ class _$_Vendor implements _Vendor {
 
   @override
   String toString() {
-    return 'Vendor(id: $id, name: $name, phone: $phone, email: $email, address: $address, city: $city, country: $country, latitude: $latitude, longitude: $longitude)';
+    return 'Store(id: $id, name: $name, phone: $phone, email: $email, address: $address, city: $city, country: $country, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Vendor &&
+            other is _$_Store &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.phone, phone) || other.phone == phone) &&
@@ -264,19 +263,19 @@ class _$_Vendor implements _Vendor {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VendorCopyWith<_$_Vendor> get copyWith =>
-      __$$_VendorCopyWithImpl<_$_Vendor>(this, _$identity);
+  _$$_StoreCopyWith<_$_Store> get copyWith =>
+      __$$_StoreCopyWithImpl<_$_Store>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VendorToJson(
+    return _$$_StoreToJson(
       this,
     );
   }
 }
 
-abstract class _Vendor implements Vendor {
-  const factory _Vendor(
+abstract class _Store implements Store {
+  const factory _Store(
       {required final int id,
       required final String name,
       final String? phone,
@@ -285,9 +284,9 @@ abstract class _Vendor implements Vendor {
       final String? city,
       final String? country,
       final double latitude,
-      final double longitude}) = _$_Vendor;
+      final double longitude}) = _$_Store;
 
-  factory _Vendor.fromJson(Map<String, dynamic> json) = _$_Vendor.fromJson;
+  factory _Store.fromJson(Map<String, dynamic> json) = _$_Store.fromJson;
 
   @override
   int get id;
@@ -309,6 +308,6 @@ abstract class _Vendor implements Vendor {
   double get longitude;
   @override
   @JsonKey(ignore: true)
-  _$$_VendorCopyWith<_$_Vendor> get copyWith =>
+  _$$_StoreCopyWith<_$_Store> get copyWith =>
       throw _privateConstructorUsedError;
 }
