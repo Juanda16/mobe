@@ -70,8 +70,7 @@ class LogIn extends StatelessWidget {
                             labelText: 'Nombre de Usuario',
                             hintText: 'nombre de usuario',
                           ),
-                          validator: (value) => textFormFieldValidator(
-                              value, 'nombre de usuario'),
+                          validator: (value) => textFormFieldValidator(value, 'nombre de usuario'),
                         ),
                         spaceV12,
                         TextFormField(
@@ -88,8 +87,7 @@ class LogIn extends StatelessWidget {
                             labelText: 'Contraseña',
                             hintText: 'Contraseña',
                           ),
-                          validator: (value) =>
-                              textFormFieldValidator(value, 'Contraseña'),
+                          validator: (value) => textFormFieldValidator(value, 'Contraseña'),
                         ),
                         spaceV48,
                         ElevatedButton(
@@ -108,16 +106,17 @@ class LogIn extends StatelessWidget {
 
                                 _formKey.currentState!.save();
 
-                                final Either<Failure, User> response =
-                                    await logInUser(LogInUserParams(
-                                        email: email, password: password));
+                                final Either<Failure, User> response = await Future.any([
+                                  logInUser(LogInUserParams(email: email, password: password)),
+                                  Future.delayed(const Duration(seconds: 5),
+                                      () => left(ServerFailure(message: 'Error al iniciar sesión')))
+                                ]);
 
                                 response.fold((Failure error) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                         backgroundColor: secondaryColor,
-                                        content:
-                                            Text('Error al iniciar sesión')),
+                                        content: Text('Error al iniciar sesión')),
                                   );
                                   Navigator.push(
                                     context,
@@ -134,8 +133,7 @@ class LogIn extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            MainPage(currentUser: user)),
+                                        builder: (context) => MainPage(currentUser: user)),
                                   );
                                 });
                               }
@@ -168,11 +166,9 @@ class LogIn extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Images.buildSvgPngImage(Images.facebookIcon,
-                          width: 40, height: 40),
+                      Images.buildSvgPngImage(Images.facebookIcon, width: 40, height: 40),
                       spaceH24,
-                      Images.buildSvgPngImage(Images.googleIcon,
-                          width: 40, height: 40),
+                      Images.buildSvgPngImage(Images.googleIcon, width: 40, height: 40),
                     ],
                   ),
                 ],
@@ -207,8 +203,7 @@ class LogIn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   spaceV12,
-                  Text('Sos nuevo por aquí?',
-                      style: sim14.copyWith(color: white)),
+                  Text('Sos nuevo por aquí?', style: sim14.copyWith(color: white)),
                   spaceV4,
                   Text(
                     'Regístrate!',
