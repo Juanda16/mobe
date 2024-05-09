@@ -22,11 +22,12 @@ Store _$StoreFromJson(Map<String, dynamic> json) {
 mixin _$Store {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get phone => throw _privateConstructorUsedError;
+  int? get phone => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
+  String? get logoUrl => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
 
@@ -43,11 +44,12 @@ abstract class $StoreCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String? phone,
+      int? phone,
       String? email,
       String? address,
       String? city,
       String? country,
+      String? logoUrl,
       double latitude,
       double longitude});
 }
@@ -72,6 +74,7 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
     Object? address = freezed,
     Object? city = freezed,
     Object? country = freezed,
+    Object? logoUrl = freezed,
     Object? latitude = null,
     Object? longitude = null,
   }) {
@@ -87,7 +90,7 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -103,6 +106,10 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      logoUrl: freezed == logoUrl
+          ? _value.logoUrl
+          : logoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       latitude: null == latitude
           ? _value.latitude
@@ -125,11 +132,12 @@ abstract class _$$_StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String? phone,
+      int? phone,
       String? email,
       String? address,
       String? city,
       String? country,
+      String? logoUrl,
       double latitude,
       double longitude});
 }
@@ -150,6 +158,7 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
     Object? address = freezed,
     Object? city = freezed,
     Object? country = freezed,
+    Object? logoUrl = freezed,
     Object? latitude = null,
     Object? longitude = null,
   }) {
@@ -165,7 +174,7 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -181,6 +190,10 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      logoUrl: freezed == logoUrl
+          ? _value.logoUrl
+          : logoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       latitude: null == latitude
           ? _value.latitude
@@ -205,6 +218,7 @@ class _$_Store implements _Store {
       this.address,
       this.city,
       this.country,
+      this.logoUrl,
       this.latitude = 0.0,
       this.longitude = 0.0});
 
@@ -216,7 +230,7 @@ class _$_Store implements _Store {
   @override
   final String name;
   @override
-  final String? phone;
+  final int? phone;
   @override
   final String? email;
   @override
@@ -226,6 +240,8 @@ class _$_Store implements _Store {
   @override
   final String? country;
   @override
+  final String? logoUrl;
+  @override
   @JsonKey()
   final double latitude;
   @override
@@ -234,7 +250,7 @@ class _$_Store implements _Store {
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, phone: $phone, email: $email, address: $address, city: $city, country: $country, latitude: $latitude, longitude: $longitude)';
+    return 'Store(id: $id, name: $name, phone: $phone, email: $email, address: $address, city: $city, country: $country, logoUrl: $logoUrl, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -249,6 +265,7 @@ class _$_Store implements _Store {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
+            (identical(other.logoUrl, logoUrl) || other.logoUrl == logoUrl) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
@@ -258,7 +275,7 @@ class _$_Store implements _Store {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, phone, email, address,
-      city, country, latitude, longitude);
+      city, country, logoUrl, latitude, longitude);
 
   @JsonKey(ignore: true)
   @override
@@ -278,11 +295,12 @@ abstract class _Store implements Store {
   const factory _Store(
       {required final int id,
       required final String name,
-      final String? phone,
+      final int? phone,
       final String? email,
       final String? address,
       final String? city,
       final String? country,
+      final String? logoUrl,
       final double latitude,
       final double longitude}) = _$_Store;
 
@@ -293,7 +311,7 @@ abstract class _Store implements Store {
   @override
   String get name;
   @override
-  String? get phone;
+  int? get phone;
   @override
   String? get email;
   @override
@@ -302,6 +320,8 @@ abstract class _Store implements Store {
   String? get city;
   @override
   String? get country;
+  @override
+  String? get logoUrl;
   @override
   double get latitude;
   @override

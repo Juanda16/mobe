@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobe/features/catalog/presentation/pages/profile/edit_profile_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
+import 'package:mobe/features/catalog/presentation/pages/stores/stores_main_page.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/styles/styles.dart';
@@ -81,8 +82,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> init() async {
-    final Either<Failure, Iterable<Category>> categoriesEither =
-        await Future.any([
+    final Either<Failure, Iterable<Category>> categoriesEither = await Future.any([
       _getCategories.call(NoParam.i),
       Future.delayed(const Duration(seconds: 5))
           .then((value) => Left(ServerFailure(message: 'Timeout')))
@@ -140,8 +140,7 @@ class _MainPageState extends State<MainPage> {
       return _searchList = tiendas;
     } else {
       _searchList = tiendas
-          .where((tienda) =>
-              tienda.name.toLowerCase().contains(_searchText.toLowerCase()))
+          .where((tienda) => tienda.name.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
 
       return _searchList;
@@ -157,6 +156,7 @@ class _MainPageState extends State<MainPage> {
 
     List<Widget> widgetOptions = <Widget>[
       buildBody(context, _getMakers, _getCategories),
+      const StoresMainPage(),
       EditProfilePage(currentUser: widget.currentUser),
       const SettingsPage(),
     ];
@@ -200,17 +200,24 @@ class _MainPageState extends State<MainPage> {
                     });
                   }
 
+                  if (drawerList[index - 1].name == 'tiendas') {
+                    widgetOptions.elementAt(0);
+                    setState(() {
+                      _selectedIndex = 1;
+                    });
+                  }
+
                   if (drawerList[index - 1].name == 'Perfil') {
                     widgetOptions.elementAt(1);
                     setState(() {
-                      _selectedIndex = 1;
+                      _selectedIndex = 2;
                     });
                   }
 
                   if (drawerList[index - 1].name == 'Configuración') {
                     widgetOptions.elementAt(2);
                     setState(() {
-                      _selectedIndex = 2;
+                      _selectedIndex = 3;
                     });
                   }
                   if (drawerList[index - 1].name == 'Cerrar Sesión') {
@@ -219,8 +226,7 @@ class _MainPageState extends State<MainPage> {
 
                   Navigator.of(context).pop();
                 },
-                color:
-                    index > categories.length ? primaryColor : secondaryColor,
+                color: index > categories.length ? primaryColor : secondaryColor,
               );
             }
           },
@@ -289,8 +295,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget buildBody(
-      BuildContext context, GetMakers getMakers, GetCategories getCategories) {
+  Widget buildBody(BuildContext context, GetMakers getMakers, GetCategories getCategories) {
     List<Maker> tiendas = [
       Maker(id: 1, name: 'tienda1'),
       Maker(id: 2, name: 'tienda2'),
@@ -299,14 +304,11 @@ class _MainPageState extends State<MainPage> {
     return RefreshIndicator(
       onRefresh: () {
         loaderOn(context);
-        getCategories
-            .call(NoParam.i)
-            .then((value) => _searchQuery.notifyListeners());
+        getCategories.call(NoParam.i).then((value) => _searchQuery.notifyListeners());
         // getMakers
         //     .call(NoParam.i)
         //     .then((value) => _searchQuery.notifyListeners());
-        return Future.delayed(const Duration(seconds: 3))
-            .then((value) => Navigator.pop(context));
+        return Future.delayed(const Duration(seconds: 3)).then((value) => Navigator.pop(context));
       },
       child: FutureBuilder(
         future: getCategories.call(NoParam.i),
@@ -314,8 +316,7 @@ class _MainPageState extends State<MainPage> {
         //     Future.delayed(Duration(seconds: 3)).then((value) => Right(tiendas)),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            final Either<Failure, Iterable<Category>> categoriesEither =
-                snapshot.data;
+            final Either<Failure, Iterable<Category>> categoriesEither = snapshot.data;
             categories = categoriesEither.fold((l) {
               print('Error: ${l}');
               return [];
@@ -328,8 +329,7 @@ class _MainPageState extends State<MainPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Recomendados',
-                      style: hpm16.copyWith(color: secondaryColor),
-                      textAlign: TextAlign.start),
+                      style: hpm16.copyWith(color: secondaryColor), textAlign: TextAlign.start),
                   SizedBox(
                     height: 160,
                     child: ListView.builder(
@@ -340,9 +340,7 @@ class _MainPageState extends State<MainPage> {
                           padding: const EdgeInsets.only(right: 12.0),
                           child: ElevatedButton(
                             onPressed: () {},
-                            child: SizedBox(
-                                width: 160,
-                                child: Text(categories[index].name)),
+                            child: SizedBox(width: 160, child: Text(categories[index].name)),
                           ),
                         );
                       },
@@ -352,13 +350,11 @@ class _MainPageState extends State<MainPage> {
                     height: 8,
                   ),
                   Text('Mejor Puntuados',
-                      style: hpm16.copyWith(color: secondaryColor),
-                      textAlign: TextAlign.start),
+                      style: hpm16.copyWith(color: secondaryColor), textAlign: TextAlign.start),
                   Expanded(
                     child: SizedBox(
                       child: GridBuilderWidget(
-                          searchList: _searchList,
-                          homeController: _homeController),
+                          searchList: _searchList, homeController: _homeController),
                     ),
                   ),
                 ],
@@ -467,8 +463,7 @@ class MenuListItem extends StatelessWidget {
               width: 70,
               color: color,
               child: Icon(Icons.motorcycle,
-                  color:
-                      color == secondaryColor ? primaryColor : secondaryColor),
+                  color: color == secondaryColor ? primaryColor : secondaryColor),
             ),
             spaceH12,
             Text(

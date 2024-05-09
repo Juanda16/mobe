@@ -12,6 +12,7 @@ class GetStores implements UseCase<Iterable<Store>, NoParam> {
 
   @override
   Future<Either<Failure, Iterable<Store>>> call(NoParam _) async {
+    print('GetStores call>>>');
     return await repository.getStores();
   }
 }

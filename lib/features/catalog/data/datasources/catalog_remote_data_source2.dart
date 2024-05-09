@@ -75,8 +75,7 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
     // makersFakeResponse;
 
     try {
-      final List<dynamic> responseList =
-          response['categories/all'] as List<dynamic>;
+      final List<dynamic> responseList = response['categories/all'] as List<dynamic>;
 
       Iterable<Category> categories = responseList.map((category) {
         return Category.fromJson(category);
@@ -91,12 +90,12 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Store>> getStores() async {
+    print('getStores>>>');
     final Map<String, dynamic> response =
         (await _getResponseFromUrl('stores/all')) as Map<String, dynamic>;
 
     try {
-      final List<dynamic> responseList =
-          response['stores/all'] as List<dynamic>;
+      final List<dynamic> responseList = response['stores/all'] as List<dynamic>;
 
       Iterable<Store> stores = responseList.map((category) {
         return Store.fromJson(category);
@@ -115,13 +114,9 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
     // makersFakeResponse;
     // log('getMakers>>> ${response}');
     Iterable<Maker> makers = (response['brands'] as List).map((maker) {
-      final String makerName =
-          (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
+      final String makerName = (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
       final String makerUrl = "$logosUrl$makerName.com";
-      final Map<String, dynamic> modifiedMaker = {
-        ...maker,
-        "logoUrl": maker["logo_url"]
-      };
+      final Map<String, dynamic> modifiedMaker = {...maker, "logoUrl": maker["logo_url"]};
 
       return Maker.fromJson(modifiedMaker);
     });
@@ -136,10 +131,10 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
         await _getResponseFromUrl(
             'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id');
     // motorcycleNameFakeResponse2;
-    Iterable<Motorcycle> motorcycleName = (response[
-                'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id']
-            as List)
-        .map((motorcycle) => Motorcycle.fromJson(motorcycle));
+    Iterable<Motorcycle> motorcycleName =
+        (response['motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id']
+                as List)
+            .map((motorcycle) => Motorcycle.fromJson(motorcycle));
     return motorcycleName;
   }
 
