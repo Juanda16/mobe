@@ -19,6 +19,9 @@ class Images {
   static String get defaultUrlMotorcycleIcon =>
       'https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/defaultbike.jpg&w=350&h=251&q=75&c=1';
 
+  static String get defaultUrlStoreIcon =>
+      'https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/defaultbike.jpg&w=350&h=251&q=75&c=1';
+
   static String get loaderIcon => 'assets/loader/mobe2.gif';
 
   static String get emptyState => 'assets/images/empty_state.svg';
@@ -101,13 +104,9 @@ class Images {
 
   /// Draw token logo from url if not null and is not empty or default token logo if it is.
   static Widget getUrlLogo(
-          {required String? logoUrl,
-          double size = 32,
-          BorderRadius? borderRadius}) =>
+          {required String? logoUrl, double size = 32, BorderRadius? borderRadius}) =>
       ClipRRect(
-        borderRadius: (borderRadius == null)
-            ? BorderRadius.circular(size / 2)
-            : borderRadius,
+        borderRadius: (borderRadius == null) ? BorderRadius.circular(size / 2) : borderRadius,
         child: (logoUrl == null || logoUrl.isEmpty)
             ? Images._defaultLogoImage(size)
             : Images._networkImage(
@@ -127,6 +126,5 @@ class Images {
         : Image.asset(url, width: width, height: height);
   }
 
-  static Widget mobeLogo({double? height = 20}) =>
-      buildSvgPngImage(mobeLogoPath, height: height);
+  static Widget mobeLogo({double? height = 20}) => buildSvgPngImage(mobeLogoPath, height: height);
 }

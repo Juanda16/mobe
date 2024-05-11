@@ -4,6 +4,7 @@ import 'package:mobe/core/error/failures.dart';
 import 'package:mobe/core/usecases/usecase.dart';
 import 'package:mobe/core/util/images.dart';
 import 'package:mobe/features/catalog/domain/entities/vendor/store.dart';
+import 'package:mobe/features/catalog/presentation/pages/stores/store_detail_page.dart';
 
 import '../../../../../injection_container.dart';
 import '../../../domain/usecases/get_stores.dart';
@@ -62,13 +63,13 @@ Widget buildBody(BuildContext context, GetStores getStores) {
                       elevation: 5,
                       child: InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => MotorcycleDetailPage(
-                          //             motorcycle: motorcycle,
-                          //           )),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => StoreDetailPage(
+                                      store: store,
+                                    )),
+                          );
                         },
                         child: Column(
                           children: [

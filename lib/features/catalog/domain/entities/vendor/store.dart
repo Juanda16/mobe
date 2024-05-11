@@ -5,17 +5,18 @@ part 'store.g.dart';
 
 @freezed
 class Store with _$Store {
-  const factory Store(
-      {required int id,
-      required String name,
-      int? phone,
-      String? email,
-      String? address,
-      String? city,
-      String? country,
-      String? logoUrl,
-      @Default(0.0) double latitude,
-      @Default(0.0) double longitude}) = _Store;
+  const factory Store({
+    required int id,
+    required String name,
+    int? phone,
+    String? email,
+    String? address,
+    String? city,
+    String? country,
+    String? logoUrl,
+    @Default(0.0) double latitude,
+    @Default(0.0) double longitude,
+  }) = _Store;
 
   factory Store.fromJson(Map<String, dynamic> json) => _$StoreFromJson(json);
 }

@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart' show Either, Left, Right;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mobe/core/util/strings.dart';
 import 'package:mobe/features/catalog/presentation/pages/profile/edit_profile_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/stores/stores_main_page.dart';
@@ -188,7 +189,7 @@ class _MainPageState extends State<MainPage> {
               );
             } else {
               return MenuListItem(
-                label: drawerList[index - 1].name,
+                label: drawerList[index - 1].name.capitalize(),
                 icon: Icons.motorcycle,
                 onTap: () {
                   // Navigator.of(context).pop();

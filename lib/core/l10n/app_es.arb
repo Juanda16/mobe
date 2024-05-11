@@ -48,5 +48,10 @@
   "success": "Éxito",
   "errorMessage": "Ha ocurrido un error, por favor intenta de nuevo",
   "error": "Error",
-  "ok": "Ok"
+  "ok": "Ok",
+  "details": "Detalles",
+  "address": "Address",
+  "city" : "City",
+  "country": "Country",
+  "type": "Type"
 }
