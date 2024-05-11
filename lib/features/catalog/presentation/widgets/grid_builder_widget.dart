@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobe/core/util/strings.dart';
 
 import '../../../../core/util/images.dart';
 import '../../domain/entities/maker/maker.dart';
@@ -32,8 +33,7 @@ class GridBuilderWidget extends StatelessWidget {
         return Card(
           color: Colors.white,
           shadowColor: Colors.grey.shade50,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           elevation: 5,
           child: InkWell(
             onTap: () {
@@ -67,7 +67,7 @@ class GridBuilderWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _searchList.elementAt(index).name,
+                                  _searchList.elementAt(index).name.capitalize(),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
@@ -83,8 +83,7 @@ class GridBuilderWidget extends StatelessWidget {
                             width: 50,
                             height: 30,
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(5)),
+                              borderRadius: const BorderRadius.all(Radius.circular(5)),
                               color: Colors.lightBlueAccent.shade400,
                             ),
                             child: Padding(
@@ -99,10 +98,7 @@ class GridBuilderWidget extends StatelessWidget {
                                     size: 16,
                                   ),
                                   Text(
-                                    _searchList
-                                        .elementAt(index)
-                                        .qualification
-                                        .toString(),
+                                    '5',
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!

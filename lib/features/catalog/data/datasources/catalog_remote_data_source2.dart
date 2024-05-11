@@ -70,9 +70,18 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Category>> getCategories() async {
-    final Map<String, dynamic> response =
-        (await _getResponseFromUrl('categories/all')) as Map<String, dynamic>;
-    // makersFakeResponse;
+    // final Map<String, dynamic> response =
+    //     (await _getResponseFromUrl('categories/all')) as Map<String, dynamic>;
+    final Map<String, dynamic> response = {
+      'categories/all': [
+        {"id": 1, "name": "tiendas", "logoUrl": ""},
+        {"id": 2, "name": "talleres", "logoUrl": ""},
+        {"id": 3, "name": "repuestos", "logoUrl": ""},
+        {"id": 4, "name": "accesorios", "logoUrl": ""},
+        {"id": 5, "name": "obligatorios", "logoUrl": ""},
+        {"id": 6, "name": "servicios", "logoUrl": ""}
+      ]
+    };
 
     try {
       final List<dynamic> responseList = response['categories/all'] as List<dynamic>;
@@ -90,9 +99,51 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Store>> getStores() async {
-    print('getStores>>>');
-    final Map<String, dynamic> response =
-        (await _getResponseFromUrl('stores/all')) as Map<String, dynamic>;
+    // final Map<String, dynamic> response =
+    //     (await _getResponseFromUrl('stores/all')) as Map<String, dynamic>;
+
+    final Map<String, dynamic> response = {
+      'stores/all': [
+        {
+          "id": 1,
+          "name": "Inducascos",
+          "address": "Calle 10",
+          "picUrl":
+              "https://inducascos.vtexassets.com/assets/vtex.file-manager-graphql/images/aa43f469-9586-400c-8700-e9c42b0955ce___da941c25a98add7bc84a346f47a399e0.png",
+          "phone": 12345,
+          "description": "Tienda de cascos y accesorios",
+          "rating": 3.4
+        },
+        {
+          "id": 2,
+          "name": "Fp_Motos",
+          "address": "Calle 11",
+          "picUrl":
+              "https://www.fpmoto.com/media/athlete2/Demos/brazil/categorias/Maletero_Moto.png",
+          "phone": 456758,
+          "description": "Tienda de herrajes, maleteros y cascos",
+          "rating": 4.2
+        },
+        {
+          "id": 3,
+          "name": "Ultrallantas",
+          "address": "Calle 12",
+          "picUrl": "https://ultrallantas.com/wp-content/uploads/2023/06/banner.png",
+          "phone": 45654764,
+          "description": "Tienda de llantas y cascos",
+          "rating": 5.0
+        },
+        {
+          "id": 4,
+          "name": "tienda de prueba",
+          "address": "prueba",
+          "picUrl": "prueba",
+          "phone": 2342,
+          "description": "prueba",
+          "rating": 1.0
+        }
+      ]
+    };
 
     try {
       final List<dynamic> responseList = response['stores/all'] as List<dynamic>;

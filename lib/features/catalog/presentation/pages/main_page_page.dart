@@ -103,19 +103,22 @@ class _MainPageState extends State<MainPage> {
           id: 1,
           name: 'tienda1',
           logoUrl:
-              'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA'),
+              'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA',
+          qualification: 5.0),
       const Maker(
-          id: 2,
-          name: 'tienda2',
-          logoUrl:
-              'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA'),
-      const Maker(id: 3, name: 'tienda3'),
-      const Maker(id: 4, name: 'tienda4'),
-      const Maker(id: 5, name: 'tienda5'),
-      const Maker(id: 6, name: 'tienda6'),
-      const Maker(id: 7, name: 'tienda7'),
-      const Maker(id: 8, name: 'tienda8'),
-      const Maker(id: 9, name: 'tienda9'),
+        id: 2,
+        name: 'tienda2',
+        logoUrl:
+            'https://www.moto1pro.com/sites/default/files/styles/featured_img_min_1200/public/2018-yamaha-mt-03-eu-night-fluo-action-003_0.jpg?itok=f9DeOPQA',
+        qualification: 5.0,
+      ),
+      const Maker(id: 3, name: 'tienda3', qualification: 5.0),
+      const Maker(id: 4, name: 'tienda4', qualification: 5.0),
+      const Maker(id: 5, name: 'tienda5', qualification: 5.0),
+      const Maker(id: 6, name: 'tienda6', qualification: 5.0),
+      const Maker(id: 7, name: 'tienda7', qualification: 5.0),
+      const Maker(id: 8, name: 'tienda8', qualification: 5.0),
+      const Maker(id: 9, name: 'tienda9', qualification: 5.0),
     ];
     _searchList = tiendas;
 
@@ -329,10 +332,10 @@ class _MainPageState extends State<MainPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Recomendados',
+                  Text((AppLocalizations.of(context)!.recomended).capitalize(),
                       style: hpm16.copyWith(color: secondaryColor), textAlign: TextAlign.start),
                   SizedBox(
-                    height: 160,
+                    height: 50,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: categories.length,
@@ -340,8 +343,25 @@ class _MainPageState extends State<MainPage> {
                         return Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: ElevatedButton(
-                            onPressed: () {},
-                            child: SizedBox(width: 160, child: Text(categories[index].name)),
+                            onPressed: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => MotorcyclesByMakerPage(
+                              //       maker: makers[index],
+                              //     ),
+                              //   ),
+                              // );
+                            },
+                            child: SizedBox(
+                              width: 160,
+                              height: 30,
+                              child: Center(
+                                child: Text(
+                                  categories[index].name.capitalize(),
+                                ),
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -350,7 +370,7 @@ class _MainPageState extends State<MainPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text('Mejor Puntuados',
+                  Text(AppLocalizations.of(context)!.bestRated.capitalize(),
                       style: hpm16.copyWith(color: secondaryColor), textAlign: TextAlign.start),
                   Expanded(
                     child: SizedBox(

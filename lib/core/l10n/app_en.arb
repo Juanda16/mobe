@@ -68,5 +68,7 @@
   "errorMessage": "An error occurred while sending your message. Please try again later.",
   "error": "Error",
   "ok": "OK",
-  "details": "Details"
+  "details": "Details",
+  "recomended": "Recomendados",
+  "bestRated": "mejor puntuados"
 }

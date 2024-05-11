@@ -53,5 +53,7 @@
   "address": "Address",
   "city" : "City",
   "country": "Country",
-  "type": "Type"
+  "type": "Type",
+  "recomended": "Recomended",
+  "bestRated": "Best Rated"
 }
