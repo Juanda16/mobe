@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mobe/core/util/strings.dart';
+import 'package:mobe/features/catalog/presentation/pages/stores/store_detail_page.dart';
 
 import '../../../../core/util/images.dart';
-import '../../domain/entities/maker/maker.dart';
-import '../pages/motorcycles_by_maker_page.dart';
+import '../../domain/entities/vendor/store.dart';
 
 class GridBuilderWidget extends StatelessWidget {
   const GridBuilderWidget({
     Key? key,
-    required List<Maker> searchList,
+    required List<Store> searchList,
     this.homeController,
   })  : _searchList = searchList,
         super(key: key);
 
-  final List<Maker> _searchList;
+  final List<Store> _searchList;
   final ScrollController? homeController;
 
   @override
   Widget build(BuildContext context) {
-    print('lenght ${_searchList.length}');
+    _searchList.sort((a, b) => b.rating.compareTo(a.rating));
     return GridView.builder(
       controller: homeController,
       // Create a grid with 2 columns
@@ -31,8 +31,8 @@ class GridBuilderWidget extends StatelessWidget {
       ),
       itemBuilder: ((BuildContext ctx, index) {
         return Card(
-          color: Colors.white,
-          shadowColor: Colors.grey.shade50,
+          color: Colors.white.withOpacity(0.7),
+          shadowColor: Colors.white.withOpacity(0.7),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           elevation: 5,
           child: InkWell(
@@ -47,16 +47,16 @@ class GridBuilderWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    flex: 2,
-                    child: Images.getUrlLogo(
-                        logoUrl: _searchList.elementAt(index).logoUrl,
-                        size: 150,
-                        borderRadius: BorderRadius.circular(0)),
-                  ),
+                      flex: 2,
+                      child: Images.getUrlLogo(
+                        logoUrl: _searchList.elementAt(index).picUrl,
+                        size: 120,
+                        borderRadius: BorderRadius.circular(20),
+                      )),
                   Expanded(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,10 +71,6 @@ class GridBuilderWidget extends StatelessWidget {
                                   style: Theme.of(context).textTheme.bodyMedium,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                ),
-                                Text(
-                                  '  ${_searchList.elementAt(index).id}',
-                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -98,7 +94,7 @@ class GridBuilderWidget extends StatelessWidget {
                                     size: 16,
                                   ),
                                   Text(
-                                    '5',
+                                    _searchList.elementAt(index).rating.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .subtitle2!
@@ -130,7 +126,7 @@ class GridBuilderWidget extends StatelessWidget {
   PageRouteBuilder<dynamic> buildPageRouteBuilder(int index) {
     return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            MotorcyclesByMakerPage(maker: _searchList.elementAt(index)),
+            StoreDetailPage(store: _searchList.elementAt(index)),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(0.0, 1.0);
           const end = Offset.zero;

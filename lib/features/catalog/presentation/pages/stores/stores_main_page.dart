@@ -59,6 +59,8 @@ Widget buildBody(BuildContext context, GetStores getStores) {
                   itemBuilder: (BuildContext context, int index) {
                     final store = stores[index];
                     return Card(
+                      color: Colors.white.withOpacity(0.7),
+                      // shadowColor: Colors.grey.shade50,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                       elevation: 5,
                       child: InkWell(
@@ -71,28 +73,31 @@ Widget buildBody(BuildContext context, GetStores getStores) {
                                     )),
                           );
                         },
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: FadeInImage.assetNetwork(
-                                placeholder: Images.loaderIcon,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: Images.loaderIcon,
 
-                                placeholderScale: 0.1,
-                                // placeholder: Images.defaultIcon,
-                                image: store.logoUrl ?? Images.defaultUrlMotorcycleIcon,
+                                  placeholderScale: 0.1,
+                                  // placeholder: Images.defaultIcon,
+                                  image: store.picUrl ?? Images.defaultUrlMotorcycleIcon,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              store.name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                              const SizedBox(height: 8),
+                              Text(
+                                store.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 8),
-                          ],
+                              const SizedBox(height: 8),
+                            ],
+                          ),
                         ),
                       ),
                     );

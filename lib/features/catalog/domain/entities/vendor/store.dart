@@ -8,12 +8,13 @@ class Store with _$Store {
   const factory Store({
     required int id,
     required String name,
-    int? phone,
+    String? phone,
     String? email,
     String? address,
     String? city,
     String? country,
-    String? logoUrl,
+    String? picUrl,
+    @Default(0.0) double rating,
     @Default(0.0) double latitude,
     @Default(0.0) double longitude,
   }) = _Store;

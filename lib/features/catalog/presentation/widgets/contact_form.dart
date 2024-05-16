@@ -84,7 +84,7 @@ class _ContactFormState extends State<ContactForm> {
       );
 
       // Close all dialogs
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pop();
 
       showDialog(
         context: context,

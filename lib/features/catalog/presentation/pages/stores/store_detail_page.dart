@@ -102,7 +102,7 @@ class StoreDetailPage extends StatelessWidget {
                       placeholder: Images.loaderIcon,
                       placeholderScale: 0.1,
                       // placeholder: Images.defaultIcon,
-                      image: store.logoUrl ?? Images.defaultUrlStoreIcon,
+                      image: store.picUrl ?? Images.defaultUrlStoreIcon,
                     ),
                   ),
                 ),
