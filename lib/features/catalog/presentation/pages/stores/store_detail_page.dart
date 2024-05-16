@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mobe/core/styles/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/util/images.dart';
@@ -36,6 +37,7 @@ class StoreDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final specs = {
       "name": AppLocalizations.of(context)!.name,
+      "description": AppLocalizations.of(context)!.description,
       "phone": AppLocalizations.of(context)!.phoneNumber,
       "email": AppLocalizations.of(context)!.email,
       "address": AppLocalizations.of(context)!.address,
@@ -102,13 +104,13 @@ class StoreDetailPage extends StatelessWidget {
                       placeholder: Images.loaderIcon,
                       placeholderScale: 0.1,
                       // placeholder: Images.defaultIcon,
-                      image: store.logoUrl ?? Images.defaultUrlStoreIcon,
+                      image: store.picUrl ?? Images.defaultUrlStoreIcon,
                     ),
                   ),
                 ),
                 // Images.getUrlLogo(logoUrl: store.image),
                 Card(
-                  color: Colors.blue[50],
+                  color: secondaryColor.withOpacity(0.3),
                   margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -119,7 +121,7 @@ class StoreDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${store.name}',
+                          store.name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -139,7 +141,7 @@ class StoreDetailPage extends StatelessWidget {
                 ),
 
                 Card(
-                  color: Colors.blue[50],
+                  color: primaryColor.withOpacity(0.9),
                   margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -154,6 +156,7 @@ class StoreDetailPage extends StatelessWidget {
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
+                                color: Colors.white,
                               )),
                           const SizedBox(height: 10),
                           ListView.builder(
@@ -165,7 +168,11 @@ class StoreDetailPage extends StatelessWidget {
                               return store.toJson()[name] != null
                                   ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                       name != specs.keys.first
-                                          ? const Divider()
+                                          ? Divider(
+                                              color: Colors.white.withOpacity(0.3),
+                                              thickness: 1,
+                                              height: 10,
+                                            )
                                           : const SizedBox(height: 0),
                                       Text(
                                         '${specs[name]}',
