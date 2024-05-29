@@ -14,6 +14,7 @@ import 'features/catalog/domain/domain.dart';
 import 'features/catalog/domain/repositories/auth_repository.dart';
 import 'features/catalog/domain/usecases/create_user.dart';
 import 'features/catalog/domain/usecases/get_motorcycle_by_id.dart';
+import 'features/catalog/domain/usecases/get_products.dart';
 import 'features/catalog/domain/usecases/log_in_user.dart';
 
 final getIt = GetIt.instance;
@@ -28,6 +29,7 @@ Future<void> init() async {
   getIt.registerLazySingleton(() => CreateUser(getIt()));
   getIt.registerLazySingleton(() => LogInUser(getIt()));
   getIt.registerLazySingleton(() => GetStores(getIt()));
+  getIt.registerLazySingleton(() => GetProducts(getIt()));
 
   // Repository
   getIt.registerLazySingleton<CatalogRepository>(

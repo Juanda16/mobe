@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobe/core/util/strings.dart';
 import 'package:mobe/features/catalog/domain/usecases/get_stores.dart';
+import 'package:mobe/features/catalog/presentation/pages/products/products_main_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/profile/edit_profile_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/settings_page.dart';
 import 'package:mobe/features/catalog/presentation/pages/stores/stores_main_page.dart';
@@ -153,6 +154,7 @@ class _MainPageState extends State<MainPage> {
     List<Widget> widgetOptions = <Widget>[
       buildBody(context, _getMakers, _getCategories),
       const StoresMainPage(),
+      const ProductsMainPage(),
       EditProfilePage(currentUser: widget.currentUser),
       const SettingsPage(),
     ];
@@ -197,23 +199,30 @@ class _MainPageState extends State<MainPage> {
                   }
 
                   if (drawerList[index - 1].name == 'tiendas') {
-                    widgetOptions.elementAt(0);
+                    widgetOptions.elementAt(1);
                     setState(() {
                       _selectedIndex = 1;
                     });
                   }
 
-                  if (drawerList[index - 1].name == 'Perfil') {
-                    widgetOptions.elementAt(1);
+                  if (drawerList[index - 1].name == 'productos') {
+                    widgetOptions.elementAt(2);
                     setState(() {
                       _selectedIndex = 2;
                     });
                   }
 
-                  if (drawerList[index - 1].name == 'Configuración') {
-                    widgetOptions.elementAt(2);
+                  if (drawerList[index - 1].name == 'Perfil') {
+                    widgetOptions.elementAt(3);
                     setState(() {
                       _selectedIndex = 3;
+                    });
+                  }
+
+                  if (drawerList[index - 1].name == 'Configuración') {
+                    widgetOptions.elementAt(4);
+                    setState(() {
+                      _selectedIndex = 4;
                     });
                   }
                   if (drawerList[index - 1].name == 'Cerrar Sesión') {
