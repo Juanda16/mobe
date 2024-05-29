@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart' show Either, Left, Right;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobe/core/util/strings.dart';
 import 'package:mobe/features/catalog/domain/usecases/get_stores.dart';
@@ -189,44 +190,52 @@ class _MainPageState extends State<MainPage> {
                 label: drawerList[index - 1].name.capitalize(),
                 icon: Icons.motorcycle,
                 onTap: () {
-                  // Navigator.of(context).pop();
-
-                  if (drawerList[index - 1].name == 'Home') {
-                    widgetOptions.elementAt(0);
-                    setState(() {
-                      _selectedIndex = 0;
-                    });
-                  }
-
-                  if (drawerList[index - 1].name == 'tiendas') {
-                    widgetOptions.elementAt(1);
-                    setState(() {
-                      _selectedIndex = 1;
-                    });
-                  }
-
-                  if (drawerList[index - 1].name == 'productos') {
-                    widgetOptions.elementAt(2);
-                    setState(() {
-                      _selectedIndex = 2;
-                    });
-                  }
-
-                  if (drawerList[index - 1].name == 'Perfil') {
-                    widgetOptions.elementAt(3);
-                    setState(() {
-                      _selectedIndex = 3;
-                    });
-                  }
-
-                  if (drawerList[index - 1].name == 'Configuración') {
-                    widgetOptions.elementAt(4);
-                    setState(() {
-                      _selectedIndex = 4;
-                    });
-                  }
-                  if (drawerList[index - 1].name == 'Cerrar Sesión') {
-                    Navigator.pop(context);
+                  switch (drawerList[index - 1].name) {
+                    case 'Home':
+                      setState(() {
+                        _selectedIndex = 0;
+                        widgetOptions.elementAt(0);
+                      });
+                      break;
+                    case 'tiendas':
+                      setState(() {
+                        _selectedIndex = 1;
+                        widgetOptions.elementAt(1);
+                      });
+                      break;
+                    case 'productos':
+                      setState(() {
+                        _selectedIndex = 2;
+                        widgetOptions.elementAt(2);
+                      });
+                      break;
+                    case 'Perfil':
+                      setState(() {
+                        _selectedIndex = 3;
+                        widgetOptions.elementAt(3);
+                      });
+                      break;
+                    case 'Configuración':
+                      setState(() {
+                        _selectedIndex = 4;
+                        widgetOptions.elementAt(4);
+                      });
+                      break;
+                    case 'Cerrar Sesión':
+                      Navigator.pop(context);
+                      break;
+                    default:
+                      setState(() {
+                        Fluttertoast.showToast(
+                          msg: 'Aun no implementado',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: secondaryColor,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      });
                   }
 
                   Navigator.of(context).pop();

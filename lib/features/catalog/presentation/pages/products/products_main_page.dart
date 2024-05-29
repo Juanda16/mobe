@@ -78,12 +78,15 @@ Widget buildBody(BuildContext context, GetProducts getProducts) {
                           child: Column(
                             children: [
                               Expanded(
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: Images.loaderIcon,
+                                child: Hero(
+                                  tag: product.id,
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder: Images.loaderIcon,
 
-                                  placeholderScale: 0.1,
-                                  // placeholder: Images.defaultIcon,
-                                  image: product.picUrl ?? Images.defaultUrlMotorcycleIcon,
+                                    placeholderScale: 0.1,
+                                    // placeholder: Images.defaultIcon,
+                                    image: product.picUrl ?? Images.defaultUrlMotorcycleIcon,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 8),
