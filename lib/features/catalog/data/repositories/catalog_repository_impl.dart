@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobe/features/catalog/domain/entities/maker/maker.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle/motorcycle.dart';
+import 'package:mobe/features/catalog/domain/entities/product/product.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
@@ -31,6 +32,13 @@ class CatalogRepositoryImpl implements CatalogRepository {
   Future<Either<Failure, Iterable<Store>>> getStores() async {
     return await _getRequest<Iterable<Store>>(() {
       return remoteDataSource.getStores();
+    });
+  }
+
+  @override
+  Future<Either<Failure, Iterable<Product>>> getProducts() async {
+    return await _getRequest<Iterable<Product>>(() {
+      return remoteDataSource.getProducts();
     });
   }
 

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:mobe/core/error/failures.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle/motorcycle.dart';
 import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle_name.dart';
+import 'package:mobe/features/catalog/domain/entities/product/product.dart';
 
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
@@ -25,8 +26,7 @@ const String responseString =
 class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   final http.Client client;
 
-  static const String baseUrl =
-      "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1/";
+  static const String baseUrl = "https://tprofqzgthutyxzhogzj.supabase.co/rest/v1/";
   static const String apiKey =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwcm9mcXpndGh1dHl4emhvZ3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2ODk4NzQsImV4cCI6MTk5NzI2NTg3NH0.8kLIMV-TD0AYbq0tuwpXIIykj7FA6TRLoFP-DHLloLs';
   static const String authToken =
@@ -80,13 +80,9 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
     // makersFakeResponse;
     // log('getMakers>>> ${response}');
     Iterable<Maker> makers = (response['brands'] as List).map((maker) {
-      final String makerName =
-          (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
+      final String makerName = (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
       final String makerUrl = "$logosUrl$makerName.com";
-      final Map<String, dynamic> modifiedMaker = {
-        ...maker,
-        "logoUrl": maker["logo_url"]
-      };
+      final Map<String, dynamic> modifiedMaker = {...maker, "logoUrl": maker["logo_url"]};
 
       return Maker.fromJson(modifiedMaker);
     });
@@ -101,10 +97,10 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
         await _getResponseFromUrl(
             'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id');
     // motorcycleNameFakeResponse2;
-    Iterable<Motorcycle> motorcycleName = (response[
-                'motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id']
-            as List)
-        .map((motorcycle) => Motorcycle.fromJson(motorcycle));
+    Iterable<Motorcycle> motorcycleName =
+        (response['motorcycles?select=*,brand:brands(name,vendor:vendors(*))&brand_id=eq.$id']
+                as List)
+            .map((motorcycle) => Motorcycle.fromJson(motorcycle));
     return motorcycleName;
   }
 
@@ -126,6 +122,12 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
   @override
   Future<Iterable<Store>> getStores() {
     // TODO: implement getStores
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Iterable<Product>> getProducts() {
+    // TODO: implement getProducts
     throw UnimplementedError();
   }
 }

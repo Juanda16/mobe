@@ -12,6 +12,7 @@ import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/product/product.dart';
 import '../../domain/entities/vendor/store.dart';
 import 'catalog_remote_data_source.dart';
 import 'fake_makers_response.dart';
@@ -70,18 +71,18 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
 
   @override
   Future<Iterable<Category>> getCategories() async {
-    // final Map<String, dynamic> response =
-    //     (await _getResponseFromUrl('categories/all')) as Map<String, dynamic>;
-    final Map<String, dynamic> response = {
-      'categories/all': [
-        {"id": 1, "name": "tiendas", "logoUrl": ""},
-        {"id": 2, "name": "talleres", "logoUrl": ""},
-        {"id": 3, "name": "repuestos", "logoUrl": ""},
-        {"id": 4, "name": "accesorios", "logoUrl": ""},
-        {"id": 5, "name": "obligatorios", "logoUrl": ""},
-        {"id": 6, "name": "servicios", "logoUrl": ""}
-      ]
-    };
+    final Map<String, dynamic> response =
+        (await _getResponseFromUrl('categories/all')) as Map<String, dynamic>;
+    // final Map<String, dynamic> response = {
+    //   'categories/all': [
+    //     {"id": 1, "name": "tiendas", "logoUrl": ""},
+    //     {"id": 2, "name": "talleres", "logoUrl": ""},
+    //     {"id": 3, "name": "repuestos", "logoUrl": ""},
+    //     {"id": 4, "name": "accesorios", "logoUrl": ""},
+    //     {"id": 5, "name": "obligatorios", "logoUrl": ""},
+    //     {"id": 6, "name": "servicios", "logoUrl": ""}
+    //   ]
+    // };
 
     try {
       final List<dynamic> responseList = response['categories/all'] as List<dynamic>;
@@ -150,8 +151,29 @@ class CatalogRemoteDataSourceImpl2 implements CatalogRemoteDataSource {
     try {
       final List<dynamic> responseList = response['stores/all'] as List<dynamic>;
 
-      Iterable<Store> stores = responseList.map((category) {
-        return Store.fromJson(category);
+      Iterable<Store> stores = responseList.map((store) {
+        return Store.fromJson(store);
+      });
+
+      return stores;
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<Iterable<Product>> getProducts() async {
+    final Map<String, dynamic> response =
+        (await _getResponseFromUrl('products/all')) as Map<String, dynamic>;
+
+    print('Products>>> ${response}');
+
+    try {
+      final List<dynamic> responseList = response['products/all'] as List<dynamic>;
+
+      Iterable<Product> stores = responseList.map((store) {
+        return Product.fromJson(store);
       });
 
       return stores;
