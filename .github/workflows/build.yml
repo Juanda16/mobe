@@ -10,7 +10,7 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/cirruslabs/flutter:stable
+      image: ghcr.io/cirruslabs/flutter:3.22.3
     steps:
       - uses: actions/checkout@v4
         with:
