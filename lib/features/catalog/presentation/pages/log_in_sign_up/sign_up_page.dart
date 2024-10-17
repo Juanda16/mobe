@@ -25,6 +25,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(28),
         child: AppBar(
@@ -73,8 +74,7 @@ class SignUpPage extends StatelessWidget {
                       children: [
                         TextFormField(
                           onSaved: (value) {
-                            userToCreate =
-                                userToCreate.copyWith(userName: value ?? '');
+                            userToCreate = userToCreate.copyWith(userName: value ?? '');
                           },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.userIcon,
@@ -87,8 +87,7 @@ class SignUpPage extends StatelessWidget {
                         spaceV12,
                         TextFormField(
                           onSaved: (value) {
-                            userToCreate =
-                                userToCreate.copyWith(email: value ?? '');
+                            userToCreate = userToCreate.copyWith(email: value ?? '');
                           },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.emailIcon,
@@ -101,8 +100,7 @@ class SignUpPage extends StatelessWidget {
                         spaceV12,
                         TextFormField(
                           onSaved: (value) {
-                            userToCreate =
-                                userToCreate.copyWith(password: value ?? '');
+                            userToCreate = userToCreate.copyWith(password: value ?? '');
                           },
                           decoration: InputDecoration(
                             icon: Images.buildSvgPngImage(Images.lock,
