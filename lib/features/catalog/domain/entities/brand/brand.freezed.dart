@@ -21,7 +21,7 @@ Brand _$BrandFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Brand {
   String get name => throw _privateConstructorUsedError;
-  Vendor? get vendor => throw _privateConstructorUsedError;
+  Store? get vendor => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,9 +33,9 @@ abstract class $BrandCopyWith<$Res> {
   factory $BrandCopyWith(Brand value, $Res Function(Brand) then) =
       _$BrandCopyWithImpl<$Res, Brand>;
   @useResult
-  $Res call({String name, Vendor? vendor});
+  $Res call({String name, Store? vendor});
 
-  $VendorCopyWith<$Res>? get vendor;
+  $StoreCopyWith<$Res>? get vendor;
 }
 
 /// @nodoc
@@ -62,18 +62,18 @@ class _$BrandCopyWithImpl<$Res, $Val extends Brand>
       vendor: freezed == vendor
           ? _value.vendor
           : vendor // ignore: cast_nullable_to_non_nullable
-              as Vendor?,
+              as Store?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $VendorCopyWith<$Res>? get vendor {
+  $StoreCopyWith<$Res>? get vendor {
     if (_value.vendor == null) {
       return null;
     }
 
-    return $VendorCopyWith<$Res>(_value.vendor!, (value) {
+    return $StoreCopyWith<$Res>(_value.vendor!, (value) {
       return _then(_value.copyWith(vendor: value) as $Val);
     });
   }
@@ -85,10 +85,10 @@ abstract class _$$_BrandCopyWith<$Res> implements $BrandCopyWith<$Res> {
       __$$_BrandCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, Vendor? vendor});
+  $Res call({String name, Store? vendor});
 
   @override
-  $VendorCopyWith<$Res>? get vendor;
+  $StoreCopyWith<$Res>? get vendor;
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$_BrandCopyWithImpl<$Res> extends _$BrandCopyWithImpl<$Res, _$_Brand>
       vendor: freezed == vendor
           ? _value.vendor
           : vendor // ignore: cast_nullable_to_non_nullable
-              as Vendor?,
+              as Store?,
     ));
   }
 }
@@ -127,7 +127,7 @@ class _$_Brand implements _Brand {
   @override
   final String name;
   @override
-  final Vendor? vendor;
+  final Store? vendor;
 
   @override
   String toString() {
@@ -162,7 +162,7 @@ class _$_Brand implements _Brand {
 }
 
 abstract class _Brand implements Brand {
-  const factory _Brand({required final String name, final Vendor? vendor}) =
+  const factory _Brand({required final String name, final Store? vendor}) =
       _$_Brand;
 
   factory _Brand.fromJson(Map<String, dynamic> json) = _$_Brand.fromJson;
@@ -170,7 +170,7 @@ abstract class _Brand implements Brand {
   @override
   String get name;
   @override
-  Vendor? get vendor;
+  Store? get vendor;
   @override
   @JsonKey(ignore: true)
   _$$_BrandCopyWith<_$_Brand> get copyWith =>

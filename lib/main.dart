@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'features/catalog/presentation/pages/makers_main_page_page.dart';
+import 'core/styles/styles.dart';
+import 'features/catalog/presentation/pages/log_in_sign_up/log_in_page.dart';
 import 'injection_container.dart' as di;
 
 Future<void> main() async {
@@ -9,8 +10,6 @@ Future<void> main() async {
   await di.init();
   runApp(const MyApp());
 }
-
-final ThemeData theme = ThemeData();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -30,30 +29,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mobe APP',
-      theme: theme.copyWith(
-        colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.blue[900],
-          secondary: Colors.blueAccent,
-        ),
-        inputDecorationTheme:
-            const InputDecorationTheme(border: OutlineInputBorder()),
-      ),
+      theme: mainTheme,
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
       themeMode: _themeMode,
       locale: _locale,
-      // localizationsDelegates: const [
-      //   AppLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: const [
         Locale('en'), // English
         Locale('es'), // Spanish
       ],
-      home: const MakersMainPage(),
+      // home: MainPage(),
+      home: LogIn(),
     );
   }
 

@@ -20,6 +20,10 @@
     "description": "A setting that allows the user to change the language of the app"
   },
   "name": "Name",
+  "address": "Address",
+  "city" : "City",
+  "country": "Country",
+  "type": "Type",
   "catalog": "Catalog",
   "contact": "Contact",
   "searchHere": "Search Here",
@@ -63,5 +67,14 @@
   "success": "Success",
   "errorMessage": "An error occurred while sending your message. Please try again later.",
   "error": "Error",
-  "ok": "OK"
+  "ok": "OK",
+  "details": "Details",
+  "address": "Address",
+  "city" : "City",
+  "country": "Country",
+  "type": "Type",
+  "recommended": "Recommended",
+  "bestRated": "Best Rated",
+   "description": "Description"
+
 }

@@ -32,10 +32,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.5
-  get_it: ^7.2.0
+  cupertino_icons: 1.0.5
+  get_it: 7.2.0
 
-  dartz: ^0.10.1
+  dartz: 0.10.1
   http: 0.13.5
   #  shared_preferences: ^2.0.15
   internet_connection_checker: 1.0.0+1
@@ -44,28 +44,30 @@ dependencies:
   shared_preferences: ^2.0.12
   #  flutter_switch: 0.
 
-  freezed_annotation: ^2.2.0
-  json_annotation: ^4.8.0
-  injectable: ^2.1.1
-  geolocator: ^9.0.2
-  url_launcher: ^6.1.11
-  google_maps_flutter: ^2.2.6
-  mailer: ^5.0.1
+  freezed_annotation: 2.2.0
+  json_annotation: 4.8.0
+  injectable: 2.1.1
+  geolocator: 9.0.2
+  url_launcher: 6.1.11
+  google_maps_flutter: 2.2.6
+  mailer: 6.1.0
+  fluttertoast: ^8.2.5
 
-
-
+  
+  
+  
   flutter_localizations:
     sdk: flutter
-  intl: any
+  intl: 0.17.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.3.3
+  build_runner: 2.3.3
   freezed: 2.3.2
-  flutter_lints: ^2.0.0
-  json_serializable: ^6.6.1
+  flutter_lints: 2.0.0
+  json_serializable: 6.6.1
 
 flutter_icons:
   android: true
@@ -83,6 +85,27 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/loader/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 600
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+          weight: 700
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

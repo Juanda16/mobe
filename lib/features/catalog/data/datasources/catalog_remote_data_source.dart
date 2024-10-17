@@ -12,6 +12,8 @@ import 'package:mobe/features/catalog/domain/entities/motorcycle_name/motorcycle
 import '../../../../core/error/exception.dart';
 import '../../domain/entities/category/category.dart';
 import '../../domain/entities/maker/maker.dart';
+import '../../domain/entities/product/product.dart';
+import '../../domain/entities/vendor/store.dart';
 import 'fake_makers_response.dart';
 import 'fake_motorcycle_response.dart';
 import 'fake_motorcycles_name_response.dart';
@@ -25,6 +27,10 @@ abstract class CatalogRemoteDataSource {
   ///
   /// Throws a [ServerException] for all error codes.
   Future<Iterable<Category>> getCategories();
+
+  Future<Iterable<Store>> getStores();
+
+  Future<Iterable<Product>> getProducts();
 
   /// Calls the endpoint.
   ///
@@ -41,10 +47,8 @@ abstract class CatalogRemoteDataSource {
 class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
   final http.Client client;
 
-  static const String baseUrl =
-      "https://motorcycle-specs-database.p.rapidapi.com";
-  static const String rapidAPIKey =
-      '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
+  static const String baseUrl = "https://motorcycle-specs-database.p.rapidapi.com";
+  static const String rapidAPIKey = '8aded21a64msh8c903c14ef97a29p13041ajsn117e83620b51';
 
   // '05a54ebaeemsh5044d354e81f934p17ac0cjsn0cc8e6061ea2';
 
@@ -96,13 +100,9 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
         makersFakeResponse;
 
     Iterable<Maker> makers = (response['make'] as List).map((maker) {
-      final String makerName =
-          (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
+      final String makerName = (maker["name"])?.toLowerCase().replaceAll(" ", '') ?? '';
       final String makerUrl = "$logosUrl$makerName.com";
-      final Map<String, dynamic> modifiedMaker = {
-        ...maker,
-        "logoUrl": makerUrl
-      };
+      final Map<String, dynamic> modifiedMaker = {...maker, "logoUrl": makerUrl};
 
       return Maker.fromJson(modifiedMaker);
     });
@@ -130,11 +130,22 @@ class CatalogRemoteDataSourceImpl implements CatalogRemoteDataSource {
 
   @override
   Future<Motorcycle> getMotorcycleById(int id) async {
-    final Map<String, dynamic>
-        response = //await _getResponseFromUrl('article/$id');
+    final Map<String, dynamic> response = //await _getResponseFromUrl('article/$id');
         motorcycleFakeResponse;
 
     Motorcycle motorcycle = Motorcycle.fromJson(response['article/$id']);
     return motorcycle;
+  }
+
+  @override
+  Future<Iterable<Store>> getStores() {
+    // TODO: implement getStores
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Iterable<Product>> getProducts() {
+    // TODO: implement getProducts
+    throw UnimplementedError();
   }
 }
