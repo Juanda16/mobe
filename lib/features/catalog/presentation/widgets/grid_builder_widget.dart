@@ -33,7 +33,8 @@ class GridBuilderWidget extends StatelessWidget {
         return Card(
           color: Colors.white.withOpacity(0.7),
           shadowColor: Colors.white.withOpacity(0.7),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           elevation: 5,
           child: InkWell(
             onTap: () {
@@ -67,7 +68,10 @@ class GridBuilderWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _searchList.elementAt(index).name.capitalize(),
+                                  _searchList
+                                      .elementAt(index)
+                                      .name
+                                      .capitalize(),
                                   style: Theme.of(context).textTheme.bodyMedium,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
@@ -79,7 +83,8 @@ class GridBuilderWidget extends StatelessWidget {
                             width: 50,
                             height: 30,
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(5)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(5)),
                               color: Colors.lightBlueAccent.shade400,
                             ),
                             child: Padding(
@@ -94,10 +99,13 @@ class GridBuilderWidget extends StatelessWidget {
                                     size: 16,
                                   ),
                                   Text(
-                                    _searchList.elementAt(index).rating.toString(),
+                                    _searchList
+                                        .elementAt(index)
+                                        .rating
+                                        .toString(),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .subtitle2!
+                                        .titleSmall!
                                         .copyWith(color: Colors.white),
                                   )
                                 ],

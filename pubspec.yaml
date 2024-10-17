@@ -36,11 +36,11 @@ dependencies:
   get_it: 7.2.0
 
   dartz: 0.10.1
-  http: 0.13.5
+  http: 1.2.2
   #  shared_preferences: ^2.0.15
   internet_connection_checker: 1.0.0+1
   flutter_svg: 1.1.6
-  cached_network_image: 3.2.3
+  cached_network_image: 3.4.1
   shared_preferences: ^2.0.12
   #  flutter_switch: 0.
 

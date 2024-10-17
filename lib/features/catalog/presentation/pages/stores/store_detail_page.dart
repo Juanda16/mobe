@@ -20,7 +20,8 @@ class StoreDetailPage extends StatelessWidget {
     required this.store,
   });
 
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.43296265331129, -122.08832357078792),
@@ -46,7 +47,7 @@ class StoreDetailPage extends StatelessWidget {
       "engine_displacement": AppLocalizations.of(context)!.engineDisplacement,
     };
 
-    Position position = const Position(
+    Position position = Position(
         longitude: 0,
         latitude: 0,
         accuracy: 0,
@@ -54,13 +55,14 @@ class StoreDetailPage extends StatelessWidget {
         heading: 0,
         speed: 0,
         speedAccuracy: 0,
-        timestamp: null,
+        timestamp: DateTime.now(),
         altitudeAccuracy: 0,
         headingAccuracy: 0);
     Geolocator.checkPermission().then((value) {
       return null;
     });
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((value) {
       position = value;
 
       return null;
@@ -111,12 +113,14 @@ class StoreDetailPage extends StatelessWidget {
                 // Images.getUrlLogo(logoUrl: store.image),
                 Card(
                   color: secondaryColor.withOpacity(0.3),
-                  margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -142,12 +146,14 @@ class StoreDetailPage extends StatelessWidget {
 
                 Card(
                   color: primaryColor.withOpacity(0.9),
-                  margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 0.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 12.0),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,31 +172,35 @@ class StoreDetailPage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final name = specs.keys.elementAt(index);
                               return store.toJson()[name] != null
-                                  ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                      name != specs.keys.first
-                                          ? Divider(
-                                              color: Colors.white.withOpacity(0.3),
-                                              thickness: 1,
-                                              height: 10,
-                                            )
-                                          : const SizedBox(height: 0),
-                                      Text(
-                                        '${specs[name]}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${store.toJson()[name]}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ])
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          name != specs.keys.first
+                                              ? Divider(
+                                                  color: Colors.white
+                                                      .withOpacity(0.3),
+                                                  thickness: 1,
+                                                  height: 10,
+                                                )
+                                              : const SizedBox(height: 0),
+                                          Text(
+                                            '${specs[name]}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${store.toJson()[name]}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ])
                                   : const SizedBox(height: 0);
                             },
                           ),
@@ -208,18 +218,20 @@ class StoreDetailPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(
-                        '${store.address}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.blueGrey,
-                        ),
-                      ),
-                      Text(
-                          '${Geolocator.distanceBetween(position.latitude, position.longitude, store.latitude ?? 6.0, store.longitude ?? -75.0).toInt() / 1000} Km'),
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${store.address}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                          Text(
+                              '${Geolocator.distanceBetween(position.latitude, position.longitude, store.latitude ?? 6.0, store.longitude ?? -75.0).toInt() / 1000} Km'),
+                        ]),
                     TextButton(
                       child: Text(AppLocalizations.of(context)!.go),
                       onPressed: () {
@@ -236,14 +248,15 @@ class StoreDetailPage extends StatelessWidget {
                     markers: {
                       Marker(
                         markerId: const MarkerId("marker_1"),
-                        position:
-                            LatLng(store.latitude ?? 6.2677510, store.longitude ?? -75.5714165),
+                        position: LatLng(store.latitude ?? 6.2677510,
+                            store.longitude ?? -75.5714165),
                       ),
                     },
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
                       //target: LatLng(position.latitude, position.longitude),
-                      target: LatLng(store.latitude ?? 6.2677510, store.longitude ?? -75.5714165),
+                      target: LatLng(store.latitude ?? 6.2677510,
+                          store.longitude ?? -75.5714165),
                       zoom: 14,
                     ),
                     onMapCreated: (GoogleMapController controller) {
@@ -277,8 +290,8 @@ class MapUtils {
   MapUtils._();
 
   static Future<void> openMap(double latitude, double longitude) async {
-    Uri googleUrl =
-        Uri.parse('https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
+    Uri googleUrl = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
     if (await canLaunchUrl(googleUrl)) {
       await launchUrl(googleUrl);
     } else {

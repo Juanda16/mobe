@@ -53,7 +53,7 @@ class MotorcycleDetailPage extends StatelessWidget {
       "starting_type": AppLocalizations.of(context)!.startingType
     };
 
-    Position position = const Position(
+    Position position = Position(
         longitude: 0,
         latitude: 0,
         accuracy: 0,
@@ -61,7 +61,7 @@ class MotorcycleDetailPage extends StatelessWidget {
         heading: 0,
         speed: 0,
         speedAccuracy: 0,
-        timestamp: null,
+        timestamp: DateTime.now(),
         altitudeAccuracy: 0,
         headingAccuracy: 0);
     Geolocator.checkPermission().then((value) {

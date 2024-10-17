@@ -249,7 +249,7 @@ class CatalogMainPage extends StatelessWidget {
                                           '3,9',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .subtitle2!
+                                              .titleSmall!
                                               .copyWith(color: Colors.white),
                                         )
                                       ],
@@ -294,7 +294,6 @@ class CatalogMainPage extends StatelessWidget {
 //   }
 //   throw ('Something went wrong. Please try again.');
 // },
-
 }
 
 class MenuListItem extends StatelessWidget {

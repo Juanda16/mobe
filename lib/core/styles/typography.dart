@@ -4,42 +4,43 @@ extension TypographyContext on BuildContext {
   /// Returns same as Theme.of(context).textTheme
   TextTheme get textTheme => Theme.of(this).textTheme;
 
-  /// Returns headline1 >> fontSize: 93
-  TextStyle? get h1 => textTheme.headline1?.copyWith(fontFamily: 'Poppins');
+  /// Returns displayLarge >> fontSize: 93
+  TextStyle? get h1 => textTheme.displayLarge?.copyWith(fontFamily: 'Poppins');
 
-  /// Returns headline2 >> fontSize: 58
-  TextStyle? get h2 => textTheme.headline2?.copyWith(fontFamily: 'Poppins');
+  /// Returns displayMedium >> fontSize: 58
+  TextStyle? get h2 => textTheme.displayMedium?.copyWith(fontFamily: 'Poppins');
 
-  /// Returns headline3 >> fontSize: 46
-  TextStyle? get h3 => textTheme.headline3?.copyWith(fontFamily: 'Poppins');
+  /// Returns displaySmall >> fontSize: 46
+  TextStyle? get h3 => textTheme.displaySmall?.copyWith(fontFamily: 'Poppins');
 
-  /// Returns headline4 >> fontSize: 33
-  TextStyle? get h4 => textTheme.headline4?.copyWith(fontFamily: 'Poppins');
+  /// Returns headlineMedium >> fontSize: 33
+  TextStyle? get h4 =>
+      textTheme.headlineMedium?.copyWith(fontFamily: 'Poppins');
 
-  /// Returns headline5 >> fontSize: 23
-  TextStyle? get h5 => textTheme.headline5?.copyWith(fontFamily: 'Poppins');
+  /// Returns headlineSmall >> fontSize: 23
+  TextStyle? get h5 => textTheme.headlineSmall?.copyWith(fontFamily: 'Poppins');
 
-  /// Returns headline6 >> fontSize: 19
+  /// Returns titleLarge >> fontSize: 19
   TextStyle? get h6 =>
-      textTheme.headline6?.copyWith(fontFamily: 'Poppins', fontSize: 18);
+      textTheme.titleLarge?.copyWith(fontFamily: 'Poppins', fontSize: 18);
 
-  /// Returns subtitle1 >> fontSize: 15
-  TextStyle? get subH1 => textTheme.subtitle1;
+  /// Returns titleMedium >> fontSize: 15
+  TextStyle? get subH1 => textTheme.titleMedium;
 
-  /// Returns subtitle2 >> fontSize: 13
-  TextStyle? get subH2 => textTheme.subtitle2;
+  /// Returns titleSmall >> fontSize: 13
+  TextStyle? get subH2 => textTheme.titleSmall;
 
-  /// Returns body1 >> fontSize: 16
-  TextStyle? get p1 => textTheme.bodyText1;
+  /// Returns bodyLarge >> fontSize: 16
+  TextStyle? get p1 => textTheme.bodyLarge;
 
-  /// Returns body2 >> fontSize: 14
-  TextStyle? get p2 => textTheme.bodyText2;
+  /// Returns bodyMedium >> fontSize: 14
+  TextStyle? get p2 => textTheme.bodyMedium;
 
-  /// Returns caption >> fontSize: 12
-  TextStyle? get caption => textTheme.caption;
+  /// Returns bodySmall >> fontSize: 12
+  TextStyle? get caption => textTheme.bodySmall;
 
-  /// Returns overline >> fontSize: 10
-  TextStyle? get overline => textTheme.overline;
+  /// Returns labelSmall >> fontSize: 10
+  TextStyle? get overline => textTheme.labelSmall;
 
   /// Returns body2 with num style >> fontSize: 14
   TextStyle? get numInterStyle =>
