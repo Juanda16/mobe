@@ -21,6 +21,8 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - name: Test
+        run: flutter test
       - name: Build
         run: flutter build apk
       - name: Download sonar-scanner
