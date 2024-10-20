@@ -23,6 +23,8 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
       - name: Test
         run: flutter test --coverage
+      - name: Verify Coverage file
+        run: ls coverage
       - name: Build
         run: flutter build apk
       - name: Download sonar-scanner
